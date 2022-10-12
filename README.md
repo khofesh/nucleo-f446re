@@ -6,6 +6,14 @@ stm32cubeIDE:
 
 https://www.st.com/en/development-tools/stm32cubeide.html
 
+## packages
+
+```shell
+sudo dnf install stlink
+```
+
+
+
 st-info
 ```shell
 [fahmad@ryzen ~]$  st-info --probe
@@ -17,3 +25,17 @@ Found 1 stlink programmers
   chipid:     0x0421
   descr:      F446
 ```
+
+## videos
+- https://www.youtube.com/watch?v=pHyz2-wbDw4
+- https://www.youtube.com/watch?v=hyZS2p1tW-g
+
+## other github
+- https://github.com/prtzl/Embedded_videos
+- https://github.com/davisjp1822/stm32_nucleo_linux
+
+## links
+- https://www.st.com/en/embedded-software/stm32cube-mcu-mpu-packages.html#tools-software
+
+## continue searching
+stm32-nucleo development on linux
