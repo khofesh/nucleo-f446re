@@ -54,4 +54,4 @@ now `r0` has value `0x32`
 # References
 
 - Test-Driven Development for Embedded C (https://pragprog.com/titles/jgade/test-driven-development-for-embedded-c/)
-- https://developer.arm.com/Processors/Cortex-M4
+- https://developer.arm.com/Processors/Cortex-M4 (Cortex-M4)
