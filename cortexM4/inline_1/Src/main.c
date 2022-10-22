@@ -44,6 +44,26 @@ int main(void)
 	 */
 	__asm volatile("MOV R0,%0"::"r"(val));
 
+	int control_reg;
+	// read CONTROL register to control_reg
+	__asm volatile("MRS %0, CONTROL":"=r"(control_reg)::);
+
+	/**
+	 * example 3: copy the content of C variable var1
+	 * to var2
+	 */
+	int var1=10, var2;
+	__asm volatile("MOV %0,%1":"=r"(var2):"r"(var1));
+
+	/**
+	 * example 4: copy the contents of a pointer into
+	 * another variable
+	 */
+	int p1, *p2;
+	p2 = (int*)0x20000008;
+	// p1 = *p2
+	__asm volatile("LDR %0,[%1]":"=r"(p1):"r"(p2));
+
     /* Loop forever */
 	for(;;);
 }
