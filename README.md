@@ -51,6 +51,10 @@ Found 1 stlink programmers
 now `r0` has value `0x32`
 ![r0 0x32](./images/Screenshot_2022-10-22_14-47-59.png)
 
+## X3 (crystal oscillator) is missing
+
+![X3 missing answer](./images/Screenshot_2022-10-22_23-12-09.png)
+
 # References
 
 - Test-Driven Development for Embedded C (https://pragprog.com/titles/jgade/test-driven-development-for-embedded-c/)
