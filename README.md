@@ -39,9 +39,17 @@ Found 1 stlink programmers
 
 - https://www.st.com/en/embedded-software/stm32cube-mcu-mpu-packages.html#tools-software
 
-## continue searching
+## constraint characters and constrain modifier
 
-stm32-nucleo development on linux
+![constraint characters](./images/Screenshot_2022-10-22_14-39-20.png)
+
+### implementation
+
+`r3` has value `0x32`
+![r3 0x32](./images/Screenshot_2022-10-22_14-47-08.png)
+
+now `r0` has value `0x32`
+![r0 0x32](./images/Screenshot_2022-10-22_14-47-59.png)
 
 # References
 
