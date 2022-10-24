@@ -25,20 +25,6 @@ Found 1 stlink programmers
   descr:      F446
 ```
 
-## videos
-
-- https://www.youtube.com/watch?v=pHyz2-wbDw4
-- https://www.youtube.com/watch?v=hyZS2p1tW-g
-
-## other github
-
-- https://github.com/prtzl/Embedded_videos
-- https://github.com/davisjp1822/stm32_nucleo_linux
-
-## links
-
-- https://www.st.com/en/embedded-software/stm32cube-mcu-mpu-packages.html#tools-software
-
 ## constraint characters and constrain modifier
 
 ![constraint characters](./images/Screenshot_2022-10-22_14-39-20.png)
@@ -53,9 +39,30 @@ now `r0` has value `0x32`
 
 ## X3 (crystal oscillator) is missing
 
+in `um1724-stm32-nucleo64-boards-mb1136-stmicroelectronics.pdf`
+
 ![X3 missing answer](./images/Screenshot_2022-10-22_23-12-09.png)
+
+## bit band
+
+see `Cortex-M4-devices-generic-user-guide.pdf` page 25.
 
 # References
 
 - Test-Driven Development for Embedded C (https://pragprog.com/titles/jgade/test-driven-development-for-embedded-c/)
 - https://developer.arm.com/Processors/Cortex-M4 (Cortex-M4)
+- https://electronics.stackexchange.com/questions/622968/some-questions-about-crystal-oscillators-of-an-stm32-microcontroller-board
+
+## videos
+
+- https://www.youtube.com/watch?v=pHyz2-wbDw4
+- https://www.youtube.com/watch?v=hyZS2p1tW-g
+
+## other github
+
+- https://github.com/prtzl/Embedded_videos
+- https://github.com/davisjp1822/stm32_nucleo_linux
+
+## stm32cube
+
+- https://www.st.com/en/embedded-software/stm32cube-mcu-mpu-packages.html#tools-software
