@@ -47,6 +47,15 @@ in `um1724-stm32-nucleo64-boards-mb1136-stmicroelectronics.pdf`
 
 see `Cortex-M4-devices-generic-user-guide.pdf` page 25.
 
+## naked function
+
+```shell
+__attribute__((naked)) function attribute
+This attribute tells the compiler that the function is an embedded assembly function.
+```
+
+https://developer.arm.com/documentation/100067/0612/Compiler-specific-Function--Variable--and-Type-Attributes/--attribute----naked---function-attribute
+
 # References
 
 - Test-Driven Development for Embedded C (https://pragprog.com/titles/jgade/test-driven-development-for-embedded-c/)
