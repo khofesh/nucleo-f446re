@@ -56,6 +56,14 @@ This attribute tells the compiler that the function is an embedded assembly func
 
 https://developer.arm.com/documentation/100067/0612/Compiler-specific-Function--Variable--and-Type-Attributes/--attribute----naked---function-attribute
 
+## AAPCS standard
+
+go to https://github.com/ARM-software/abi-aa/releases , choose `aapcs32.pdf`.
+
+![Core registers and AAPCS usage](./images/Screenshot_2022-10-28_22-05-24.png)
+
+check `cortexM4/007Stack/Debug/007Stack.list`
+
 # References
 
 - Test-Driven Development for Embedded C (https://pragprog.com/titles/jgade/test-driven-development-for-embedded-c/)
