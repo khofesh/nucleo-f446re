@@ -84,7 +84,7 @@ see `rm0390-stm32f446xx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf` pag
 
 ![position 39](./images/Screenshot_2022-10-29_19-59-57.png)
 
-**why we use ISPR1 ?**
+**why we use ISPR1 ?** \
 Interrupt Set-pending Registers contains NVIC_ISPR0-NVIC_ISPR7 registers. Each register can handle 32 IRQs. Since the IRQ is 39 (USART3), we have to use ISPR1.
 
 # References
