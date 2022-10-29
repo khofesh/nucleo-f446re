@@ -64,6 +64,29 @@ go to https://github.com/ARM-software/abi-aa/releases , choose `aapcs32.pdf`.
 
 check `cortexM4/007Stack/Debug/007Stack.list`
 
+## Steps to program an MCU peripheral interrupt
+
+- Identify the IRQ number of the peripheral by referring to the MCU vector table. IRQ numbers are vendor-specific
+
+- Program the Processor register to enable that IRQ (only when you enable the IRQ, the processor will accept the interrupt over that line ).Set the priority (optional)
+
+- Configure the peripheral (USART3) using its peripheral configuration register. For example, in the case of USART3, whenever a packet is received, it will automatically issue an interrupt on the IRQ line 39.
+
+- When the interrupt is issued on the IRQ line, it will first get pended in the pending register of the processor.
+
+- NVIC will allow the IRQ handler associated with the IRQ number to run only if the priority of the new interrupts higher than the currently executing interrupt handler. Otherwise newly arrived interrupt will stay in pending state.
+
+- Please note that if peripheral issues an interrupt when the IRQ number is disabled (not activated from the processor side), then still interrupt will get pended in the pending register of the NVIC. As soon as IRQ is enabled, it will trigger the execution of the ISR if the priority is higher than the currently active ISR.
+
+## 008USART3_int_pend
+
+see `rm0390-stm32f446xx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf` page 241. USART3 is in position 39
+
+![position 39](./images/Screenshot_2022-10-29_19-59-57.png)
+
+**why we use ISPR1 ?**
+Interrupt Set-pending Registers contains NVIC_ISPR0-NVIC_ISPR7 registers. Each register can handle 32 IRQs. Since the IRQ is 39 (USART3), we have to use ISPR1.
+
 # References
 
 - Test-Driven Development for Embedded C (https://pragprog.com/titles/jgade/test-driven-development-for-embedded-c/)
