@@ -67,8 +67,9 @@ check `cortexM4/007Stack/Debug/007Stack.list`
 # References
 
 - Test-Driven Development for Embedded C (https://pragprog.com/titles/jgade/test-driven-development-for-embedded-c/)
-- https://developer.arm.com/Processors/Cortex-M4 (Cortex-M4)
+- https://developer.arm.com/Processors/Cortex-M4
 - https://electronics.stackexchange.com/questions/622968/some-questions-about-crystal-oscillators-of-an-stm32-microcontroller-board
+- https://www.st.com/content/st_com/en/stm32-mcu-developer-zone.html
 
 ## videos
 
@@ -83,3 +84,9 @@ check `cortexM4/007Stack/Debug/007Stack.list`
 ## stm32cube
 
 - https://www.st.com/en/embedded-software/stm32cube-mcu-mpu-packages.html#tools-software
+
+## books and resources
+
+- https://github.com/cnoviello/mastering-stm32-2nd
+- https://leanpub.com/mastering-stm32-2nd
+- https://www.amazon.com/Joseph-Yiu/e/B001IQWINC/ref=sr_ntt_srch_lnk_2?qid=1443620939&sr=8-2-fkmr0
