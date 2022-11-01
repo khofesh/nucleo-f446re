@@ -72,7 +72,21 @@ uint32_t *pSHCSR = (uint32_t*)0xE000ED24;
 
 ## fault status registers
 
+when a fault happens, inside the fault handler, you can check a couple of fault status and address information registers to get more details about the fault and the instruction address at which the fault happened.
+
 ![fault status registers](../images/Screenshot_2022-11-01_22-27-16.png)
+
+example usageFault --> register address (UFSR) is 0xE000ED2A
+
+```c
+uint32_t *pUFSR = (uint32_t*)0xE000ED2A;
+printf("exception: UsageFault\n");
+printf("USFR = %lx\n", (*pUFSR) & 0xFFFF);
+```
+
+the meaning of USFR
+
+![meaning](../images/Screenshot_2022-11-01_23-38-27.png)
 
 ## System Handler Control and State Register
 

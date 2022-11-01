@@ -27,11 +27,12 @@ void HardFault_Handler();
 void MemManage_Handler();
 void BusFault_Handler();
 void UsageFault_Handler();
+__attribute__ ((naked)) void UsageFault_Handler();
 
 int main(void)
 {
 	// enable all configurable exceptions
-	// usage fault, mem manage fault and bus fault
+	// usage fault, memManage fault and bus fault
 	uint32_t *pSHCSR = (uint32_t*)0xE000ED24;
 
 	// enable 18, 17, and 16 bit position
@@ -73,8 +74,32 @@ void BusFault_Handler()
 	while(1);
 }
 
-void UsageFault_Handler()
+__attribute__ ((naked)) void UsageFault_Handler()
 {
+	// extract the value of MSP which happens to be the
+	// base address of the stack frame which got
+	// saved during the exception entry
+	// from thread mode to handler mode
+	__asm volatile("MRS r0,MSP");
+	__asm volatile("B UsageFault_Handler_c");
+}
+
+void UsageFault_Handler_c(uint32_t *pBaseStackFrame)
+{
+	// get value from stack pointer (MSP)
+	printf("pBaseStackFrame = %p\n", pBaseStackFrame);
+	printf("value of R0 = %lx\n", pBaseStackFrame[0]);
+	printf("value of R1 = %lx\n", pBaseStackFrame[1]);
+	printf("value of R2 = %lx\n", pBaseStackFrame[2]);
+	printf("value of R3 = %lx\n", pBaseStackFrame[3]);
+	printf("value of R12 = %lx\n", pBaseStackFrame[4]);
+	printf("value of LR = %lx\n", pBaseStackFrame[5]);
+	printf("value of PC = %lx\n", pBaseStackFrame[6]);
+	printf("value of XPSR = %lx\n", pBaseStackFrame[7]);
+
+	uint32_t *pUFSR = (uint32_t*)0xE000ED2A;
 	printf("exception: UsageFault\n");
+	printf("USFR = %lx\n", (*pUFSR) & 0xFFFF);
+
 	while(1);
 }
