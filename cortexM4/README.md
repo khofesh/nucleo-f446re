@@ -102,6 +102,8 @@ the meaning of USFR
 
 ## SVCMath
 
-remember where to which register we store argument/result
+remember to which register we store argument/result
 
 ![Core registers and AAPCS usage](../images/Screenshot_2022-10-28_22-05-24.png)
+
+# PendSV exception
