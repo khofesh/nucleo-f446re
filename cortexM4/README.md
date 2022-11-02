@@ -54,6 +54,10 @@ in debug configuration, enable SWV
 
 ![debug configuration](../images/Screenshot_2022-11-01_23-11-55.png)
 
+make sure the least significant bit is set to one (SWV setting during debugging)
+
+![swv settings](../images/Screenshot_2022-11-02_21-40-44.png)
+
 result
 
 ![printf](../images/Screenshot_2022-11-01_23-13-33.png)
@@ -91,3 +95,13 @@ the meaning of USFR
 ## System Handler Control and State Register
 
 ![System Handler Control and State Register](../images/Screenshot_2022-11-01_22-27-48.png)
+
+# SVC exception
+
+![SVC](../images/Screenshot_2022-11-02_21-37-00.png)
+
+## SVCMath
+
+remember where to which register we store argument/result
+
+![Core registers and AAPCS usage](../images/Screenshot_2022-10-28_22-05-24.png)
