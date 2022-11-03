@@ -109,3 +109,15 @@ remember to which register we store argument/result
 # PendSV exception
 
 # implementation of task scheduler
+
+## configure systick timer
+
+- Internal 16 MHz factory-trimmed RC (1% accuracy)
+- 1x SysTick timer and up to twelve 16-bit and two 32-bit timers up to 180 MHz,
+- 1m is 1KHz in frequency domain = (we want 1000 sys tick exceptions in 1 sec)
+- to bring down systick timer count clock from 16MHz to 1KHz use a divisor (reload value)
+- reload value = 16000
+
+16000000 Hz / 16000 count value = 1000 Hz (TICK_HZ - desired exception frequency)
+
+![System timer, SysTick](../images/Screenshot_2022-11-03_23-59-53.png)
