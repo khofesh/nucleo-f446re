@@ -28,6 +28,21 @@ void task2_handler();
 void task3_handler();
 void task4_handler();
 
+// stack memory calculations
+#define SIZE_TASK_STACK 		1024U
+#define SIZE_SCHEDULER_STACK 	1024U
+
+// see STM32F446RETX_RAM.ld
+#define SRAM_START 				0x20000000U
+#define SIZE_RAM				(128 * 1024)
+#define SRAM_END				(SRAM_START + SIZE_RAM)
+
+#define T1_STACK_START			SRAM_END
+#define T2_STACK_START			(SRAM_END - (1 * SIZE_TASK_STACK))
+#define T3_STACK_START			(SRAM_END - (2 * SIZE_TASK_STACK))
+#define T4_STACK_START			(SRAM_END - (3 * SIZE_TASK_STACK))
+#define SCHED_STACK_START		(SRAM_END - (4 * SIZE_TASK_STACK))
+
 int main(void)
 {
     /* Loop forever */
