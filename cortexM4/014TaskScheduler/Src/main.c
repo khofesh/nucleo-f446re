@@ -29,6 +29,7 @@ void task3_handler();
 void task4_handler();
 
 void init_systick_timer(uint32_t tick_hz);
+__attribute__((naked)) void init_scheduler_stack(uint32_t sched_top_of_stack);
 
 void SysTick_Handler();
 
@@ -54,6 +55,7 @@ void SysTick_Handler();
 
 int main(void)
 {
+	init_scheduler_stack(SCHED_STACK_START);
 	init_systick_timer(TICK_HZ);
     /* Loop forever */
 	for(;;);
@@ -113,6 +115,12 @@ void init_systick_timer(uint32_t tick_hz)
 
 	// enable systick
 	*pSCSR |= (1 << 0); // enable the counter
+}
+
+__attribute__((naked)) void init_scheduler_stack(uint32_t sched_top_of_stack)
+{
+	__asm volatile("MSR MSP,%0"::"r"(sched_top_of_stack):);
+	__asm volatile("BX LR");
 }
 
 void SysTick_Handler()

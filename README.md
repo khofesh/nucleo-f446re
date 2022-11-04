@@ -56,6 +56,32 @@ This attribute tells the compiler that the function is an embedded assembly func
 
 https://developer.arm.com/documentation/100067/0612/Compiler-specific-Function--Variable--and-Type-Attributes/--attribute----naked---function-attribute
 
+example
+
+```c
+__attribute__((naked)) int add(int i, int j); /* Declaring a function with __attribute__((naked)). */
+
+__attribute__((naked)) int add(int i, int j)
+{
+    __asm("ADD r0, r1, #1"); /* Basic assembler statements are supported. */
+
+/*  Parameter references are not supported inside naked functions: */
+//  __asm (
+//    "ADD r0, %[input_i], %[input_j]"       /* Assembler statement with parameter references */
+//    :                                      /* Output operand parameter */
+//    : [input_i] "r" (i), [input_j] "r" (j) /* Input operand parameter */
+//    );
+
+
+/*  Mixing C code is not supported inside naked functions: */
+/*  int res = 0;
+    return res;
+*/
+
+}
+
+```
+
 ## AAPCS standard
 
 go to https://github.com/ARM-software/abi-aa/releases , choose `aapcs32.pdf`.
