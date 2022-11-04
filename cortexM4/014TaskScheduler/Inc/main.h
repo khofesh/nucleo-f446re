@@ -18,13 +18,15 @@ __attribute__((naked)) void init_scheduler_stack(uint32_t sched_top_of_stack);
 void init_tasks_stack();
 __attribute__((naked)) void switch_sp_to_psp();
 void enable_processor_faults();
-uint8_t get_psp_value();
+uint32_t get_psp_value();
+void save_psp_value(uint32_t current_psp_value);
+void update_next_task();
 
 void HardFault_Handler();
 void MemManage_Handler();
 void BusFault_Handler();
 
-void SysTick_Handler();
+__attribute__((naked)) void SysTick_Handler();
 
 // stack memory calculations
 #define SIZE_TASK_STACK 		1024U

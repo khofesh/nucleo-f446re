@@ -34,7 +34,7 @@ uint32_t psp_of_tasks[MAX_TASKS] = {
 
 uint32_t task_handlers[MAX_TASKS];
 
-uint8_t current_task = 0; // task1 is running
+uint32_t current_task = 0; // task1 is running
 
 int main(void)
 {
@@ -148,7 +148,7 @@ void init_tasks_stack()
 	}
 }
 
-uint8_t get_psp_value()
+uint32_t get_psp_value()
 {
 	return psp_of_tasks[current_task];
 }
@@ -199,7 +199,44 @@ void BusFault_Handler()
 	while(1);
 }
 
-void SysTick_Handler()
+void save_psp_value(uint32_t current_psp_value)
 {
-
+	psp_of_tasks[current_task] = current_psp_value;
 }
+
+void update_next_task()
+{
+	current_task++;
+	current_task %= MAX_TASKS;
+}
+
+__attribute__((naked)) void SysTick_Handler()
+{
+	// save the context of current task
+
+	// 1. get current running task's PSP value
+	__asm volatile("MRS R0,PSP");
+	// 2. using that PSP value store SF2 (R4-R11)
+	__asm volatile("STMDB R0!,{R4-R11}");
+
+	__asm volatile("PUSH {LR}");
+
+	// 3. save the current value of PSP
+	__asm volatile("BL save_psp_value");
+
+	// retrieve the context of next task
+
+	// 1. decide next task to run
+	__asm volatile("BL update_next_task");
+	// 2. get its past PSP value
+	__asm volatile("BL get_psp_value");
+	// 3. using that PSP value to retrieve SF2(R4-R11)
+	__asm volatile("LDM R0!,{R4-R11}");
+	// 4. update PSP and exit
+	__asm volatile("MSR PSP,R0");
+
+	__asm volatile("POP {LR}");
+
+	__asm volatile("BX LR");
+}
+
