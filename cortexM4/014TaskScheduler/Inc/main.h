@@ -21,6 +21,8 @@ void enable_processor_faults();
 uint32_t get_psp_value();
 void save_psp_value(uint32_t current_psp_value);
 void update_next_task();
+void task_delay(uint32_t tick_count);
+void idle_task();
 
 void HardFault_Handler();
 void MemManage_Handler();
@@ -42,13 +44,14 @@ __attribute__((naked)) void SysTick_Handler();
 #define T3_STACK_START			(SRAM_END - (2 * SIZE_TASK_STACK))
 #define T4_STACK_START			(SRAM_END - (3 * SIZE_TASK_STACK))
 #define SCHED_STACK_START		(SRAM_END - (4 * SIZE_TASK_STACK))
+#define IDLE_STACK_START		(SRAM_END - (5 * SIZE_TASK_STACK))
 
 #define TICK_HZ 				1000U
 
 #define HSI_CLOCK				16000000U
 #define SYSTICK_TIMER_CLOCK		HSI_CLOCK
 
-#define MAX_TASKS 				4
+#define MAX_TASKS 				5
 #define DUMMY_XPSR				0x01000000U
 
 #define TASK_RUNNING_STATE		0x00

@@ -26,7 +26,8 @@
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
 
-uint32_t current_task = 0; // task1 is running
+uint32_t current_task = 1; // task1 is running
+uint32_t g_tick_count = 0;
 
 typedef struct {
 	uint32_t psp_value;
@@ -142,15 +143,17 @@ void init_tasks_stack()
 		user_tasks[i].current_state = TASK_RUNNING_STATE;
 	}
 
-	user_tasks[0].psp_value = T1_STACK_START;
-	user_tasks[1].psp_value = T2_STACK_START;
-	user_tasks[2].psp_value = T3_STACK_START;
-	user_tasks[3].psp_value = T4_STACK_START;
+	user_tasks[0].psp_value = IDLE_STACK_START;
+	user_tasks[1].psp_value = T1_STACK_START;
+	user_tasks[2].psp_value = T2_STACK_START;
+	user_tasks[3].psp_value = T3_STACK_START;
+	user_tasks[4].psp_value = T4_STACK_START;
 
-	user_tasks[0].task_handler = task1_handler;
-	user_tasks[1].task_handler = task2_handler;
-	user_tasks[2].task_handler = task3_handler;
-	user_tasks[3].task_handler = task4_handler;
+	user_tasks[0].task_handler = idle_task;
+	user_tasks[1].task_handler = task1_handler;
+	user_tasks[2].task_handler = task2_handler;
+	user_tasks[3].task_handler = task3_handler;
+	user_tasks[4].task_handler = task4_handler;
 
 	uint32_t *pPSP;
 
@@ -237,6 +240,17 @@ void update_next_task()
 {
 	current_task++;
 	current_task %= MAX_TASKS;
+}
+
+void task_delay(uint32_t tick_count)
+{
+	user_tasks[current_task].block_count = g_tick_count + tick_count;
+	user_tasks[current_task].current_state = TASK_BLOCKED_STATE;
+}
+
+void idle_task()
+{
+	while(1);
 }
 
 __attribute__((naked)) void SysTick_Handler()
