@@ -121,3 +121,16 @@ remember to which register we store argument/result
 16000000 Hz / 16000 count value = 1000 Hz (TICK_HZ - desired exception frequency)
 
 ![System timer, SysTick](../images/Screenshot_2022-11-03_23-59-53.png)
+
+## gpio
+
+```c
+#define PERIPH_BASE           0x40000000UL /*!< Peripheral base address in the alias region                                */
+
+#define AHB1PERIPH_BASE       (PERIPH_BASE + 0x00020000UL)
+
+#define GPIOA_BASE            (AHB1PERIPH_BASE + 0x0000UL)
+```
+
+AHB1PERIPH_BASE = 0x40020000
+GPIOA_BASE = 0x40020000 + 0x0000 = 0x40020000
