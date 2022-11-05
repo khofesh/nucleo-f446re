@@ -23,12 +23,15 @@ void save_psp_value(uint32_t current_psp_value);
 void update_next_task();
 void task_delay(uint32_t tick_count);
 void idle_task();
+void update_global_tick_count();
+void unblock_tasks();
+void schedule();
 
 void HardFault_Handler();
 void MemManage_Handler();
 void BusFault_Handler();
 
-__attribute__((naked)) void SysTick_Handler();
+void SysTick_Handler();
 
 // stack memory calculations
 #define SIZE_TASK_STACK 		1024U
@@ -54,7 +57,10 @@ __attribute__((naked)) void SysTick_Handler();
 #define MAX_TASKS 				5
 #define DUMMY_XPSR				0x01000000U
 
-#define TASK_RUNNING_STATE		0x00
+#define TASK_READY_STATE		0x00
 #define TASK_BLOCKED_STATE		0xFF
+
+#define INTERRUPT_DISABLE()		do{asm volatile ("MOV R0,#0x1"); asm volatile("MSR PRIMASK,R0;");}while(0)
+#define INTERRUPT_ENABLE()		do{asm volatile ("MOV R0,#0x0"); asm volatile("MSR PRIMASK,R0;");}while(0)
 
 #endif /* MAIN_H_ */

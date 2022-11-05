@@ -64,9 +64,9 @@ void task1_handler()
 	{
 		printf("task1\n");
 		led_on(LED_GREEN);
-		delay(DELAY_COUNT_1S);
+		task_delay(1000);
 		led_off(LED_GREEN);
-		delay(DELAY_COUNT_1S);
+		task_delay(1000);
 	}
 }
 
@@ -76,9 +76,9 @@ void task2_handler()
 	{
 		printf("task2\n");
 		led_on(LED_ORANGE);
-		delay(DELAY_COUNT_500MS);
+		task_delay(500);
 		led_off(LED_ORANGE);
-		delay(DELAY_COUNT_500MS);
+		task_delay(500);
 	}
 }
 
@@ -88,9 +88,9 @@ void task3_handler()
 	{
 		printf("task3\n");
 		led_on(LED_BLUE);
-		delay(DELAY_COUNT_250MS);
+		task_delay(250);
 		led_off(LED_BLUE);
-		delay(DELAY_COUNT_250MS);
+		task_delay(250);
 	}
 }
 
@@ -100,9 +100,9 @@ void task4_handler()
 	{
 		printf("task4\n");
 		led_on(LED_ORANGE);
-		delay(DELAY_COUNT_500MS);
+		task_delay(125);
 		led_off(LED_ORANGE);
-		delay(DELAY_COUNT_500MS);
+		task_delay(125);
 	}
 }
 
@@ -140,7 +140,7 @@ void init_tasks_stack()
 {
 	for (int i = 0; i < MAX_TASKS; i++)
 	{
-		user_tasks[i].current_state = TASK_RUNNING_STATE;
+		user_tasks[i].current_state = TASK_READY_STATE;
 	}
 
 	user_tasks[0].psp_value = IDLE_STACK_START;
@@ -238,14 +238,48 @@ void save_psp_value(uint32_t current_psp_value)
 
 void update_next_task()
 {
-	current_task++;
-	current_task %= MAX_TASKS;
+	uint32_t state = TASK_BLOCKED_STATE;
+
+	for (int i = 0; i < MAX_TASKS; i++)
+	{
+		current_task++;
+		current_task %= MAX_TASKS;
+		state = user_tasks[current_task].current_state;
+
+		if ((state == TASK_READY_STATE) && (current_task != 0))
+		{
+			break;
+		}
+	}
+
+	if (state != TASK_READY_STATE)
+	{
+		current_task = 0;
+	}
+}
+
+void schedule()
+{
+	uint32_t *pICSR = (uint32_t*)0xE000ED04;
+
+	// pend the pendsv exception
+	*pICSR |= (1 << 28);
 }
 
 void task_delay(uint32_t tick_count)
 {
-	user_tasks[current_task].block_count = g_tick_count + tick_count;
-	user_tasks[current_task].current_state = TASK_BLOCKED_STATE;
+	// disable interrupt
+	INTERRUPT_DISABLE();
+
+	if (current_task)
+	{
+		user_tasks[current_task].block_count = g_tick_count + tick_count;
+		user_tasks[current_task].current_state = TASK_BLOCKED_STATE;
+		schedule();
+	}
+
+	// enable interrupt
+	INTERRUPT_ENABLE();
 }
 
 void idle_task()
@@ -253,7 +287,26 @@ void idle_task()
 	while(1);
 }
 
-__attribute__((naked)) void SysTick_Handler()
+void update_global_tick_count()
+{
+	g_tick_count++;
+}
+
+void unblock_tasks()
+{
+	for(int i = 1; i < MAX_TASKS; i++)
+	{
+		if (user_tasks[i].current_state != TASK_READY_STATE)
+		{
+			if (user_tasks[i].block_count == g_tick_count)
+			{
+				user_tasks[i].current_state = TASK_READY_STATE;
+			}
+		}
+	}
+}
+
+__attribute__((naked)) void PendSV_Handler()
 {
 	// save the context of current task
 
@@ -281,5 +334,16 @@ __attribute__((naked)) void SysTick_Handler()
 	__asm volatile("POP {LR}");
 
 	__asm volatile("BX LR");
+}
+
+void SysTick_Handler()
+{
+	uint32_t *pICSR = (uint32_t*)0xE000ED04;
+
+	update_global_tick_count();
+	unblock_tasks();
+
+	// pend the pendsv exception
+	*pICSR |= (1 << 28);
 }
 
