@@ -26,27 +26,22 @@
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
 
-uint32_t psp_of_tasks[MAX_TASKS] = {
-		T1_STACK_START,
-		T2_STACK_START,
-		T3_STACK_START,
-		T4_STACK_START,
-};
-
-uint32_t task_handlers[MAX_TASKS];
-
 uint32_t current_task = 0; // task1 is running
+
+typedef struct {
+	uint32_t psp_value;
+	uint32_t block_count;
+	uint32_t current_state;
+	void (*task_handler)(void);
+}TCB_t;
+
+TCB_t user_tasks[MAX_TASKS];
 
 int main(void)
 {
 	enable_processor_faults();
 
 	init_scheduler_stack(SCHED_STACK_START);
-
-	task_handlers[0] = (uint32_t)task1_handler;
-	task_handlers[1] = (uint32_t)task2_handler;
-	task_handlers[2] = (uint32_t)task3_handler;
-	task_handlers[3] = (uint32_t)task4_handler;
 
 	init_tasks_stack();
 
@@ -66,7 +61,7 @@ void task1_handler()
 {
 	while(1)
 	{
-//		printf("task1\n");
+		printf("task1\n");
 		led_on(LED_GREEN);
 		delay(DELAY_COUNT_1S);
 		led_off(LED_GREEN);
@@ -78,7 +73,7 @@ void task2_handler()
 {
 	while(1)
 	{
-//		printf("task2\n");
+		printf("task2\n");
 		led_on(LED_ORANGE);
 		delay(DELAY_COUNT_500MS);
 		led_off(LED_ORANGE);
@@ -90,7 +85,7 @@ void task3_handler()
 {
 	while(1)
 	{
-//		printf("task3\n");
+		printf("task3\n");
 		led_on(LED_BLUE);
 		delay(DELAY_COUNT_250MS);
 		led_off(LED_BLUE);
@@ -102,7 +97,7 @@ void task4_handler()
 {
 	while(1)
 	{
-//		printf("task4\n");
+		printf("task4\n");
 		led_on(LED_ORANGE);
 		delay(DELAY_COUNT_500MS);
 		led_off(LED_ORANGE);
@@ -142,17 +137,32 @@ __attribute__((naked)) void init_scheduler_stack(uint32_t sched_top_of_stack)
 
 void init_tasks_stack()
 {
+	for (int i = 0; i < MAX_TASKS; i++)
+	{
+		user_tasks[i].current_state = TASK_RUNNING_STATE;
+	}
+
+	user_tasks[0].psp_value = T1_STACK_START;
+	user_tasks[1].psp_value = T2_STACK_START;
+	user_tasks[2].psp_value = T3_STACK_START;
+	user_tasks[3].psp_value = T4_STACK_START;
+
+	user_tasks[0].task_handler = task1_handler;
+	user_tasks[1].task_handler = task2_handler;
+	user_tasks[2].task_handler = task3_handler;
+	user_tasks[3].task_handler = task4_handler;
+
 	uint32_t *pPSP;
 
 	for(int i = 0; i < MAX_TASKS; i++)
 	{
-		pPSP = (uint32_t*) psp_of_tasks[i];
+		pPSP = (uint32_t*) user_tasks[i].psp_value;
 
 		pPSP--;
 		*pPSP = DUMMY_XPSR; // 0x01000000
 
 		pPSP--; // PC
-		*pPSP = task_handlers[i];
+		*pPSP = (uint32_t) user_tasks[i].task_handler;
 
 		pPSP--; // LR
 		*pPSP = 0xFFFFFFFD;
@@ -163,13 +173,13 @@ void init_tasks_stack()
 			*pPSP = 0;
 		}
 
-		psp_of_tasks[i] = (uint32_t)pPSP;
+		user_tasks[i].psp_value = (uint32_t)pPSP;
 	}
 }
 
 uint32_t get_psp_value()
 {
-	return psp_of_tasks[current_task];
+	return user_tasks[current_task].psp_value;
 }
 
 __attribute__((naked)) void switch_sp_to_psp()
@@ -220,7 +230,7 @@ void BusFault_Handler()
 
 void save_psp_value(uint32_t current_psp_value)
 {
-	psp_of_tasks[current_task] = current_psp_value;
+	user_tasks[current_task].psp_value = current_psp_value;
 }
 
 void update_next_task()

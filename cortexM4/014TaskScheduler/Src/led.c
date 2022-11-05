@@ -16,7 +16,7 @@ void delay(uint32_t count)
 
 void led_init_all(void)
 {
-
+	// so the led doesn't work on stm32 f446re
 	uint32_t *pRccAhb1enr = (uint32_t *)0x40023830;
 	uint32_t *pGpiodModeReg = (uint32_t *)0x40020000;
 
