@@ -20,6 +20,7 @@
 #include <stdio.h>
 
 #include "main.h"
+#include "led.h"
 
 #if !defined(__SOFT_FP__) && defined(__ARM_FP)
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
@@ -49,6 +50,8 @@ int main(void)
 
 	init_tasks_stack();
 
+	led_init_all();
+
 	init_systick_timer(TICK_HZ);
 
 	switch_sp_to_psp();
@@ -63,7 +66,11 @@ void task1_handler()
 {
 	while(1)
 	{
-		printf("task1\n");
+//		printf("task1\n");
+		led_on(LED_GREEN);
+		delay(DELAY_COUNT_1S);
+		led_off(LED_GREEN);
+		delay(DELAY_COUNT_1S);
 	}
 }
 
@@ -71,7 +78,11 @@ void task2_handler()
 {
 	while(1)
 	{
-		printf("task2\n");
+//		printf("task2\n");
+		led_on(LED_ORANGE);
+		delay(DELAY_COUNT_500MS);
+		led_off(LED_ORANGE);
+		delay(DELAY_COUNT_500MS);
 	}
 }
 
@@ -79,7 +90,11 @@ void task3_handler()
 {
 	while(1)
 	{
-		printf("task3\n");
+//		printf("task3\n");
+		led_on(LED_BLUE);
+		delay(DELAY_COUNT_250MS);
+		led_off(LED_BLUE);
+		delay(DELAY_COUNT_250MS);
 	}
 }
 
@@ -87,7 +102,11 @@ void task4_handler()
 {
 	while(1)
 	{
-		printf("task4\n");
+//		printf("task4\n");
+		led_on(LED_ORANGE);
+		delay(DELAY_COUNT_500MS);
+		led_off(LED_ORANGE);
+		delay(DELAY_COUNT_500MS);
 	}
 }
 
