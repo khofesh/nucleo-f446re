@@ -454,3 +454,27 @@ xPSR: 0x01000000 pc: 0x08000310 psp: 0x2001fc00
 
 ![putty config](../images/Screenshot_2022-11-07_00-26-23.png)
 ![some command](../images/Screenshot_2022-11-07_00-29-05.png)
+
+## telnet command
+
+```shell
+[fahmad@ryzen OpenOCD]$  telnet localhost 4444
+Trying ::1...
+telnet: connect to address ::1: Connection refused
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+Open On-Chip Debugger
+> reset
+Unable to match requested speed 2000 kHz, using 1800 kHz
+Unable to match requested speed 2000 kHz, using 1800 kHz
+target halted due to breakpoint, current mode: Thread
+xPSR: 0x01000000 pc: 0x08000310 psp: 0x2001fc00
+>
+```
+
+to close session:
+
+- type `Ctrl + ]`
+- it changes the prompt to `telnet>`
+- type `close`
