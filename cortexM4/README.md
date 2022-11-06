@@ -243,3 +243,36 @@ arm-none-eabi-objdump -s main.o
 ```shell
 arm-none-eabi-objdump -D main.o > main.log
 ```
+
+## different data and sections of a program
+
+![sections of a program](../images/Screenshot_2022-11-06_19-21-45.png)
+
+example
+
+```c
+#include <stdint.h>
+
+int g_un_data1;
+int g_un_data2 = 0;
+int g_i_data = 0x55;//.data
+static int g_un_s_data;
+static int g_i_s_data = 0x44; //.data
+
+int main(void)
+{
+
+}
+```
+
+## startup file
+
+STM32F446xx Vector table (see `rm0390-stm32f446xx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf` page 239)
+
+you have to follow the vector table
+
+![vector table part 1](../images/Screenshot_2022-11-06_19-41-44.png)
+![vector table part 2](../images/Screenshot_2022-11-06_19-42-22.png)
+![vector table part 3](../images/Screenshot_2022-11-06_19-43-11.png)
+![vector table part 4](../images/Screenshot_2022-11-06_19-43-41.png)
+![vector table part 5](../images/Screenshot_2022-11-06_19-44-12.png)
