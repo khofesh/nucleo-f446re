@@ -6,6 +6,15 @@
 
 #define STACK_START SRAM_END
 
+extern uint32_t _etext;
+extern uint32_t _edata;
+extern uint32_t _sdata;
+extern uint32_t _ebss;
+extern uint32_t _sbss;
+
+// prototype of main
+int main(void);
+
 void Reset_Handler();
 void NMI_Handler() __attribute__((weak, alias("Default_Handler")));
 void HardFault_Handler() __attribute__((weak, alias("Default_Handler")));
@@ -486,12 +495,29 @@ uint32_t vectors[] __attribute__((section(".isr_vector"))) = {
 void Reset_Handler()
 {
     // copy .data section to SRAM
+    uint32_t size = &_edata - &_sdata;
+    uint32_t *pDestination = (uint32_t *)&_sdata; // ram
+    uint32_t *pSource = (uint32_t *)&_etext;      // flash
 
-    // initialize the .bss section to zero in SRAM
+    for (uint32_t i = 0; i < size; i++)
+    {
+        *pDestination++ = *pSource++;
+    }
+
+    // initialize the .bss section to zero in RAM
+    size = &_ebss - &_sbss;
+
+    pDestination = (uint32_t *)&_sbss;
+
+    for (uint32_t i = 0; i < size; i++)
+    {
+        *pDestination++ = 0;
+    }
 
     // call init function of std. library
 
     // call main()
+    main();
 }
 
 void Default_Handler()

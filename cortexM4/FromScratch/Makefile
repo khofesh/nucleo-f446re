@@ -6,6 +6,9 @@ LDFLAGS = -nostdlib -T stm32_ls.ld -Wl,-Map=final.map
 
 all: main.o led.o stm32_startup.o final.elf
 
+list-ld-symbols: final.elf
+	arm-none-eabi-nm $^
+
 dump-elf: final.elf
 	$(OBJDUMP) -h $^
 
