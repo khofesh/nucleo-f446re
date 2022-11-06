@@ -18,177 +18,349 @@ void DebugMon_Handler() __attribute__((weak, alias("Default_Handler")));
 
 void PendSV_Handler() __attribute__((weak, alias("Default_Handler")));
 void SysTick_Handler() __attribute__((weak, alias("Default_Handler")));
-/* Window Watchdog interrupt                                          */
+/*
+ * Window Watchdog interrupt
+ */
 void WWDG_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* PVD through EXTI line detection interrupt                          */
+/*
+ * PVD through EXTI line detection interrupt
+ */
 void PVD_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* Tamper and TimeStamp interrupts through the EXTI line              */
+/*
+ * Tamper and TimeStamp interrupts through the EXTI line
+ */
 void TAMP_STAMP_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* RTC Wakeup interrupt through the EXTI line                         */
+/*
+ * RTC Wakeup interrupt through the EXTI line
+ */
 void RTC_WKUP_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* Flash global interrupt                                             */
+/*
+ * Flash global interrupt
+ */
 void FLASH_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* RCC global interrupt                                               */
+/*
+ * RCC global interrupt
+ */
 void RCC_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* EXTI Line0 interrupt                                               */
+/*
+ * EXTI Line0 interrupt
+ */
 void EXTI0_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* EXTI Line1 interrupt                                               */
+/*
+ * EXTI Line1 interrupt
+ */
 void EXTI1_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* EXTI Line2 interrupt                                               */
+/*
+ * EXTI Line2 interrupt
+ */
 void EXTI2_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* EXTI Line3 interrupt                                               */
+/*
+ * EXTI Line3 interrupt
+ */
 void EXTI3_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* EXTI Line4 interrupt                                               */
+/*
+ * EXTI Line4 interrupt
+ */
 void EXTI4_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* DMA1 Stream0 global interrupt                                      */
+/*
+ * DMA1 Stream0 global interrupt
+ */
 void DMA1_Stream0_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* DMA1 Stream1 global interrupt                                      */
+/*
+ * DMA1 Stream1 global interrupt
+ */
 void DMA1_Stream1_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* DMA1 Stream2 global interrupt                                      */
+/*
+ * DMA1 Stream2 global interrupt
+ */
 void DMA1_Stream2_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* DMA1 Stream3 global interrupt                                      */
+/*
+ * DMA1 Stream3 global interrupt
+ */
 void DMA1_Stream3_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* DMA1 Stream4 global interrupt                                      */
+/*
+ * DMA1 Stream4 global interrupt
+ */
 void DMA1_Stream4_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* DMA1 Stream5 global interrupt                                      */
+/*
+ * DMA1 Stream5 global interrupt
+ */
 void DMA1_Stream5_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* DMA1 Stream6 global interrupt                                      */
+/*
+ * DMA1 Stream6 global interrupt
+ */
 void DMA1_Stream6_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* ADC1 global interrupt                                              */
+/*
+ * ADC1 global interrupt
+ */
 void ADC_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* CAN1 TX interrupts                                                 */
+/*
+ * CAN1 TX interrupts
+ */
 void CAN1_TX_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* CAN1 RX0 interrupts                                                */
+/*
+ * CAN1 RX0 interrupts
+ */
 void CAN1_RX0_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* CAN1 RX1 interrupts                                                */
+/*
+ * CAN1 RX1 interrupts
+ */
 void CAN1_RX1_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* CAN1 SCE interrupt                                                 */
+/*
+ * CAN1 SCE interrupt
+ */
 void CAN1_SCE_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* EXTI Line[9:5] interrupts                                          */
+/*
+ * EXTI Line[9:5] interrupts
+ */
 void EXTI9_5_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* TIM1 Break interrupt and TIM9 global interrupt                     */
+/*
+ * TIM1 Break interrupt and TIM9 global interrupt
+ */
 void TIM1_BRK_TIM9_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* TIM1 Update interrupt and TIM10 global interrupt                   */
+/*
+ * TIM1 Update interrupt and TIM10 global interrupt
+ */
 void TIM1_UP_TIM10_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* TIM1 Trigger and Commutation interrupts and TIM11 global interrupt */
+/*
+ * TIM1 Trigger and Commutation interrupts and TIM11 global interrupt
+ */
 void TIM1_TRG_COM_TIM11_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* TIM1 Capture Compare interrupt                                     */
+/*
+ * TIM1 Capture Compare interrupt
+ */
 void TIM1_CC_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* TIM2 global interrupt                                              */
+/*
+ * TIM2 global interrupt
+ */
 void TIM2_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* TIM3 global interrupt                                              */
+/*
+ * TIM3 global interrupt
+ */
 void TIM3_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* TIM4 global interrupt                                              */
+/*
+ * TIM4 global interrupt
+ */
 void TIM4_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* I2C1 event interrupt                                               */
+/*
+ * I2C1 event interrupt
+ */
 void I2C1_EV_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* I2C1 error interrupt                                               */
+/*
+ * I2C1 error interrupt
+ */
 void I2C1_ER_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* I2C2 event interrupt                                               */
+/*
+ * I2C2 event interrupt
+ */
 void I2C2_EV_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* I2C2 error interrupt                                               */
+/*
+ * I2C2 error interrupt
+ */
 void I2C2_ER_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* SPI1 global interrupt                                              */
+/*
+ * SPI1 global interrupt
+ */
 void SPI1_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* SPI2 global interrupt                                              */
+/*
+ * SPI2 global interrupt
+ */
 void SPI2_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* USART1 global interrupt                                            */
+/*
+ * USART1 global interrupt
+ */
 void USART1_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* USART2 global interrupt                                            */
+/*
+ * USART2 global interrupt
+ */
 void USART2_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* USART3 global interrupt                                            */
+/*
+ * USART3 global interrupt
+ */
 void USART3_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* EXTI Line[15:10] interrupts                                        */
+/*
+ * EXTI Line[15:10] interrupts
+ */
 void EXTI15_10_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* RTC Alarms (A and B) through EXTI line interrupt                   */
+/*
+ * RTC Alarms (A and B) through EXTI line interrupt
+ */
 void RTC_Alarm_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* USB On-The-Go FS Wakeup through EXTI line interrupt                */
+/*
+ * USB On-The-Go FS Wakeup through EXTI line interrupt
+ */
 void OTG_FS_WKUP_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* TIM8 Break interrupt and TIM12 global interrupt                    */
+/*
+ * TIM8 Break interrupt and TIM12 global interrupt
+ */
 void TIM8_BRK_TIM12_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* TIM8 Update interrupt and TIM13 global interrupt                   */
+/*
+ * TIM8 Update interrupt and TIM13 global interrupt
+ */
 void TIM8_UP_TIM13_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* TIM8 Trigger and Commutation interrupts and TIM14 global interrupt */
+/*
+ * TIM8 Trigger and Commutation interrupts and TIM14 global interrupt
+ */
 void TIM8_TRG_COM_TIM14_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* TIM8 Capture Compare interrupt                                     */
+/*
+ * TIM8 Capture Compare interrupt
+ */
 void TIM8_CC_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* DMA1 Stream7 global interrupt                                      */
+/*
+ * DMA1 Stream7 global interrupt
+ */
 void DMA1_Stream7_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* FMC global interrupt                                               */
+/*
+ * FMC global interrupt
+ */
 void FMC_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* SDIO global interrupt                                              */
+/*
+ * SDIO global interrupt
+ */
 void SDIO_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* TIM5 global interrupt                                              */
+/*
+ * TIM5 global interrupt
+ */
 void TIM5_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* SPI3 global interrupt                                              */
+/*
+ * SPI3 global interrupt
+ */
 void SPI3_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* UART4 global interrupt                                             */
+/*
+ * UART4 global interrupt
+ */
 void UART4_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* UART5 global interrupt                                             */
+/*
+ * UART5 global interrupt
+ */
 void UART5_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* TIM6 global interrupt, DAC1 and DAC2 underrun error interrupt      */
+/*
+ * TIM6 global interrupt, DAC1 and DAC2 underrun error interrupt
+ */
 void TIM6_DAC_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* TIM7 global interrupt                                              */
+/*
+ * TIM7 global interrupt
+ */
 void TIM7_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* DMA2 Stream0 global interrupt                                      */
+/*
+ * DMA2 Stream0 global interrupt
+ */
 void DMA2_Stream0_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* DMA2 Stream1 global interrupt                                      */
+/*
+ * DMA2 Stream1 global interrupt
+ */
 void DMA2_Stream1_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* DMA2 Stream2 global interrupt                                      */
+/*
+ * DMA2 Stream2 global interrupt
+ */
 void DMA2_Stream2_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* DMA2 Stream3 global interrupt                                      */
+/*
+ * DMA2 Stream3 global interrupt
+ */
 void DMA2_Stream3_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* DMA2 Stream4 global interrupt                                      */
+/*
+ * DMA2 Stream4 global interrupt
+ */
 void DMA2_Stream4_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* CAN2 TX interrupts                                                 */
+/*
+ * CAN2 TX interrupts
+ */
 void CAN2_TX_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* CAN2 RX0 interrupts                                                */
+/*
+ * CAN2 RX0 interrupts
+ */
 void CAN2_RX0_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* CAN2 RX1 interrupts                                                */
+/*
+ * CAN2 RX1 interrupts
+ */
 void CAN2_RX1_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* CAN2 SCE interrupt                                                 */
+/*
+ * CAN2 SCE interrupt
+ */
 void CAN2_SCE_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* USB On The Go FS global interrupt                                  */
+/*
+ * USB On The Go FS global interrupt
+ */
 void OTG_FS_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* DMA2 Stream5 global interrupt                                      */
+/*
+ * DMA2 Stream5 global interrupt
+ */
 void DMA2_Stream5_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* DMA2 Stream6 global interrupt                                      */
+/*
+ * DMA2 Stream6 global interrupt
+ */
 void DMA2_Stream6_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* DMA2 Stream7 global interrupt                                      */
+/*
+ * DMA2 Stream7 global interrupt
+ */
 void DMA2_Stream7_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* USART6 global interrupt                                            */
+/*
+ * USART6 global interrupt
+ */
 void USART6_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* I2C3 event interrupt                                               */
+/*
+ * I2C3 event interrupt
+ */
 void I2C3_EV_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* I2C3 error interrupt                                               */
+/*
+ * I2C3 error interrupt
+ */
 void I2C3_ER_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* USB On The Go HS End Point 1 Out                                   */
+/*
+ * USB On The Go HS End Point 1 Out
+ */
 void OTG_HS_EP1_OUT_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* USB On The Go HS End Point 1 In                                    */
+/*
+ * USB On The Go HS End Point 1 In
+ */
 void OTG_HS_EP1_IN_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* USB On The Go HS Wakeup                                            */
+/*
+ * USB On The Go HS Wakeup
+ */
 void OTG_HS_WKUP_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* USB On The Go HS global interrupt                                  */
+/*
+ * USB On The Go HS global interrupt
+ */
 void OTG_HS_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* DCMI global interrupt                                              */
+/*
+ * DCMI global interrupt
+ */
 void DCMI_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* Floating point unit interrupt                                      */
+/*
+ * Floating point unit interrupt
+ */
 void FPU_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* SPI 4 global interrupt                                             */
+/*
+ * SPI 4 global interrupt
+ */
 void SPI4_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* SAI1 global interrupt                                              */
+/*
+ * SAI1 global interrupt
+ */
 void SAI1_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* SAI2 global interrupt                                              */
+/*
+ * SAI2 global interrupt
+ */
 void SAI2_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* QuadSPI global interrupt                                           */
+/*
+ * QuadSPI global interrupt
+ */
 void QuadSPI_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* HDMI-CEC global interrupt                                          */
+/*
+ * HDMI-CEC global interrupt
+ */
 void HDMI_CEC_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* SPDIF-Rx global interrupt                                          */
+/*
+ * SPDIF-Rx global interrupt
+ */
 void SPDIF_Rx_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* FMPI2C1 event interrupt                                            */
+/*
+ * FMPI2C1 event interrupt
+ */
 void FMPI2C1_IRQHandler() __attribute__((weak, alias("Default_Handler")));
-/* FMPI2C1 error interrupt                                            */
+/*
+ * FMPI2C1 error interrupt
+ */
 void FMPI2C1_error_IRQHandler() __attribute__((weak, alias("Default_Handler")));
 
 /**
@@ -313,6 +485,13 @@ uint32_t vectors[] __attribute__((section(".isr_vector"))) = {
 
 void Reset_Handler()
 {
+    // copy .data section to SRAM
+
+    // initialize the .bss section to zero in SRAM
+
+    // call init function of std. library
+
+    // call main()
 }
 
 void Default_Handler()
