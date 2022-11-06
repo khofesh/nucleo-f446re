@@ -276,3 +276,28 @@ you have to follow the vector table
 ![vector table part 3](../images/Screenshot_2022-11-06_19-43-11.png)
 ![vector table part 4](../images/Screenshot_2022-11-06_19-43-41.png)
 ![vector table part 5](../images/Screenshot_2022-11-06_19-44-12.png)
+
+check `.isr_vector`
+
+```shell
+[fahmad@ryzen FromScratch]$  make dump-startup
+arm-none-eabi-objdump -h stm32_startup.o
+
+stm32_startup.o:     file format elf32-littlearm
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000000c  00000000  00000000  00000034  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00000000  00000000  00000040  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000000  00000000  00000000  00000040  2**0
+                  ALLOC
+  3 .isr_vector   00000008  00000000  00000000  00000040  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, DATA
+  4 .comment      00000024  00000000  00000000  00000048  2**0
+                  CONTENTS, READONLY
+  5 .ARM.attributes 0000002e  00000000  00000000  0000006c  2**0
+                  CONTENTS, READONLY
+
+```
