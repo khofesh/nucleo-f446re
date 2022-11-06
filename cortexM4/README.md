@@ -301,3 +301,28 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
 
 ```
+
+## linker script
+
+https://marketplace.visualstudio.com/items?itemName=ZixuanWang.linkerscript
+
+In STM32F446xx, the main system consists of 32-bit multilayer AHB bus matrix that
+interconnects:
+
+Seven masters:
+
+- Cortex®-M4 with FPU core I-bus, D-bus and S-bus
+- DMA1 memory bus
+- DMA2 memory bus
+- DMA2 peripheral bus
+- USB OTG HS DMA bus
+
+Seven slaves:
+
+- Internal Flash memory ICode bus
+- Internal Flash memory DCode bus
+- Main internal SRAM1 (112 KB)
+- Auxiliary internal SRAM2 (16 KB)
+- AHB1 peripherals including AHB to APB bridges and APB peripherals
+- AHB2 peripherals
+- FMC / QUADSPI

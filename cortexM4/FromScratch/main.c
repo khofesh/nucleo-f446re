@@ -23,18 +23,19 @@
 #include "led.h"
 
 #if !defined(__SOFT_FP__) && defined(__ARM_FP)
-  #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
+#warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
 
 uint32_t current_task = 1; // task1 is running
 uint32_t g_tick_count = 0;
 
-typedef struct {
+typedef struct
+{
 	uint32_t psp_value;
 	uint32_t block_count;
 	uint32_t current_state;
 	void (*task_handler)(void);
-}TCB_t;
+} TCB_t;
 
 TCB_t user_tasks[MAX_TASKS];
 
@@ -54,15 +55,16 @@ int main(void)
 
 	task1_handler();
 
-    /* Loop forever */
-	for(;;);
+	/* Loop forever */
+	for (;;)
+		;
 }
 
 void task1_handler()
 {
-	while(1)
+	while (1)
 	{
-		printf("task1\n");
+		// printf("task1\n");
 		led_on(LED_GREEN);
 		task_delay(1000);
 		led_off(LED_GREEN);
@@ -72,9 +74,9 @@ void task1_handler()
 
 void task2_handler()
 {
-	while(1)
+	while (1)
 	{
-		printf("task2\n");
+		// printf("task2\n");
 		led_on(LED_ORANGE);
 		task_delay(500);
 		led_off(LED_ORANGE);
@@ -84,9 +86,9 @@ void task2_handler()
 
 void task3_handler()
 {
-	while(1)
+	while (1)
 	{
-		printf("task3\n");
+		// printf("task3\n");
 		led_on(LED_BLUE);
 		task_delay(250);
 		led_off(LED_BLUE);
@@ -96,9 +98,9 @@ void task3_handler()
 
 void task4_handler()
 {
-	while(1)
+	while (1)
 	{
-		printf("task4\n");
+		// printf("task4\n");
 		led_on(LED_ORANGE);
 		task_delay(125);
 		led_off(LED_ORANGE);
@@ -113,7 +115,7 @@ void init_systick_timer(uint32_t tick_hz)
 	// SYST_CSR
 	uint32_t *pSCSR = (uint32_t *)0xE000E010;
 
-	uint32_t count_value = (SYSTICK_TIMER_CLOCK/tick_hz) - 1;
+	uint32_t count_value = (SYSTICK_TIMER_CLOCK / tick_hz) - 1;
 
 	// clear the value of SVR
 	*pSRVR &= ~(0x00FFFFFFFF);
@@ -132,7 +134,8 @@ void init_systick_timer(uint32_t tick_hz)
 
 __attribute__((naked)) void init_scheduler_stack(uint32_t sched_top_of_stack)
 {
-	__asm volatile("MSR MSP,%0"::"r"(sched_top_of_stack):);
+	__asm volatile("MSR MSP,%0" ::"r"(sched_top_of_stack)
+				   :);
 	__asm volatile("BX LR");
 }
 
@@ -157,15 +160,15 @@ void init_tasks_stack()
 
 	uint32_t *pPSP;
 
-	for(int i = 0; i < MAX_TASKS; i++)
+	for (int i = 0; i < MAX_TASKS; i++)
 	{
-		pPSP = (uint32_t*) user_tasks[i].psp_value;
+		pPSP = (uint32_t *)user_tasks[i].psp_value;
 
 		pPSP--;
 		*pPSP = DUMMY_XPSR; // 0x01000000
 
 		pPSP--; // PC
-		*pPSP = (uint32_t) user_tasks[i].task_handler;
+		*pPSP = (uint32_t)user_tasks[i].task_handler;
 
 		pPSP--; // LR
 		*pPSP = 0xFFFFFFFD;
@@ -193,7 +196,7 @@ __attribute__((naked)) void switch_sp_to_psp()
 	__asm volatile("PUSH {LR}"); // preserve LR which connect the main()
 	__asm volatile("BL get_psp_value");
 	__asm volatile("MSR PSP,R0"); // initialize PSP
-	__asm volatile("POP {LR}"); // pops back LR value
+	__asm volatile("POP {LR}");	  // pops back LR value
 
 	// change SP to PSP using CONTROL register
 	__asm volatile("MOV R0,#0X02");
@@ -205,7 +208,7 @@ void enable_processor_faults()
 {
 	// enable all configurable exceptions
 	// usage fault, memManage fault and bus fault
-	uint32_t *pSHCSR = (uint32_t*)0xE000ED24;
+	uint32_t *pSHCSR = (uint32_t *)0xE000ED24;
 
 	// enable 18, 17, and 16 bit position
 	*pSHCSR |= (1 << 16); // MEMFAULTENA
@@ -215,20 +218,23 @@ void enable_processor_faults()
 
 void HardFault_Handler()
 {
-	printf("exception: HardFault\n");
-	while(1);
+	// printf("exception: HardFault\n");
+	while (1)
+		;
 }
 
 void MemManage_Handler()
 {
-	printf("exception: MemManage\n");
-	while(1);
+	// printf("exception: MemManage\n");
+	while (1)
+		;
 }
 
 void BusFault_Handler()
 {
-	printf("exception: BusFault\n");
-	while(1);
+	// printf("exception: BusFault\n");
+	while (1)
+		;
 }
 
 void save_psp_value(uint32_t current_psp_value)
@@ -260,7 +266,7 @@ void update_next_task()
 
 void schedule()
 {
-	uint32_t *pICSR = (uint32_t*)0xE000ED04;
+	uint32_t *pICSR = (uint32_t *)0xE000ED04;
 
 	// pend the pendsv exception
 	*pICSR |= (1 << 28);
@@ -284,7 +290,8 @@ void task_delay(uint32_t tick_count)
 
 void idle_task()
 {
-	while(1);
+	while (1)
+		;
 }
 
 void update_global_tick_count()
@@ -294,7 +301,7 @@ void update_global_tick_count()
 
 void unblock_tasks()
 {
-	for(int i = 1; i < MAX_TASKS; i++)
+	for (int i = 1; i < MAX_TASKS; i++)
 	{
 		if (user_tasks[i].current_state != TASK_READY_STATE)
 		{
@@ -338,7 +345,7 @@ __attribute__((naked)) void PendSV_Handler()
 
 void SysTick_Handler()
 {
-	uint32_t *pICSR = (uint32_t*)0xE000ED04;
+	uint32_t *pICSR = (uint32_t *)0xE000ED04;
 
 	update_global_tick_count();
 	unblock_tasks();
@@ -346,4 +353,3 @@ void SysTick_Handler()
 	// pend the pendsv exception
 	*pICSR |= (1 << 28);
 }
-
