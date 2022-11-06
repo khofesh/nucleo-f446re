@@ -495,7 +495,7 @@ uint32_t vectors[] __attribute__((section(".isr_vector"))) = {
 void Reset_Handler()
 {
     // copy .data section to SRAM
-    uint32_t size = &_edata - &_sdata;
+    uint32_t size = (uint32_t)&_edata - (uint32_t)&_sdata;
     uint32_t *pDestination = (uint32_t *)&_sdata; // ram
     uint32_t *pSource = (uint32_t *)&_etext;      // flash
 
@@ -505,7 +505,7 @@ void Reset_Handler()
     }
 
     // initialize the .bss section to zero in RAM
-    size = &_ebss - &_sbss;
+    size = (uint32_t)&_ebss - (uint32_t)&_sbss;
 
     pDestination = (uint32_t *)&_sbss;
 

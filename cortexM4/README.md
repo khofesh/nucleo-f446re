@@ -383,6 +383,65 @@ wrote 16384 bytes from file final.elf in 0.520421s (30.744 KiB/s)
 
 ```
 
+more openocd command
+
+```shell
+(gdb) target remote localhost:3333
+Remote debugging using localhost:3333
+warning: No executable has been specified and target does not support
+determining executable automatically.  Try using the "file" command.
+0x080006c0 in ?? ()
+(gdb) monitor reset init
+Unable to match requested speed 2000 kHz, using 1800 kHz
+Unable to match requested speed 2000 kHz, using 1800 kHz
+target halted due to debug-request, current mode: Thread
+xPSR: 0x01000000 pc: 0x08000790 msp: 0x20020000
+Unable to match requested speed 8000 kHz, using 4000 kHz
+Unable to match requested speed 8000 kHz, using 4000 kHz
+(gdb) monitor flash write_image erase final.elf
+auto erase enabled
+wrote 16384 bytes from file final.elf in 0.524344s (30.514 KiB/s)
+
+(gdb) monitor reset
+Unable to match requested speed 2000 kHz, using 1800 kHz
+Unable to match requested speed 2000 kHz, using 1800 kHz
+(gdb) monitor halt
+target halted due to debug-request, current mode: Thread
+xPSR: 0x01000000 pc: 0x080006c0 psp: 0x2001ebfc
+(gdb) monitor mdw 0x0000000020000000 4
+0x20000000: 00000000 00001386 2001ebb8 00000000
+
+(gdb) monitor bp 0x00000000080002ec 2hw
+Invalid command argument
+length option value ('2hw') is not valid
+(gdb) monitor bp 0x00000000080002ec 2 hw
+breakpoint set at 0x080002ec
+
+(gdb) monitor resume
+(gdb) monitor reset
+Unable to match requested speed 2000 kHz, using 1800 kHz
+Unable to match requested speed 2000 kHz, using 1800 kHz
+target halted due to breakpoint, current mode: Thread
+xPSR: 0x01000000 pc: 0x080002ec psp: 0x2001ffc0
+(gdb) monitor mdw 0x0000000020000000 4
+0x20000000: 00000001 00000000 2001ebc0 00000000
+
+(gdb) monitor rbp 0x080002ec
+(gdb) monitor bp
+(gdb) monitor bp 0x0000000008000310 2 hw
+breakpoint set at 0x08000310
+
+(gdb) monitor reset
+Unable to match requested speed 2000 kHz, using 1800 kHz
+Unable to match requested speed 2000 kHz, using 1800 kHz
+target halted due to breakpoint, current mode: Thread
+xPSR: 0x01000000 pc: 0x08000310 psp: 0x2001fc00
+(gdb) monitor mdw 0x0000000020000000 4
+0x20000000: 00000002 00000000 2001ebc0 00000000
+
+(gdb)
+```
+
 ### gdb multiarch problem on fedora references
 
 - https://www.reddit.com/r/Fedora/comments/x9wlyw/gdbmultiarch_for_cortex_mx/
@@ -390,4 +449,8 @@ wrote 16384 bytes from file final.elf in 0.520421s (30.744 KiB/s)
 - https://www.mail-archive.com/package-review@lists.fedoraproject.org/msg411106.html
 - https://docs.rust-embedded.org/book/intro/install/linux.html
 - https://wiki.archlinux.org/title/Toolbox
--
+
+## using Putty
+
+![putty config](../images/Screenshot_2022-11-07_00-26-23.png)
+![some command](../images/Screenshot_2022-11-07_00-29-05.png)
