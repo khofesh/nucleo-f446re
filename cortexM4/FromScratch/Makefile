@@ -2,7 +2,7 @@ CC = arm-none-eabi-gcc
 MACHINE = cortex-m4
 CFLAGS = -c -mcpu=$(MACHINE) -mthumb -std=gnu11 -Wall -O0
 OBJDUMP = arm-none-eabi-objdump
-LDFLAGS = -nostdlib -T stm32_ls.ld
+LDFLAGS = -nostdlib -T stm32_ls.ld -Wl,-Map=final.map
 
 all: main.o led.o stm32_startup.o final.elf
 
