@@ -201,3 +201,45 @@ makefile symbols
 $^ # denotes dependency
 $@ # denotes target
 ```
+
+## Relocatable object files
+
+dump the content of the object file
+
+```shell
+arm-none-eabi-objdump -h main.o
+
+main.o:     file format elf32-littlearm
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000504  00000000  00000000  00000034  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  1 .data         00000004  00000000  00000000  00000538  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000054  00000000  00000000  0000053c  2**2
+                  ALLOC
+  3 .rodata       00000064  00000000  00000000  0000053c  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  4 .comment      00000024  00000000  00000000  000005a0  2**0
+                  CONTENTS, READONLY
+  5 .ARM.attributes 0000002e  00000000  00000000  000005c4  2**0
+                  CONTENTS, READONLY
+
+```
+
+display assembler contents of executable sections
+
+```shell
+arm-none-eabi-objdump -d main.o > main.log
+```
+
+display the full contents of all sections requested
+
+```shell
+arm-none-eabi-objdump -s main.o
+```
+
+```shell
+arm-none-eabi-objdump -D main.o > main.log
+```
