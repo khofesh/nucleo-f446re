@@ -27,5 +27,8 @@ led.o: led.c
 stm32_startup.o: stm32_startup.c
 	$(CC) $(CFLAGS) $^ -o $@
 
+flash:	
+	openocd -f /home/fahmad/GitHub/OpenOCD/tcl/board/st_nucleo_f4.cfg
+
 clean:
 	rm -rf *.o *elf

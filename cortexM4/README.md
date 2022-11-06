@@ -326,3 +326,68 @@ Seven slaves:
 - AHB1 peripherals including AHB to APB bridges and APB peripherals
 - AHB2 peripherals
 - FMC / QUADSPI
+
+## Problem with OpenOCD and STM32 devices
+
+https://stackoverflow.com/questions/71608471/unable-to-start-debug-session-with-openocd-clion
+
+INSTALLING THE STMicroelectronics version of OpenOCD
+
+```shell
+git clone https://github.com/STMicroelectronics/OpenOCD.git
+./bootstrap
+./configure --enable-stlink
+make
+sudo make install
+```
+
+change dir to FromScratch folder and run using the configuration from the github folder above
+
+```shell
+openocd -f /home/fahmad/GitHub/OpenOCD/tcl/board/st_nucleo_f4.cfg
+```
+
+## arm-none-eabi-gdb doesn't exist on Fedora
+
+use container (toolbox container) https://containertoolbx.org/install/
+
+```shell
+toolbox create -i docker.io/akdev1l/ubuntu-toolbox:22.04
+toolbox enter ubuntu-toolbox-22.04
+sudo apt install gdb-arm-none-eabi
+```
+
+cd to the/dir/nucleo-f446re/cortexM4/FromScratch
+
+```shell
+⬢[fahmad@toolbox FromScratch]$ gdb-multiarch
+GNU gdb (Ubuntu 12.0.90-0ubuntu1) 12.0.90
+
+(gdb) target remote localhost:3333
+Remote debugging using localhost:3333
+warning: No executable has been specified and target does not support
+determining executable automatically.  Try using the "file" command.
+0xfffffffe in ?? ()
+(gdb) monitor reset init
+Unable to match requested speed 2000 kHz, using 1800 kHz
+Unable to match requested speed 2000 kHz, using 1800 kHz
+target halted due to debug-request, current mode: Thread
+xPSR: 0x01000000 pc: 0xfffffffe msp: 0xfffffffc
+Unable to match requested speed 8000 kHz, using 4000 kHz
+Unable to match requested speed 8000 kHz, using 4000 kHz
+(gdb) monitor flash write_image erase final.elf
+auto erase enabled
+wrote 16384 bytes from file final.elf in 0.520421s (30.744 KiB/s)
+
+(gdb)
+
+```
+
+### gdb multiarch problem on fedora references
+
+- https://www.reddit.com/r/Fedora/comments/x9wlyw/gdbmultiarch_for_cortex_mx/
+- https://www.reddit.com/r/arm/comments/rskgrt/help_getting_armnoneeabigdb_to_work_on_fedora_35/
+- https://www.mail-archive.com/package-review@lists.fedoraproject.org/msg411106.html
+- https://docs.rust-embedded.org/book/intro/install/linux.html
+- https://wiki.archlinux.org/title/Toolbox
+-
