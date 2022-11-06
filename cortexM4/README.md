@@ -134,3 +134,70 @@ remember to which register we store argument/result
 
 AHB1PERIPH_BASE = 0x40020000
 GPIOA_BASE = 0x40020000 + 0x0000 = 0x40020000
+
+# FromScratch
+
+https://developer.arm.com/downloads/-/gnu-rm
+
+https://gcc.gnu.org/onlinedocs/gcc-9.3.0/gcc/
+
+https://gcc.gnu.org/onlinedocs/gcc-9.3.0/gcc/ARM-Options.html#ARM-Options
+
+options: https://gcc.gnu.org/onlinedocs/gcc-9.3.0/gcc/Overall-Options.html#Overall-Options
+
+compiler, link, assembler
+
+```shell
+arm-none-eabi-gcc
+```
+
+linker
+
+```shell
+arm-none-eabi-ld
+```
+
+elf file analyzer
+
+```
+arm-none-eabi-nm
+arm-none-eabi-objdump
+arm-none-eabi-readelf
+```
+
+assembler
+
+```shell
+arm-none-eabi-as
+```
+
+format converter
+
+```shell
+arm-none-eabi-objcopy
+```
+
+![process](../images/Screenshot_2022-11-06_16-57-06.png)
+source:fastbitlab.com
+
+![process 2](../images/Screenshot_2022-11-06_16-58-35.png)
+source:fastbitlab.com
+
+Compile or assemble the source files, but do not link.
+
+```shell
+arm-none-eabi-gcc -c -mcpu=cortex-m4 -mthumb main.c -o main.o
+```
+
+Stop after the stage of compilation proper; do not assemble.
+
+```shell
+arm-none-eabi-gcc -S -mcpu=cortex-m4 -mthumb main.c -o main.s
+```
+
+makefile symbols
+
+```
+$^ # denotes dependency
+$@ # denotes target
+```
