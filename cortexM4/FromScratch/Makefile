@@ -2,7 +2,7 @@ CC = arm-none-eabi-gcc
 MACHINE = cortex-m4
 CFLAGS = -c -mcpu=$(MACHINE) -mthumb -mfloat-abi=soft -std=gnu11 -Wall -O0
 OBJDUMP = arm-none-eabi-objdump
-# LDFLAGS = -mcpu=$(MACHINE) -mthumb -mfloat-abi=soft --specs=nano.specs -T stm32_ls.ld -Wl,-Map=final.map
+LDFLAGS = -mcpu=$(MACHINE) -mthumb -mfloat-abi=soft --specs=nano.specs -T stm32_ls.ld -Wl,-Map=final.map
 # semi-hosting
 LDFLAGS_SH = -mcpu=$(MACHINE) -mthumb -mfloat-abi=soft --specs=rdimon.specs -T stm32_ls.ld -Wl,-Map=final.map
 
