@@ -11,6 +11,10 @@ extern uint32_t _edata;
 extern uint32_t _sdata;
 extern uint32_t _ebss;
 extern uint32_t _sbss;
+extern uint32_t _la_data;
+
+// libc prototyp
+void __libc_init_array();
 
 // prototype of main
 int main(void);
@@ -497,7 +501,7 @@ void Reset_Handler()
     // copy .data section to SRAM
     uint32_t size = (uint32_t)&_edata - (uint32_t)&_sdata;
     uint32_t *pDestination = (uint32_t *)&_sdata; // ram
-    uint32_t *pSource = (uint32_t *)&_etext;      // flash
+    uint32_t *pSource = (uint32_t *)&_la_data;    // flash
 
     for (uint32_t i = 0; i < size; i++)
     {
@@ -515,6 +519,7 @@ void Reset_Handler()
     }
 
     // call init function of std. library
+    __libc_init_array();
 
     // call main()
     main();

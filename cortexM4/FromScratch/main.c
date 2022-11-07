@@ -49,6 +49,8 @@ int main(void)
 
 	init_scheduler_stack(SCHED_STACK_START);
 
+	printf("simple task scheduler\n");
+
 	init_tasks_stack();
 
 	led_init_all();
@@ -68,7 +70,7 @@ void task1_handler()
 {
 	while (1)
 	{
-		// printf("task1\n");
+		printf("task1\n");
 		led_on(LED_GREEN);
 		task_delay(1000);
 		led_off(LED_GREEN);
@@ -80,7 +82,7 @@ void task2_handler()
 {
 	while (1)
 	{
-		// printf("task2\n");
+		printf("task2\n");
 		led_on(LED_ORANGE);
 		task_delay(500);
 		led_off(LED_ORANGE);
@@ -92,7 +94,7 @@ void task3_handler()
 {
 	while (1)
 	{
-		// printf("task3\n");
+		printf("task3\n");
 		led_on(LED_BLUE);
 		task_delay(250);
 		led_off(LED_BLUE);
@@ -104,7 +106,7 @@ void task4_handler()
 {
 	while (1)
 	{
-		// printf("task4\n");
+		printf("task4\n");
 		led_on(LED_ORANGE);
 		task_delay(125);
 		led_off(LED_ORANGE);
@@ -222,21 +224,21 @@ void enable_processor_faults()
 
 void HardFault_Handler()
 {
-	// printf("exception: HardFault\n");
+	printf("exception: HardFault\n");
 	while (1)
 		;
 }
 
 void MemManage_Handler()
 {
-	// printf("exception: MemManage\n");
+	printf("exception: MemManage\n");
 	while (1)
 		;
 }
 
 void BusFault_Handler()
 {
-	// printf("exception: BusFault\n");
+	printf("exception: BusFault\n");
 	while (1)
 		;
 }

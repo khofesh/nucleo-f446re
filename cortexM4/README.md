@@ -478,3 +478,35 @@ to close session:
 - type `Ctrl + ]`
 - it changes the prompt to `telnet>`
 - type `close`
+
+## libc
+
+```shell
+[fahmad@ryzen FromScratch]$  telnet localhost 4444
+Trying ::1...
+telnet: connect to address ::1: Connection refused
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+Open On-Chip Debugger
+> reset init
+Unable to match requested speed 2000 kHz, using 1800 kHz
+Unable to match requested speed 2000 kHz, using 1800 kHz
+target halted due to debug-request, current mode: Thread
+xPSR: 0x01000000 pc: 0x080008e4 msp: 0x20020000
+Unable to match requested speed 8000 kHz, using 4000 kHz
+Unable to match requested speed 8000 kHz, using 4000 kHz
+> flash write_image erase final.elf
+device id = 0x10006421
+flash size = 512 kbytes
+auto erase enabled
+wrote 16384 bytes from file final.elf in 0.547161s (29.242 KiB/s)
+
+> reset
+Unable to match requested speed 2000 kHz, using 1800 kHz
+Unable to match requested speed 2000 kHz, using 1800 kHz
+> halt
+target halted due to debug-request, current mode: Thread
+xPSR: 0x01000000 pc: 0x08000814 psp: 0x2001ebfc
+>
+```
