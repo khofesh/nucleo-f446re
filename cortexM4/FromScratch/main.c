@@ -26,6 +26,9 @@
 #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
 
+// semi-hosting init function
+extern void initialise_monitor_handles();
+
 uint32_t current_task = 1; // task1 is running
 uint32_t g_tick_count = 0;
 
@@ -46,6 +49,8 @@ TCB_t user_tasks[MAX_TASKS];
 int main(void)
 {
 	enable_processor_faults();
+
+	initialise_monitor_handles();
 
 	init_scheduler_stack(SCHED_STACK_START);
 

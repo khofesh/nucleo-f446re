@@ -510,3 +510,98 @@ target halted due to debug-request, current mode: Thread
 xPSR: 0x01000000 pc: 0x08000814 psp: 0x2001ebfc
 >
 ```
+
+## semi-hosting
+
+telnet part
+
+```shell
+[fahmad@ryzen FromScratch]$  telnet localhost 4444
+Trying ::1...
+telnet: connect to address ::1: Connection refused
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+Open On-Chip Debugger
+> reset init
+Unable to match requested speed 2000 kHz, using 1800 kHz
+Unable to match requested speed 2000 kHz, using 1800 kHz
+target halted due to debug-request, current mode: Thread
+xPSR: 0x01000000 pc: 0x080008e4 msp: 0x20020000
+Unable to match requested speed 8000 kHz, using 4000 kHz
+Unable to match requested speed 8000 kHz, using 4000 kHz
+> flash write_image erase final_sh.elf
+device id = 0x10006421
+flash size = 512 kbytes
+auto erase enabled
+wrote 32768 bytes from file final_sh.elf in 0.968193s (33.051 KiB/s)
+
+> arm semihosting enable
+semihosting is enabled
+
+> reset
+Unable to match requested speed 2000 kHz, using 1800 kHz
+Unable to match requested speed 2000 kHz, using 1800 kHz
+> halt
+target halted due to debug-request, current mode: Thread
+xPSR: 0x01000000 pc: 0x080007a0 psp: 0x2001ebfc, semihosting
+> shutdown
+shutdown command invoked
+Connection closed by foreign host.
+```
+
+openocd part (truncated)
+
+```shell
+[fahmad@ryzen FromScratch]$  make flash
+openocd -f /home/fahmad/GitHub/OpenOCD/tcl/board/st_nucleo_f4.cfg
+Open On-Chip Debugger 0.11.0+dev-00454-gd3b71197b (2022-11-06-23:32) [https://github.com/STMicroelectronics/OpenOCD]
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+Info : The selected transport took over low-level target control. The results might differ compared to plain JTAG/SWD
+srst_only separate srst_nogate srst_open_drain connect_deassert_srst
+
+Info : Listening on port 6666 for tcl connections
+Info : Listening on port 4444 for telnet connections
+Info : clock speed 2000 kHz
+Info : STLINK V2J40M27 (API v2) VID:PID 0483:374B
+Info : Target voltage: 3.259960
+Info : stm32f4x.cpu: Cortex-M4 r0p1 processor detected
+Info : stm32f4x.cpu: target has 6 breakpoints, 4 watchpoints
+Info : starting gdb server for stm32f4x.cpu on 3333
+Info : Listening on port 3333 for gdb connections
+Info : accepting 'telnet' connection on tcp/4444
+Info : Unable to match requested speed 2000 kHz, using 1800 kHz
+Info : Unable to match requested speed 2000 kHz, using 1800 kHz
+target halted due to debug-request, current mode: Thread
+xPSR: 0x01000000 pc: 0x080008e4 msp: 0x20020000
+Info : Unable to match requested speed 8000 kHz, using 4000 kHz
+Info : Unable to match requested speed 8000 kHz, using 4000 kHz
+Info : device id = 0x10006421
+Info : flash size = 512 kbytes
+Info : Unable to match requested speed 2000 kHz, using 1800 kHz
+Info : Unable to match requested speed 2000 kHz, using 1800 kHz
+simple task scheduler
+task1
+task2
+task3
+task4
+task4
+task3
+task4
+task4
+task2
+task3
+task4
+task4
+task3
+task4
+task4
+
+target halted due to debug-request, current mode: Thread
+xPSR: 0x01000000 pc: 0x080007a0 psp: 0x2001ebfc, semihosting
+shutdown command invoked
+Info : dropped 'telnet' connection
+
+```
