@@ -139,3 +139,6 @@ Interrupt Set-pending Registers contains NVIC_ISPR0-NVIC_ISPR7 registers. Each r
 - https://github.com/cnoviello/mastering-stm32-2nd
 - https://leanpub.com/mastering-stm32-2nd
 - https://www.amazon.com/Joseph-Yiu/e/B001IQWINC/ref=sr_ntt_srch_lnk_2?qid=1443620939&sr=8-2-fkmr0
+- https://www.udemy.com/share/101rCk3@h6VIEb91dmd0NDr6RlJGG-Fzr2c7KKYor7UAgBj15f-Cs6ZDh6L9B2aWqXMeKfSQ/
+- https://www.udemy.com/share/101X3i3@rjXmCKUFlkt7bzjUuiH6TJxIJWmwE1CTM0rlJF2D349wt4IZZgGJuVQGxUDpUCtO/
+- https://www.udemy.com/share/101XJQ3@jUor6jCAyQHJHKSK0i7XJkGxA2LGn2In-wDvf1MdP7TN51VnLip-rMJQptw7PDhy/
