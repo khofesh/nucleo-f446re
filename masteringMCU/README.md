@@ -95,9 +95,7 @@ references: `rm0390-stm32f446xx-advanced-armbased-32bit-mcus-stmicroelectronics.
 
 # Clock tree
 
-## HSI measurements
-
-# sigrok, pulseview, sigrok-cli
+## sigrok, pulseview, sigrok-cli
 
 I'm using sparkfun USB Logic Analyzer, because saleae is very expensive.
 
@@ -108,11 +106,6 @@ install necessary softwares
 ```shell
 sudo dnf install sigrok-cli sigrok-firmware-fx2lafw pulseview
 ```
-
-sigrok URLs:
-
-- https://sigrok.org/wiki/Downloads
-- https://sigrok.org/wiki/PulseView#Download
 
 detect hardware
 
@@ -125,7 +118,13 @@ open pulseview and select `fx2lafw (generic driver for FX2 based LAs)`
 
 ![pulseview](../images/Screenshot_2022-11-18_21-44-02.png)
 
-# HSI measurement
+### sigrok URLs:
+
+- https://sigrok.org/wiki/Downloads
+- https://sigrok.org/wiki/PulseView#Download
+- https://sigrok.org/doc/pulseview/0.4.1/manual.html
+
+## HSI measurement
 
 usb logic analyzer \
 connect ch0 to D7/PA8 \
@@ -149,4 +148,6 @@ you'll get 8MHz
 
 <img src="../images/Screenshot_2022-11-18_23-11-17.png" alt="analysis two 8MHz" width="500"/>
 
-# HSE measurement
+> The sample rate you choose must at least be twice that of the highest frequency you want to capture - ideally 3 to 5 times as much so that you have some margin. That way, a jittering signal won’t ruin your measurements.
+
+## HSE measurement
