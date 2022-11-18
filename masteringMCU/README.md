@@ -97,7 +97,7 @@ references: `rm0390-stm32f446xx-advanced-armbased-32bit-mcus-stmicroelectronics.
 
 ## HSI measurements
 
-## sigrok, pulseview, sigrok-cli
+# sigrok, pulseview, sigrok-cli
 
 I'm using sparkfun USB Logic Analyzer, because saleae is very expensive.
 
@@ -124,3 +124,8 @@ Bus 005 Device 011: ID 0925:3881 Lakeview Research Saleae Logic
 open pulseview and select `fx2lafw (generic driver for FX2 based LAs)`
 
 ![pulseview](../images/Screenshot_2022-11-18_21-44-02.png)
+
+# HSI measurement
+
+debug `006HSIMeasurement` and hit `run` on pulseview
+![analysis](../images/Screenshot_2022-11-18_22-40-15.png)
