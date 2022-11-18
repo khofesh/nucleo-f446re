@@ -38,8 +38,8 @@ int main(void) {
 	*pRccCfgrReg &= ~(0x3 << 21); // clear 21 and 22 bit positions
 
 	// configure MCO1 prescaler
-	*pRccCfgrReg |= (1 << 25);
-	*pRccCfgrReg |= (1 << 26);
+//	*pRccCfgrReg |= (1 << 25);
+//	*pRccCfgrReg |= (1 << 26);
 
 	// 2. configure PA8 to AF0 mode to behave as MCO1 signal
 

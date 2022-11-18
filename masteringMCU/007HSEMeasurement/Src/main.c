@@ -21,11 +21,10 @@
 
 #define GPIOA_BASE_ADDR 0x40020000UL
 
-int main(void)
-{
+int main(void) {
 
-	uint32_t *pRccCrReg = (uint32_t *)RCC_CR_REG_ADDR;
-	uint32_t *pRccCfgrReg = (uint32_t *)RCC_CFGR_REG_ADDR;
+	uint32_t *pRccCrReg = (uint32_t*) RCC_CR_REG_ADDR;
+	uint32_t *pRccCfgrReg = (uint32_t*) RCC_CFGR_REG_ADDR;
 
 	// 1.Enable the HSE clock using HSEON bit (RCC_CR)
 	*pRccCrReg |= (1 << 16);
@@ -54,19 +53,18 @@ int main(void)
 	 */
 
 	// a ) Enable the peripheral clock for GPIOA peripheral
-
-	uint32_t *pRCCAhb1Enr = (uint32_t *)(RCC_BASE_ADDR + 0x30);
+	uint32_t *pRCCAhb1Enr = (uint32_t*) (RCC_BASE_ADDR + 0x30);
 	*pRCCAhb1Enr |= (1 << 0); // Enable GPIOA peripheral clock
 
 	// b ) Configure the mode of GPIOA pin 8 as alternate function mode
 
-	uint32_t *pGPIOAModeReg = (uint32_t *)(GPIOA_BASE_ADDR + 00);
+	uint32_t *pGPIOAModeReg = (uint32_t*) (GPIOA_BASE_ADDR + 00);
 	*pGPIOAModeReg &= ~(0x3 << 16); // clear
 	*pGPIOAModeReg |= (0x2 << 16);	// set
 
 	// c ) Configure the alternation function register to set the mode 0 for PA8
 
-	uint32_t *pGPIOAAltFunHighReg = (uint32_t *)(GPIOA_BASE_ADDR + 0x24);
+	uint32_t *pGPIOAAltFunHighReg = (uint32_t*) (GPIOA_BASE_ADDR + 0x24);
 	*pGPIOAAltFunHighReg &= ~(0xf << 0);
 
 	for (;;)

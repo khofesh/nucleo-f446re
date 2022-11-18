@@ -134,4 +134,19 @@ and GND to GND
 <img src="../images/photo1668786759.jpeg" alt="usb logic connected" width="500"/>
 
 debug `006HSIMeasurement` and hit `run` on pulseview
-![analysis](../images/Screenshot_2022-11-18_22-40-15.png)
+
+<img src="../images/Screenshot_2022-11-18_22-40-15.png" alt="analysis one 4MHz" width="500"/>
+
+in `main.c` of `006HSIMeasurement`, comment out the following lines
+
+```c
+	// configure MCO1 prescaler
+//	*pRccCfgrReg |= (1 << 25);
+//	*pRccCfgrReg |= (1 << 26);
+```
+
+you'll get 8MHz
+
+<img src="../images/Screenshot_2022-11-18_23-11-17.png" alt="analysis two 8MHz" width="500"/>
+
+# HSE measurement
