@@ -94,3 +94,33 @@ Three different clock sources can be used to drive the system clock (SYSCLK):
 references: `rm0390-stm32f446xx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf` page 117
 
 # Clock tree
+
+## HSI measurements
+
+## sigrok, pulseview, sigrok-cli
+
+I'm using sparkfun USB Logic Analyzer, because saleae is very expensive.
+
+https://learn.sparkfun.com/tutorials/using-the-usb-logic-analyzer-with-sigrok-pulseview/all
+
+install necessary softwares
+
+```shell
+sudo dnf install sigrok-cli sigrok-firmware-fx2lafw pulseview
+```
+
+sigrok URLs:
+
+- https://sigrok.org/wiki/Downloads
+- https://sigrok.org/wiki/PulseView#Download
+
+detect hardware
+
+```shell
+[fahmad@ryzen ~]$  lsusb | grep Saleae
+Bus 005 Device 011: ID 0925:3881 Lakeview Research Saleae Logic
+```
+
+open pulseview and select `fx2lafw (generic driver for FX2 based LAs)`
+
+![pulseview](../images/Screenshot_2022-11-18_21-44-02.png)
