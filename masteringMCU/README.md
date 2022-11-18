@@ -81,3 +81,16 @@ For simultaneous accesses to the 32-bit AHB-Lite bus, the arbitration order in d
 
 The system bus interface contains control logic to handle unaligned accesses, FPB remapped accesses,
 bit-band accesses, and pipelined instruction fetches.
+
+# Clocking system
+
+Three different clock sources can be used to drive the system clock (SYSCLK):
+
+- HSI (high speec internal) oscillator clock or RC oscillator (internal to the MCU)
+- HSE (high speec external) oscillator clock or crystal oscillator (external to the MCU) \
+  8 MHz
+- Two main PLL (Phase Locked Loop) clocks (internal to the MCU)
+
+references: `rm0390-stm32f446xx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf` page 117
+
+# Clock tree
