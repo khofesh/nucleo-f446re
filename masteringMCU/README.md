@@ -127,5 +127,11 @@ open pulseview and select `fx2lafw (generic driver for FX2 based LAs)`
 
 # HSI measurement
 
+usb logic analyzer \
+connect ch0 to D7/PA8 \
+and GND to GND
+
+<img src="../images/photo1668786759.jpeg" alt="usb logic connected" width="500"/>
+
 debug `006HSIMeasurement` and hit `run` on pulseview
 ![analysis](../images/Screenshot_2022-11-18_22-40-15.png)
