@@ -177,3 +177,41 @@ External interrupt/event controller block diagram
 3. The link between a GPIO port and the relevant EXTI line must be established using the SYSCFG_EXTICRX register.
 4. Configure the trigger detection (falling/rising/both) for relevant EX line (This is done via EXTI controller registers )
 5. Implement the handler to service the interrupt.
+
+# GPIO (General Purpose Input Output)
+
+open drain with internal pull up and open drain with external pull up
+
+![pull up](../images/Screenshot_2022-11-28_16-18-56.png)
+
+# GPIO programming structure
+
+## GPIO port mode register (GPIOx_MODER) (x = A..H)
+
+Address offset: 0x00
+
+### GPIO functional description
+
+Basic structure of a 5 V tolerant I/O port bit
+
+![Basic structure of a 5 V tolerant I/O port bit](../images/Screenshot_2022-11-28_18-25-44.png)
+
+## GPIO port output speed register (GPIOx_OSPEEDR) (x = A..H)
+
+Address offset: 0x08
+
+![I/O AC characteristics](../images/Screenshot_2022-11-28_19-33-18.png)
+
+check `stm32f446re.pdf` for the image above
+
+## GPIO port pull-up/pull-down register (GPIOx_PUPDR) (x = A..H)
+
+Address offset: 0x0C
+
+## GPIO port input data register (GPIOx_IDR) (x = A..H)
+
+Address offset: 0x10
+
+## GPIO port output data register (GPIOx_ODR) (x = A..H)
+
+Address offset: 0x14
