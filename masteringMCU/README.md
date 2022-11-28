@@ -215,3 +215,56 @@ Address offset: 0x10
 ## GPIO port output data register (GPIOx_ODR) (x = A..H)
 
 Address offset: 0x14
+
+# alternate functionality
+
+alternate function for GPIO port 'C'
+
+![alternate function](../images/Screenshot_2022-11-28_19-47-47.png)
+
+## GPIO alternate function low register (GPIOx_AFRL) (x = A..H)
+
+Address offset: 0x20
+
+![](../images/Screenshot_2022-11-28_19-56-38.png)
+
+## GPIO alternate function high register (GPIOx_AFRH) (x = A..H)
+
+Address offset: 0x24
+
+![](../images/Screenshot_2022-11-28_19-57-16.png)
+
+## example
+
+### 1
+
+find out the alternate functionally mode (AFx) and AFR (alternate function register) settings
+to make
+
+- PA0 as UART4_TX
+- PA1 as UART4_RX
+- PA10 as TIM1_CH3
+
+### 2
+
+Lets say you have to configure PB8 pin as I2C Functionality ? Which Alternate function Register will you modify ? What are the bit positions needs to modified with what value ?
+
+GPIOB_AFRH (high register) \
+Bit position: 0, 1, 2, 3 \
+value: 4
+
+### 3
+
+For STM32VGx to configure PC6 as TIM3 functionality, which alternate function register will modify? What are the bit positions that need to modified with what value?
+
+GPIOC_AFRL (log register) \
+bit position: 24, 25, 26, 27 \
+value: 2
+
+# GPIO peripheral clock (RCC)
+
+## RCC AHB1 peripheral clock enable register (RCC_AHB1ENR)
+
+Address offset: 0x30 \
+Reset value: 0x0000 0000 \
+Access: no wait state, word, half-word and byte access.
