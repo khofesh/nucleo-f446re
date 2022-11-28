@@ -157,3 +157,23 @@ you'll get 8MHz
 check reset handler address
 
 ![reset handler](../images/Screenshot_2022-11-28_12-19-25.png)
+
+# interrupts
+
+nucleo f446re design for the blue button
+
+![user blue button](../images/Screenshot_2022-11-28_13-09-00.png)
+
+External interrupt/event GPIO mapping
+![External interrupt/event GPIO mapping](../images/Screenshot_2022-11-28_13-11-00.png)
+
+External interrupt/event controller block diagram
+![External interrupt/event controller block diagram](../images/Screenshot_2022-11-28_14-25-55.png)
+
+## how does a button issue interrupt to the processor in STM32 ?
+
+1. The button is connected to a GPIO pin of the microcontroller
+2. The GPIO pin should be configured to input mode
+3. The link between a GPIO port and the relevant EXTI line must be established using the SYSCFG_EXTICRX register.
+4. Configure the trigger detection (falling/rising/both) for relevant EX line (This is done via EXTI controller registers )
+5. Implement the handler to service the interrupt.
