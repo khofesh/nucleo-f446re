@@ -151,3 +151,9 @@ you'll get 8MHz
 > The sample rate you choose must at least be twice that of the highest frequency you want to capture - ideally 3 to 5 times as much so that you have some margin. That way, a jittering signal won’t ruin your measurements.
 
 ## HSE measurement
+
+# vector table
+
+check reset handler address
+
+![reset handler](../images/Screenshot_2022-11-28_12-19-25.png)
