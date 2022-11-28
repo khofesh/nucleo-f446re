@@ -72,3 +72,6 @@ ctrlp.root
 [Rr]elease
 [Dd]ebug
 .launch
+
+# temp folder
+temp/
