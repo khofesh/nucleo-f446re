@@ -49,6 +49,7 @@
 #define GPIOF_BASEADDR (AHB1PERIPH_BASEADDR + 0x1400)
 #define GPIOG_BASEADDR (AHB1PERIPH_BASEADDR + 0x1800)
 #define GPIOH_BASEADDR (AHB1PERIPH_BASEADDR + 0x1C00)
+#define RCC_BASEADDR (AHB1PERIPH_BASEADDR + 0x3800)
 
 /**
  * base addresses of peripherals which are hanging on APB1 bus
@@ -197,5 +198,49 @@ typedef struct
 #define GPIOF ((GPIO_RegDef_t *)GPIOF_BASEADDR)
 #define GPIOG ((GPIO_RegDef_t *)GPIOG_BASEADDR)
 #define GPIOH ((GPIO_RegDef_t *)GPIOH_BASEADDR)
+
+#define RCC ((RCC_RegDef_t *)RCC_BASEADDR)
+
+/**
+ * clock enable macros for GPIOx peripherals
+ * see RM0390-*.pdf page 144
+ */
+
+// GPIOA peripheral clock enable
+#define GPIOA_PCLK_EN() (RCC->AHB1ENR |= (1 << 0))
+// GPIOB peripheral clock enable
+#define GPIOB_PCLK_EN() (RCC->AHB1ENR |= (1 << 1))
+// GPIOC peripheral clock enable
+#define GPIOC_PCLK_EN() (RCC->AHB1ENR |= (1 << 2))
+// GPIOD peripheral clock enable
+#define GPIOD_PCLK_EN() (RCC->AHB1ENR |= (1 << 3))
+// GPIOE peripheral clock enable
+#define GPIOE_PCLK_EN() (RCC->AHB1ENR |= (1 << 4))
+// GPIOF peripheral clock enable
+#define GPIOF_PCLK_EN() (RCC->AHB1ENR |= (1 << 5))
+// GPIOG peripheral clock enable
+#define GPIOG_PCLK_EN() (RCC->AHB1ENR |= (1 << 6))
+// GPIOH peripheral clock enable
+#define GPIOH_PCLK_EN() (RCC->AHB1ENR |= (1 << 7))
+
+/**
+ * clock enable macros for I2Cx peripherals
+ * see RM0390-*.pdf page 147
+ */
+
+// I2C1 peripheral clock enable
+#define I2C1_PCLK_EN() (RCC->APB1ENR |= (1 << 21))
+
+/**
+ * clock enable macros for SPIx peripherals
+ */
+
+/**
+ * clock enable macros for USARTx peripherals
+ */
+
+/**
+ * clock enable macros for SYSCFG peripherals
+ */
 
 #endif /* INC_STM32F446XX_H_ */
