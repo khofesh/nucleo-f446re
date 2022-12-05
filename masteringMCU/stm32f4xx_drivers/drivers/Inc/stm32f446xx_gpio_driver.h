@@ -19,10 +19,10 @@ typedef struct
 		This parameter can be any value of @ref GPIO_pins_define */
 	uint32_t GPIO_PinNumber;
 	/*!< Specifies the operating mode for the selected pins.
-		This parameter can be a value of @ref GPIO_mode_define */
+		This parameter can be a value of @ref GPIO_PIN_MODES */
 	uint32_t GPIO_PinMode;
 	/*!< Specifies the speed for the selected pins.
-		This parameter can be a value of @ref GPIO_speed_define */
+		This parameter can be a value of @ref GPIO_PIN_SPEED */
 	uint32_t GPIO_PinSpeed;
 	/*!< Specifies the Pull-up or Pull-Down activation for the selected pins.
 		This parameter can be a value of @ref GPIO_pull_define */
@@ -46,7 +46,29 @@ typedef struct
 } GPIO_Handle_t;
 
 /**
- * @brief GPIO pin possible modes
+ * @ref GPIO_pins_define
+ * GPIO pin numbers
+ */
+#define GPIO_PIN_NO_0 0
+#define GPIO_PIN_NO_1 1
+#define GPIO_PIN_NO_2 2
+#define GPIO_PIN_NO_3 3
+#define GPIO_PIN_NO_4 4
+#define GPIO_PIN_NO_5 5
+#define GPIO_PIN_NO_6 6
+#define GPIO_PIN_NO_7 7
+#define GPIO_PIN_NO_8 8
+#define GPIO_PIN_NO_9 9
+#define GPIO_PIN_NO_10 10
+#define GPIO_PIN_NO_11 11
+#define GPIO_PIN_NO_12 12
+#define GPIO_PIN_NO_13 13
+#define GPIO_PIN_NO_14 14
+#define GPIO_PIN_NO_15 15
+
+/**
+ * @ref GPIO_PIN_MODES
+ * GPIO pin possible modes
  * RM0390-*.pdf page 187
  * 00: Input (reset state)
  * 01: General purpose output mode
@@ -65,11 +87,39 @@ typedef struct
 #define GPIO_MODE_IT_RFT 6
 
 /**
- * @brief GPIO pin possible output
+ * GPIO pin possible output
+ * RM0390-*.pdf page 188
  * These bits are written by software to configure the output type of the I/O port.
  * 0: Output push-pull (reset state)
  * 1: Output open-drain
  */
+#define GPIO_OP_TYPE_PP 0
+#define GPIO_OP_TYPE_OD 1
+
+/**
+ * @ref GPIO_PIN_SPEED
+ * These bits are written by software to configure the I/O output speed.
+ * 00: Low speed
+ * 01: Medium speed
+ * 10: Fast speed
+ * 11: High speed
+ */
+#define GPIO_SPEED_LOW 0
+#define GPIO_SPEED_MEDIUM 1
+#define GPIO_SPEED_FAST 2
+#define GPIO_SPEED_HIGH 3
+
+/**
+ * @ref GPIO_pull_define
+ * These bits are written by software to configure the I/O pull-up or pull-down
+ * 00: No pull-up, pull-down
+ * 01: Pull-up
+ * 10: Pull-down
+ * 11: Reserved
+ */
+#define GPIO_NO_PUPD 0
+#define GPIO_PIN_PU 1
+#define GPIO_PIN_PD 2
 
 /*****************************************
  * APIs supported by this driver         *
@@ -78,19 +128,21 @@ typedef struct
 
 /**
  * Peripheral clock setup
- * EnOrDi - enable or disable
  */
+
 void GPIO_PeriClockControl(GPIO_RegDef_t *pGPIOx, uint32_t EnOrDi);
 
 /**
  * init and de-init
  */
+
 void GPIO_Init(GPIO_Handle_t *pGPIOHandle);
 void GPIO_DeInit(GPIO_RegDef_t *pGPIOx);
 
 /**
  * data read and write
  */
+
 uint32_t GPIO_ReadFromInputPin(GPIO_RegDef_t *pGPIOx, uint32_t PinNumber);
 uint16_t GPIO_ReadFromInputPort(GPIO_RegDef_t *pGPIOx);
 void GPIO_WriteToOutputPin(GPIO_RegDef_t *pGPIOx, uint32_t PinNumber, uint32_t Value);
