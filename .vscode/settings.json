@@ -3,7 +3,8 @@
     "*.yaml": "yaml",
     "tests.h": "c",
     "stddef.h": "c",
-    "algorithm": "c"
+    "algorithm": "c",
+    "compare": "c"
   },
   "C_Cpp.errorSquiggles": "Disabled"
 }
