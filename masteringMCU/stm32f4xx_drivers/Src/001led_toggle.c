@@ -26,6 +26,8 @@ int main(void)
 	GpioLed.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_OD;
 	GpioLed.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_PIN_PU;
 
+	// user blue button - PC13
+
 	GPIO_PeriClockControl(GPIOA, ENABLE);
 	GPIO_Init(&GpioLed);
 
