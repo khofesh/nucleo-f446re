@@ -189,13 +189,18 @@ void GPIO_DeInit(GPIO_RegDef_t *pGPIOx)
 
 /**
  * @brief
+ * see rm0390-*.pdf page 189
  *
  * @param pGPIOx
  * @param PinNumber
- * @return uint32_t
+ * @return 0 or 1
  */
-uint32_t GPIO_ReadFromInputPin(GPIO_RegDef_t *pGPIOx, uint32_t PinNumber)
+uint16_t GPIO_ReadFromInputPin(GPIO_RegDef_t *pGPIOx, uint16_t PinNumber)
 {
+    uint16_t value;
+    value = (uint16_t)(pGPIOx->IDR >> PinNumber & 0x00000001);
+
+    return value;
 }
 
 /**
@@ -206,6 +211,10 @@ uint32_t GPIO_ReadFromInputPin(GPIO_RegDef_t *pGPIOx, uint32_t PinNumber)
  */
 uint16_t GPIO_ReadFromInputPort(GPIO_RegDef_t *pGPIOx)
 {
+    uint16_t value;
+    value = (uint16_t)pGPIOx->IDR;
+
+    return value;
 }
 
 /**
@@ -217,6 +226,17 @@ uint16_t GPIO_ReadFromInputPort(GPIO_RegDef_t *pGPIOx)
  */
 void GPIO_WriteToOutputPin(GPIO_RegDef_t *pGPIOx, uint32_t PinNumber, uint32_t Value)
 {
+    if (Value == GPIO_PIN_SET)
+    {
+        /* write 1 to the output data register at the bit field corresponding to the
+        pin number */
+        pGPIOx->ODR |= (1 << PinNumber);
+    }
+    else
+    {
+        // write
+        pGPIOx->ODR &= ~(1 << PinNumber);
+    }
 }
 
 /**
@@ -227,6 +247,7 @@ void GPIO_WriteToOutputPin(GPIO_RegDef_t *pGPIOx, uint32_t PinNumber, uint32_t V
  */
 void GPIO_WriteToOutputPort(GPIO_RegDef_t *pGPIOx, uint16_t Value)
 {
+    pGPIOx->ODR = Value;
 }
 
 /**
@@ -237,6 +258,7 @@ void GPIO_WriteToOutputPort(GPIO_RegDef_t *pGPIOx, uint16_t Value)
  */
 void GPIO_ToggleOutputPin(GPIO_RegDef_t *pGPIOx, uint32_t PinNumber)
 {
+    pGPIOx->ODR ^= (1 << PinNumber);
 }
 
 /**
