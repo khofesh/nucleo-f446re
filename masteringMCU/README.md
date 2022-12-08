@@ -268,3 +268,13 @@ value: 2
 Address offset: 0x30 \
 Reset value: 0x0000 0000 \
 Access: no wait state, word, half-word and byte access.
+
+# GPIO pin interrupt configution
+
+1. pin must be in input configuration
+2. configure the edge trigger (RT, FT, RFT)
+3. enable interrupt delivery from peripheral to the processor (on peripheral side)
+4. identify the IRQ number on which the processor accepts the interrupt from that pin
+5. configure the IRQ priority for the identified IRQ number (processor side)
+6. enable interrupt reception on that IRQ number (processor side)
+7. implement IRQ handler

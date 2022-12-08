@@ -107,7 +107,41 @@ void GPIO_Init(GPIO_Handle_t *pGPIOHandle)
     }
     else
     {
-        /* code */
+        /* configure interrupt mode */
+        if (pGPIOHandle->GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_IT_FT)
+        {
+            // 1. configure the FTSR
+            EXTI->FTSR |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
+
+            // clear the corresponding RTSR bit
+            EXTI->RTSR &= ~(1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
+        }
+        else if (pGPIOHandle->GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_IT_RT)
+        {
+            // 1. configure the RTSR
+            EXTI->RTSR |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
+
+            // clear the corresponding RTSR bit
+            EXTI->FTSR &= ~(1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
+        }
+        else if (pGPIOHandle->GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_IT_RFT)
+        {
+            // 1. configure both FTSR and RTSR
+            EXTI->RTSR |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
+
+            // clear the corresponding RTSR bit
+            EXTI->FTSR |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
+        }
+
+        // 2. configure the GPIO post selection in SYSCFG_EXTICR
+        uint8_t temp1 = pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber / 4;
+        uint8_t temp2 = pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber % 4;
+        uint8_t portCode = GPIOB_BASEADDR_TO_CODE(pGPIOHandle->pGPIOx);
+        SYSCFG_PCLK_EN();
+        SYSCFG->EXTICR[temp1] = portCode << (temp2 * 4);
+
+        // 3. enable the EXTI interrupt delivery using IMR (interrupt mask register)
+        EXTI->IMR |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
     }
 
     temp = 0;
@@ -263,13 +297,50 @@ void GPIO_ToggleOutputPin(GPIO_RegDef_t *pGPIOx, uint32_t PinNumber)
 
 /**
  * @brief
- *
+ * see Cortex-M4-devices-generic-user-guide.pdf page 219
+ * `4-2 Nested Vectored Interrupt Controller`
  * @param IRQNumber
  * @param IRQPriority
  * @param EnOrDi
  */
 void GPIO_IRQConfig(uint32_t IRQNumber, uint32_t IRQPriority, uint32_t EnOrDi)
 {
+    if (EnOrDi == ENABLE)
+    {
+        if (IRQNumber <= 31)
+        {
+            /* program ISER0 register */
+            *NVIC_ISER0 |= (1 << IRQNumber);
+        }
+        else if (IRQNumber > 31 && IRQNumber < 64)
+        {
+            /* program ISER1 register */
+            *NVIC_ISER1 |= (1 << IRQNumber % 32);
+        }
+        else if (IRQNumber >= 64 && IRQNumber < 96)
+        {
+            /* program ISER2 register */
+            *NVIC_ISER2 |= (1 << IRQNumber % 64);
+        }
+    }
+    else
+    {
+        if (IRQNumber <= 31)
+        {
+            /* program ICER0 register */
+            *NVIC_ICER0 |= (1 << IRQNumber);
+        }
+        else if (IRQNumber > 31 && IRQNumber < 64)
+        {
+            /* program ICER1 register */
+            *NVIC_ICER1 |= (1 << IRQNumber % 32);
+        }
+        else if (IRQNumber >= 64 && IRQNumber < 96)
+        {
+            /* program ICER2 register */
+            *NVIC_ICER2 |= (1 << IRQNumber % 64);
+        }
+    }
 }
 
 /**
