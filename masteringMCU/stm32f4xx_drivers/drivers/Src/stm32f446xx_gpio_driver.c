@@ -300,10 +300,9 @@ void GPIO_ToggleOutputPin(GPIO_RegDef_t *pGPIOx, uint32_t PinNumber)
  * see Cortex-M4-devices-generic-user-guide.pdf page 219
  * `4-2 Nested Vectored Interrupt Controller`
  * @param IRQNumber
- * @param IRQPriority
- * @param EnOrDi
+ * @param EnOrDi enable or disable
  */
-void GPIO_IRQConfig(uint32_t IRQNumber, uint32_t IRQPriority, uint32_t EnOrDi)
+void GPIO_IRQInterruptConfig(uint32_t IRQNumber, uint32_t EnOrDi)
 {
     if (EnOrDi == ENABLE)
     {
@@ -344,10 +343,32 @@ void GPIO_IRQConfig(uint32_t IRQNumber, uint32_t IRQPriority, uint32_t EnOrDi)
 }
 
 /**
+ * @brief change IRQ priority
+ * see Cortex-M4-devices-generic-user-guide.pdf page 223
+ * `4.2.7 Interrupt Priority Registers`
+ * @param IRQPriority
+ */
+void GPIO_IRQPriorityConfig(uint32_t IRQNumber, uint32_t IRQPriority)
+{
+    // 1. find out the IPR register
+    uint8_t iprx = IRQNumber / 4;
+    uint8_t iprx_section = IRQNumber % 4;
+
+    uint8_t shift_amount = (8 * iprx_section) + (8 - NO_PR_BITS_IMPLEMENTED);
+    *(NVIC_PR_BASE_ADDR + iprx * 4) |= (IRQPriority << (8 * shift_amount));
+}
+
+/**
  * @brief
  *
  * @param PinNumber
  */
 void GPIO_IRQHandler(uint32_t PinNumber)
 {
+    // clear the EXTi PR register corresponding to the pin number
+    if (EXTI->PR & (1 << PinNumber))
+    {
+        /* clear */
+        EXTI->PR |= (1 << PinNumber);
+    }
 }

@@ -19,24 +19,32 @@
  * see Cortex-M4-devices-generic-user-guide.pdf page 219
  * `4-2 Nested Vectored Interrupt Controller`
  */
-#define NVIC_ISER0 ((_vo uint32_t *)0xE000E100)
-#define NVIC_ISER1 ((_vo uint32_t *)0xE000E104)
-#define NVIC_ISER2 ((_vo uint32_t *)0xE000E108)
-#define NVIC_ISER3 ((_vo uint32_t *)0xE000E10C)
-#define NVIC_ISER4 ((_vo uint32_t *)0xE000E110)
-#define NVIC_ISER5 ((_vo uint32_t *)0xE000E114)
-#define NVIC_ISER6 ((_vo uint32_t *)0xE000E118)
+#define NVIC_ISER0 ((__vo uint32_t *)0xE000E100)
+#define NVIC_ISER1 ((__vo uint32_t *)0xE000E104)
+#define NVIC_ISER2 ((__vo uint32_t *)0xE000E108)
+#define NVIC_ISER3 ((__vo uint32_t *)0xE000E10C)
+#define NVIC_ISER4 ((__vo uint32_t *)0xE000E110)
+#define NVIC_ISER5 ((__vo uint32_t *)0xE000E114)
+#define NVIC_ISER6 ((__vo uint32_t *)0xE000E118)
 
 /**
  * @brief ARM Cortex Mx processor NVIC ICERx register addresses
  */
-#define NVIC_ICER0 ((_vo uint32_t *)0xE000E180)
-#define NVIC_ICER1 ((_vo uint32_t *)0xE000E184)
-#define NVIC_ICER2 ((_vo uint32_t *)0xE000E18C)
-#define NVIC_ICER3 ((_vo uint32_t *)0xE000E190)
-#define NVIC_ICER4 ((_vo uint32_t *)0xE000E194)
-#define NVIC_ICER5 ((_vo uint32_t *)0xE000E198)
-#define NVIC_ICER6 ((_vo uint32_t *)0xE000E119C)
+#define NVIC_ICER0 ((__vo uint32_t *)0xE000E180)
+#define NVIC_ICER1 ((__vo uint32_t *)0xE000E184)
+#define NVIC_ICER2 ((__vo uint32_t *)0xE000E18C)
+#define NVIC_ICER3 ((__vo uint32_t *)0xE000E190)
+#define NVIC_ICER4 ((__vo uint32_t *)0xE000E194)
+#define NVIC_ICER5 ((__vo uint32_t *)0xE000E198)
+#define NVIC_ICER6 ((__vo uint32_t *)0xE000E19C)
+
+/**
+ * @brief ARM Cortex Mx processor priority register address calculation
+ *
+ */
+#define NVIC_PR_BASE_ADDR ((__vo uint32_t *)0xE000E400)
+
+#define NO_PR_BITS_IMPLEMENTED 4
 
 /* END */
 

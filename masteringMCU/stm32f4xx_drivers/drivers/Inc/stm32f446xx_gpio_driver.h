@@ -153,7 +153,8 @@ void GPIO_ToggleOutputPin(GPIO_RegDef_t *pGPIOx, uint32_t PinNumber);
 /**
  * IRQ configuration and ISR handling
  */
-void GPIO_IRQConfig(uint32_t IRQNumber, uint32_t IRQPriority, uint32_t EnOrDi);
+void GPIO_IRQInterruptConfig(uint32_t IRQNumber, uint32_t EnOrDi);
+void GPIO_IRQPriorityConfig(uint32_t IRQNumber, uint32_t IRQPriority);
 void GPIO_IRQHandler(uint32_t PinNumber);
 
 #endif /* INC_STM32F446XX_GPIO_DRIVER_H_ */
