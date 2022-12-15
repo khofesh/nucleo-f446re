@@ -106,6 +106,7 @@
 
 #define NVIC_IRQ_PRI0 0
 #define NVIC_IRQ_PRI15 15
+#define NVIC_IRQ_PRI47 47
 
 /**
  * base addresses of peripherals which are hanging on APB1 bus
