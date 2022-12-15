@@ -88,6 +88,26 @@
 #define RCC_BASEADDR (AHB1PERIPH_BASEADDR + 0x3800)
 
 /**
+ * @brief IRQ (interrupt request) numbers of STM32F446xx
+ * rm0390-*.pdf page 240
+ */
+#define IRQ_NO_EXTI0 6
+#define IRQ_NO_EXTI1 7
+#define IRQ_NO_EXTI2 8
+#define IRQ_NO_EXTI3 9
+#define IRQ_NO_EXTI4 10
+#define IRQ_NO_EXTI9_5 23
+#define IRQ_NO_EXTI15_10 40
+
+/**
+ * @brief possible priority levels
+ *
+ */
+
+#define NVIC_IRQ_PRI0 0
+#define NVIC_IRQ_PRI15 15
+
+/**
  * base addresses of peripherals which are hanging on APB1 bus
  */
 #define I2C1_BASEADDR (APB1PERIPH_BASEADDR + 0x5400)
