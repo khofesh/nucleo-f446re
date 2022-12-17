@@ -48,11 +48,11 @@ typedef struct
  * @brief SPI_BusConfig
  */
 // SPI_BusConfig full-duplex
-#define SPI_BUF_CONFIG_FD 1
+#define SPI_BUS_CONFIG_FD 1
 // SPI_BusConfig half-duplex
-#define SPI_BUF_CONFIG_HD 2
+#define SPI_BUS_CONFIG_HD 2
 // SPI_BusConfig simplex - receive only
-#define SPI_BUF_CONFIG_SIMPLEX_RXONLY 3
+#define SPI_BUS_CONFIG_SIMPLEX_RXONLY 3
 
 /**
  * @brief SPI_SclkSpeed
@@ -110,6 +110,13 @@ typedef struct
 #define SPI_SSM_DI 0
 
 /**
+ * @brief SPI related status flags definitions
+ */
+#define SPI_TXE_FLAG (1 << SPI_SR_TXE)
+#define SPI_RXNE_FLAG (1 << SPI_SR_RXNE)
+#define SPI_BSY_FLAG (1 << SPI_SR_BSY)
+
+/**
  * @brief peripheral clock setup
  */
 void SPI_PeriClockControl(SPI_RegDef_t *pSPIx, uint8_t EnOrDi);
@@ -136,5 +143,7 @@ void SPI_IRQHandler(SPI_Handle_t *pHandle);
 /**
  * @brief other peripheral control APIs
  */
+void SPI_PeripheralControl(SPI_RegDef_t *pSPIx, uint8_t EnOrDi);
+void SPI_SSIConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi);
 
 #endif /* INC_STM32F446XX_SPI_DRIVER_H_ */

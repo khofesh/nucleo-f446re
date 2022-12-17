@@ -614,5 +614,79 @@ typedef enum
 #define RESET DISABLE
 #define GPIO_PIN_SET SET
 #define GPIO_PIN_RESET RESET
+#define FLAG_RESET RESET
+#define FLAG_SET SET
+
+/**********************************************
+ * Bit position definitions of SPI peripheral *
+ * see rm0390-*.pdf page 886                  *
+ **********************************************/
+
+// SPI_CR1 BIDIMODE bit position
+#define SPI_CR1_BIDIMODE 15
+// SPI_CR1 BIDIOE bit position
+#define SPI_CR1_BIDIOE 14
+// SPI_CR1 CRCEN bit position
+#define SPI_CR1_CRCEN 13
+// SPI_CR1 CRCNEXT bit position
+#define SPI_CR1_CRCNEXT 12
+// SPI_CR1 DFF bit position
+#define SPI_CR1_DFF 11
+// SPI_CR1 RXONLY bit position
+#define SPI_CR1_RXONLY 10
+// SPI_CR1 SSM bit position
+#define SPI_CR1_SSM 9
+// SPI_CR1 SSI bit position
+#define SPI_CR1_SSI 8
+// SPI_CR1 LSBFIRST bit position
+#define SPI_CR1_LSBFIRST 7
+// SPI_CR1 SPE bit position
+#define SPI_CR1_SPE 6
+// SPI_CR1 BR2 bit position
+#define SPI_CR1_BR2 5
+// SPI_CR1 BR1 bit position
+#define SPI_CR1_BR1 4
+// SPI_CR1 BR0 bit position
+#define SPI_CR1_BR0 3
+// SPI_CR1 MSTR bit position
+#define SPI_CR1_MSTR 2
+// SPI_CR1 CPOL bit position
+#define SPI_CR1_CPOL 1
+// SPI_CR1 CPHA bit position
+#define SPI_CR1_CPHA 0
+
+// SPI_CR2 TXEIE bit position
+#define SPI_CR2_TXEIE 7
+// SPI_CR2 RXNEIE bit position
+#define SPI_CR2_RXNEIE 6
+// SPI_CR2 ERRIE bit position
+#define SPI_CR2_ERRIE 5
+// SPI_CR2 FRF bit position
+#define SPI_CR2_FRF 4
+// SPI_CR2 SSOE bit position
+#define SPI_CR2_SSOE 2
+// SPI_CR2 TXDMAEN bit position
+#define SPI_CR2_TXDMAEN 1
+// SPI_CR2 RXDMAEN bit position
+#define SPI_CR2_RXDMAEN 0
+
+// SPI_SR FRE bit position
+#define SPI_SR_FRE 8
+// SPI_SR BSY bit position
+#define SPI_SR_BSY 7
+// SPI_SR OVR bit position
+#define SPI_SR_OVR 6
+// SPI_SR MODF bit position
+#define SPI_SR_MODF 5
+// SPI_SR CRCERR bit position
+#define SPI_SR_CRCERR 4
+// SPI_SR UDR bit position
+#define SPI_SR_UDR 3
+// SPI_SR CHSIDE bit position
+#define SPI_SR_CHSIDE 2
+// SPI_SR TXE bit position
+#define SPI_SR_TXE 1
+// SPI_SR RXNE bit position
+#define SPI_SR_RXNE 0
 
 #endif /* INC_STM32F446XX_H_ */
