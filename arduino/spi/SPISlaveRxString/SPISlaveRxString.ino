@@ -6,11 +6,9 @@
  * MISO  12  // Master In Slave Out.
  * MOSI  11  // Master Out Slave In.
  * SS    10  // Slave Select . Arduino SPI pins respond only if SS pulled low by the master
- *
- 
  */
 #include <SPI.h>
-#include<stdint.h>  
+#include <stdint.h>  
 #define SPI_SCK 13
 #define SPI_MISO 12
 #define SPI_MOSI 11

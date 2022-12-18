@@ -54,6 +54,11 @@ int main()
 
 	SPI_SendData(SPI2, (uint8_t *)user_data, strlen(user_data));
 
+	// confirm SPI is not busy
+	while (SPI_GetFlagStatus(SPI2, SPI_BSY_FLAG))
+		;
+
+	// disable the SPI2 peripheral
 	SPI_PeripheralControl(SPI2, DISABLE);
 
 	while (1)
@@ -87,12 +92,12 @@ void SPI2_GPIOInits()
 	GPIO_Init(&SPIPins);
 
 	// MISO
-//	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_14;
-//	GPIO_Init(&SPIPins);
+	//	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_14;
+	//	GPIO_Init(&SPIPins);
 
 	// NSS
-//	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_12;
-//	GPIO_Init(&SPIPins);
+	//	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_12;
+	//	GPIO_Init(&SPIPins);
 }
 
 /**

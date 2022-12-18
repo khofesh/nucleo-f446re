@@ -8,6 +8,7 @@
 #ifndef INC_STM32F446XX_SPI_DRIVER_H_
 #define INC_STM32F446XX_SPI_DRIVER_H_
 
+#include "stdbool.h"
 #include "stm32f446xx.h"
 
 /**
@@ -145,5 +146,7 @@ void SPI_IRQHandler(SPI_Handle_t *pHandle);
  */
 void SPI_PeripheralControl(SPI_RegDef_t *pSPIx, uint8_t EnOrDi);
 void SPI_SSIConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi);
+void SPI_SSOEConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi);
+bool SPI_GetFlagStatus(SPI_RegDef_t *pSPIx, uint32_t flagName);
 
 #endif /* INC_STM32F446XX_SPI_DRIVER_H_ */

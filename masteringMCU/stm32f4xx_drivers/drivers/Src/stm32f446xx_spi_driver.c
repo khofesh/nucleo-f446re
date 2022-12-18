@@ -6,9 +6,6 @@
  */
 
 #include "stm32f446xx_spi_driver.h"
-#include "stdbool.h"
-
-bool SPI_GetFlagStatus(SPI_RegDef_t *pSPIx, uint32_t flagName);
 
 /**
  * @brief
@@ -247,5 +244,23 @@ void SPI_SSIConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi)
     else
     {
         pSPIx->CR1 &= ~(1 << SPI_CR1_SSI);
+    }
+}
+
+/**
+ * @brief SPI_SSOEConfig
+ *
+ * @param pSPIx
+ * @param EnOrDi
+ */
+void SPI_SSOEConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi)
+{
+    if (EnOrDi == ENABLE)
+    {
+        pSPIx->CR2 |= (1 << SPI_CR2_SSOE);
+    }
+    else
+    {
+        pSPIx->CR2 &= ~(1 << SPI_CR2_SSOE);
     }
 }
