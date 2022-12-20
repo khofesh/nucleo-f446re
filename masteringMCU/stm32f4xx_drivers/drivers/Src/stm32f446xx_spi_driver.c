@@ -226,15 +226,19 @@ uint8_t SPI_SendDataIT(SPI_Handle_t *pSPIHandle, uint8_t *pTxBuffer, uint32_t Le
 
     if (state != SPI_BUSY_IN_TX)
     {
-        // 1 . Save the Tx buffer address and Len information in some global variables
+        // 1. save the Tx buffer address and len information in some global variables
         pSPIHandle->pTxBuffer = pTxBuffer;
         pSPIHandle->TxLen = Len;
-        // 2.  Mark the SPI state as busy in transmission so that
-        //     no other code can take over same SPI peripheral until transmission is over
+
+        // 2. mark the SPI state as busy in transmission so that
+        // no other code can take over same SPI peripheral until transmission is over
         pSPIHandle->TxState = SPI_BUSY_IN_TX;
 
-        // 3. Enable the TXEIE control bit to get interrupt whenever TXE flag is set in SR
+        // 3. enable the TXEIE control bit to get interrupt whenever TXE flag is set in SR
+        // see RM0390*.pdf page 888 - SPI control register 2 (SPI_CR2)
         pSPIHandle->pSPIx->CR2 |= (1 << SPI_CR2_TXEIE);
+
+        // 4. data transmission will be handled by the ISR code
     }
 
     return state;
@@ -261,7 +265,7 @@ uint8_t SPI_ReceiveDataIT(SPI_Handle_t *pSPIHandle, uint8_t *pRxBuffer, uint32_t
         // no other code can take over same SPI peripheral until transmission is over
         pSPIHandle->RxState = SPI_BUSY_IN_RX;
 
-        // 3. enable the TXEIE control bit to get interrupt whenever TXE flag is set in SR
+        // 3. enable the RXNEIE control bit to get interrupt whenever TXE flag is set in SR
         // see RM0390*.pdf page 888 - SPI control register 2 (SPI_CR2)
         pSPIHandle->pSPIx->CR2 |= (1 << SPI_CR2_RXNEIE);
 
@@ -551,4 +555,5 @@ void SPI_CloseReception(SPI_Handle_t *pSPIHandle)
 
 __weak void SPI_ApplicationEventCallback(SPI_Handle_t *pSPIHandle, uint8_t appEvent)
 {
+    // This is a weak implementation . the user application may override this function.
 }

@@ -72,6 +72,7 @@ int main()
 	 */
 	SPI_SSOEConfig(SPI2, ENABLE);
 
+	// SPI_IRQPriorityConfig(IRQ_NO_SPI2, 0);
 	SPI_IRQInterruptConfig(IRQ_NO_SPI2, ENABLE);
 
 	while (1)
@@ -100,7 +101,7 @@ int main()
 		{
 			printf("send and receive\n");
 			/* fetch the data from the SPI peripheral byte by byte in interrupt mode */
-			while (SPI_SendDataIT(&SPI2Handle, &dummy, 1) != SPI_READY)
+			while (SPI_SendDataIT(&SPI2Handle, &dummy, 1) == SPI_BUSY_IN_TX)
 			{
 				if (justOnce2 != 1)
 				{
@@ -109,7 +110,7 @@ int main()
 				}
 			}
 
-			while (SPI_ReceiveDataIT(&SPI2Handle, &ReadByte, 1) != SPI_READY)
+			while (SPI_ReceiveDataIT(&SPI2Handle, ((uint8_t *)&ReadByte), 1) == SPI_BUSY_IN_RX)
 			{
 				if (justOnce3 != 1)
 				{
