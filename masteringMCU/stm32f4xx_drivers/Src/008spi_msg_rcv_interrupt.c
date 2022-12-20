@@ -23,9 +23,11 @@ volatile uint8_t rcvStop = 0;
 volatile uint8_t dataAvailable = 0;
 
 void delay();
-void SPI2_GPIOInits(void);
-void SPI2_Inits(void);
-void Slave_GPIO_InterruptPinInit(void);
+void SPI2_GPIOInits();
+void SPI2_Inits();
+void Slave_GPIO_InterruptPinInit();
+void SPI2_IRQHandler();
+void EXTI15_10_IRQHandler();
 
 /**
  * find out microcontroller pin to communicate over SPI2
@@ -184,7 +186,7 @@ void SPI2_Inits()
 	SPI2Handle.SPIConfig.SPI_BusConfig = SPI_BUS_CONFIG_FD;
 	SPI2Handle.SPIConfig.SPI_DeviceMode = SPI_DEVICE_MODE_MASTER;
 	// generates serial clock of 8MHz
-	SPI2Handle.SPIConfig.SPI_SclkSpeed = SPI_SCLK_SPEED_DIV32;
+	SPI2Handle.SPIConfig.SPI_SclkSpeed = SPI_SCLK_SPEED_DIV8;
 	SPI2Handle.SPIConfig.SPI_DFF = SPI_DFF_8BITS;
 	SPI2Handle.SPIConfig.SPI_CPOL = SPI_CPOL_LOW;
 	SPI2Handle.SPIConfig.SPI_CPHA = SPI_CPHA_LOW;
