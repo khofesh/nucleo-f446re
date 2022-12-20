@@ -217,17 +217,11 @@ void Slave_GPIO_InterruptPinInit(void)
 	GPIO_IRQInterruptConfig(IRQ_NO_EXTI15_10, ENABLE);
 }
 
-void SPI2_IRQHandler()
-{
-	printf("inside SPI2_IRQHandler\n");
-	SPI_IRQHandler(&SPI2Handle);
-}
-
-void SPI_ApplicationEventCallback(SPI_Handle_t *pSPIHandle, uint8_t AppEv)
+void SPI_ApplicationEventCallback(SPI_Handle_t *pSPIHandle, uint8_t appEvent)
 {
 	static uint32_t i = 0;
 	/* In the RX complete event , copy data in to rcv buffer . '\0' indicates end of message(rcvStop = 1) */
-	if (AppEv == SPI_EVENT_RX_CMPLT)
+	if (appEvent == SPI_EVENT_RX_CMPLT)
 	{
 		RcvBuff[i++] = ReadByte;
 		if (ReadByte == '\0' || (i == MAX_LEN))
@@ -237,6 +231,12 @@ void SPI_ApplicationEventCallback(SPI_Handle_t *pSPIHandle, uint8_t AppEv)
 			i = 0;
 		}
 	}
+}
+
+void SPI2_IRQHandler()
+{
+	printf("inside SPI2_IRQHandler\n");
+	SPI_IRQHandler(&SPI2Handle);
 }
 
 void EXTI15_10_IRQHandler()
