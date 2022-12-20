@@ -50,6 +50,10 @@ int main()
 {
 	uint8_t dummy = 0xff;
 
+	uint32_t justOnce = 0;
+	uint32_t justOnce2 = 0;
+	uint32_t justOnce3 = 0;
+
 	Slave_GPIO_InterruptPinInit();
 
 	// this function is used to initialize the GPIO pins to behave as SPI2 pins
@@ -73,22 +77,47 @@ int main()
 		rcvStop = 0;
 
 		while (!dataAvailable)
-			; // wait till data available interrupt from transmitter device(slave)
+		{
+			// wait till data available interrupt from transmitter device(slave)
 
-		GPIO_IRQInterruptConfig(IRQ_NO_EXTI9_5, DISABLE);
+			if (justOnce != 1)
+			{
+				printf("trapped here\n");
+				justOnce++;
+			}
+		}
+
+		printf("I'm out\n");
+
+		GPIO_IRQInterruptConfig(IRQ_NO_EXTI15_10, DISABLE);
 
 		// enable the SPI2 peripheral
 		SPI_PeripheralControl(SPI2, ENABLE);
 
 		while (!rcvStop)
 		{
+			printf("send and receive\n");
 			/* fetch the data from the SPI peripheral byte by byte in interrupt mode */
 			while (SPI_SendDataIT(&SPI2Handle, &dummy, 1) == SPI_BUSY_IN_TX)
-				;
+			{
+				if (justOnce2 != 1)
+				{
+					printf("trapped in SPI_SendDataIT\n");
+					justOnce2++;
+				}
+			}
+
 			while (SPI_ReceiveDataIT(&SPI2Handle, &ReadByte, 1) == SPI_BUSY_IN_RX)
-				;
+			{
+				if (justOnce3 != 1)
+				{
+					printf("trapped in SPI_ReceiveDataIT\n");
+					justOnce3++;
+				}
+			}
 		}
 
+		printf("confirming now\n");
 		// confirm SPI is not busy
 		while (SPI_GetFlagStatus(SPI2, SPI_BSY_FLAG))
 			;
@@ -100,7 +129,7 @@ int main()
 
 		dataAvailable = 0;
 
-		GPIO_IRQInterruptConfig(IRQ_NO_EXTI9_5, ENABLE);
+		GPIO_IRQInterruptConfig(IRQ_NO_EXTI15_10, ENABLE);
 	}
 
 	return 0;
@@ -151,20 +180,18 @@ void SPI2_GPIOInits()
  */
 void SPI2_Inits()
 {
-	SPI_Handle_t SPI2handle;
-
-	SPI2handle.pSPIx = SPI2;
-	SPI2handle.SPIConfig.SPI_BusConfig = SPI_BUS_CONFIG_FD;
-	SPI2handle.SPIConfig.SPI_DeviceMode = SPI_DEVICE_MODE_MASTER;
+	SPI2Handle.pSPIx = SPI2;
+	SPI2Handle.SPIConfig.SPI_BusConfig = SPI_BUS_CONFIG_FD;
+	SPI2Handle.SPIConfig.SPI_DeviceMode = SPI_DEVICE_MODE_MASTER;
 	// generates serial clock of 8MHz
-	SPI2handle.SPIConfig.SPI_SclkSpeed = SPI_SCLK_SPEED_DIV32;
-	SPI2handle.SPIConfig.SPI_DFF = SPI_DFF_8BITS;
-	SPI2handle.SPIConfig.SPI_CPOL = SPI_CPOL_LOW;
-	SPI2handle.SPIConfig.SPI_CPHA = SPI_CPHA_LOW;
+	SPI2Handle.SPIConfig.SPI_SclkSpeed = SPI_SCLK_SPEED_DIV32;
+	SPI2Handle.SPIConfig.SPI_DFF = SPI_DFF_8BITS;
+	SPI2Handle.SPIConfig.SPI_CPOL = SPI_CPOL_LOW;
+	SPI2Handle.SPIConfig.SPI_CPHA = SPI_CPHA_LOW;
 	// hardware slave management enabled for NSS pin
-	SPI2handle.SPIConfig.SPI_SSM = SPI_SSM_DI;
+	SPI2Handle.SPIConfig.SPI_SSM = SPI_SSM_DI;
 
-	SPI_Init(&SPI2handle);
+	SPI_Init(&SPI2Handle);
 }
 
 /**
@@ -192,6 +219,7 @@ void Slave_GPIO_InterruptPinInit(void)
 
 void SPI2_IRQHandler()
 {
+	printf("inside SPI2_IRQHandler\n");
 	SPI_IRQHandler(&SPI2Handle);
 }
 

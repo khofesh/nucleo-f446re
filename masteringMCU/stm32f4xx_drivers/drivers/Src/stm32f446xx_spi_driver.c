@@ -226,19 +226,15 @@ uint8_t SPI_SendDataIT(SPI_Handle_t *pSPIHandle, uint8_t *pTxBuffer, uint32_t Le
 
     if (state != SPI_BUSY_IN_TX)
     {
-        // 1. save the Tx buffer address and len information in some global variables
+        // 1 . Save the Tx buffer address and Len information in some global variables
         pSPIHandle->pTxBuffer = pTxBuffer;
         pSPIHandle->TxLen = Len;
-
-        // 2. mark the SPI state as busy in transmission so that
-        // no other code can take over same SPI peripheral until transmission is over
+        // 2.  Mark the SPI state as busy in transmission so that
+        //     no other code can take over same SPI peripheral until transmission is over
         pSPIHandle->TxState = SPI_BUSY_IN_TX;
 
-        // 3. enable the TXEIE control bit to get interrupt whenever TXE flag is set in SR
-        // see RM0390*.pdf page 888 - SPI control register 2 (SPI_CR2)
+        // 3. Enable the TXEIE control bit to get interrupt whenever TXE flag is set in SR
         pSPIHandle->pSPIx->CR2 |= (1 << SPI_CR2_TXEIE);
-
-        // 4. data transmission will be handled by the ISR code
     }
 
     return state;
@@ -287,36 +283,36 @@ void SPI_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnOrDi)
     {
         if (IRQNumber <= 31)
         {
-            // program ISER0 register
+            /* program ISER0 register */
             *NVIC_ISER0 |= (1 << IRQNumber);
         }
-        else if (IRQNumber > 31 && IRQNumber < 64) // 32 to 63
+        else if (IRQNumber > 31 && IRQNumber < 64)
         {
-            // program ISER1 register
-            *NVIC_ISER1 |= (1 << (IRQNumber % 32));
+            /* program ISER1 register */
+            *NVIC_ISER1 |= (1 << IRQNumber % 32);
         }
         else if (IRQNumber >= 64 && IRQNumber < 96)
         {
-            // program ISER2 register //64 to 95
-            *NVIC_ISER3 |= (1 << (IRQNumber % 64));
+            /* program ISER2 register */
+            *NVIC_ISER2 |= (1 << IRQNumber % 64);
         }
     }
     else
     {
         if (IRQNumber <= 31)
         {
-            // program ICER0 register
+            /* program ICER0 register */
             *NVIC_ICER0 |= (1 << IRQNumber);
         }
         else if (IRQNumber > 31 && IRQNumber < 64)
         {
-            // program ICER1 register
-            *NVIC_ICER1 |= (1 << (IRQNumber % 32));
+            /* program ICER1 register */
+            *NVIC_ICER1 |= (1 << IRQNumber % 32);
         }
-        else if (IRQNumber >= 6 && IRQNumber < 96)
+        else if (IRQNumber >= 64 && IRQNumber < 96)
         {
-            // program ICER2 register
-            *NVIC_ICER3 |= (1 << (IRQNumber % 64));
+            /* program ICER2 register */
+            *NVIC_ICER2 |= (1 << IRQNumber % 64);
         }
     }
 }
@@ -329,13 +325,12 @@ void SPI_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnOrDi)
  */
 void SPI_IRQPriorityConfig(uint8_t IRQNumber, uint32_t IRQPriority)
 {
-    // 1. first lets find out the ipr register
+    // 1. find out the IPR register
     uint8_t iprx = IRQNumber / 4;
     uint8_t iprx_section = IRQNumber % 4;
 
     uint8_t shift_amount = (8 * iprx_section) + (8 - NO_PR_BITS_IMPLEMENTED);
-
-    *(NVIC_PR_BASE_ADDR + iprx) |= (IRQPriority << shift_amount);
+    *(NVIC_PR_BASE_ADDR + iprx) |= (IRQPriority << (8 * shift_amount));
 }
 
 /**
