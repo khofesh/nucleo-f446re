@@ -100,7 +100,7 @@ int main()
 		{
 			printf("send and receive\n");
 			/* fetch the data from the SPI peripheral byte by byte in interrupt mode */
-			while (SPI_SendDataIT(&SPI2Handle, &dummy, 1) == SPI_BUSY_IN_TX)
+			while (SPI_SendDataIT(&SPI2Handle, &dummy, 1) != SPI_READY)
 			{
 				if (justOnce2 != 1)
 				{
@@ -109,7 +109,7 @@ int main()
 				}
 			}
 
-			while (SPI_ReceiveDataIT(&SPI2Handle, &ReadByte, 1) == SPI_BUSY_IN_RX)
+			while (SPI_ReceiveDataIT(&SPI2Handle, &ReadByte, 1) != SPI_READY)
 			{
 				if (justOnce3 != 1)
 				{
