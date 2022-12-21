@@ -28,17 +28,19 @@
 #define NVIC_ISER4 ((__vo uint32_t *)0xE000E110)
 #define NVIC_ISER5 ((__vo uint32_t *)0xE000E114)
 #define NVIC_ISER6 ((__vo uint32_t *)0xE000E118)
+#define NVIC_ISER7 ((__vo uint32_t *)0xE000E11C)
 
 /**
  * @brief ARM Cortex Mx processor NVIC ICERx register addresses
  */
 #define NVIC_ICER0 ((__vo uint32_t *)0xE000E180)
 #define NVIC_ICER1 ((__vo uint32_t *)0xE000E184)
-#define NVIC_ICER2 ((__vo uint32_t *)0xE000E18C)
-#define NVIC_ICER3 ((__vo uint32_t *)0xE000E190)
-#define NVIC_ICER4 ((__vo uint32_t *)0xE000E194)
-#define NVIC_ICER5 ((__vo uint32_t *)0xE000E198)
-#define NVIC_ICER6 ((__vo uint32_t *)0xE000E19C)
+#define NVIC_ICER2 ((__vo uint32_t *)0xE000E188)
+#define NVIC_ICER3 ((__vo uint32_t *)0xE000E18C)
+#define NVIC_ICER4 ((__vo uint32_t *)0xE000E190)
+#define NVIC_ICER5 ((__vo uint32_t *)0xE000E194)
+#define NVIC_ICER6 ((__vo uint32_t *)0xE000E198)
+#define NVIC_ICER7 ((__vo uint32_t *)0xE000E19C)
 
 /**
  * @brief ARM Cortex Mx processor priority register address calculation
@@ -492,6 +494,34 @@ typedef struct
 	{                                 \
 		(RCC->AHB1RSTR |= (1 << 7));  \
 		(RCC->AHB1RSTR &= ~(1 << 7)); \
+	} while (0)
+
+/*
+ * Macros to reset SPIx peripherals
+ */
+#define SPI1_REG_RESET()               \
+	do                                 \
+	{                                  \
+		(RCC->APB2RSTR |= (1 << 12));  \
+		(RCC->APB2RSTR &= ~(1 << 12)); \
+	} while (0)
+#define SPI2_REG_RESET()               \
+	do                                 \
+	{                                  \
+		(RCC->APB1RSTR |= (1 << 14));  \
+		(RCC->APB1RSTR &= ~(1 << 14)); \
+	} while (0)
+#define SPI3_REG_RESET()               \
+	do                                 \
+	{                                  \
+		(RCC->APB1RSTR |= (1 << 15));  \
+		(RCC->APB1RSTR &= ~(1 << 15)); \
+	} while (0)
+#define SPI4_REG_RESET()               \
+	do                                 \
+	{                                  \
+		(RCC->APB2RSTR |= (1 << 13));  \
+		(RCC->APB2RSTR &= ~(1 << 13)); \
 	} while (0)
 
 /**

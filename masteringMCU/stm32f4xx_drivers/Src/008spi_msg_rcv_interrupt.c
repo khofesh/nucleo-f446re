@@ -72,7 +72,7 @@ int main()
 	 */
 	SPI_SSOEConfig(SPI2, ENABLE);
 
-	// SPI_IRQPriorityConfig(IRQ_NO_SPI2, 0);
+	SPI_IRQPriorityConfig(IRQ_NO_SPI2, 43);
 	SPI_IRQInterruptConfig(IRQ_NO_SPI2, ENABLE);
 
 	while (1)
