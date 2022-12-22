@@ -50,7 +50,8 @@ void I2C_PeriClockControl(I2C_RegDef_t *pI2Cx, uint8_t EnOrDi)
 
 /**
  * @brief I2C_Init
- *
+ * caution: all configuration in this function must
+ * be done when the peripheral is disabled in the control register
  * @param pI2CHandle
  */
 void I2C_Init(I2C_Handle_t *pI2CHandle)
@@ -59,7 +60,11 @@ void I2C_Init(I2C_Handle_t *pI2CHandle)
 
     // 2. configure the speed of the serial clock (SCL)
 
-    //
+    // 3. configure the device address (applicable when device is slave)
+
+    // 4. enable the Acking
+
+    // 5. configure the rise time for I2C pins
 }
 
 /**
@@ -69,6 +74,18 @@ void I2C_Init(I2C_Handle_t *pI2CHandle)
  */
 void I2C_DeInit(I2C_RegDef_t *pI2Cx)
 {
+    if (pI2Cx == I2C1)
+    {
+        I2C1_REG_RESET();
+    }
+    else if (pI2Cx == I2C2)
+    {
+        I2C2_REG_RESET();
+    }
+    else if (pI2Cx == I2C3)
+    {
+        I2C3_REG_RESET();
+    }
 }
 
 /**
@@ -99,6 +116,14 @@ void I2C_IRQPriorityConfig(uint8_t IRQNumber, uint32_t IRQPriority)
  */
 void I2C_PeripheralControl(I2C_RegDef_t *pI2Cx, uint8_t EnOrDi)
 {
+    if (EnOrDi == ENABLE)
+    {
+        pI2Cx->CR1 |= (1 << I2C_CR1_PE);
+    }
+    else
+    {
+        pI2Cx->CR1 &= ~(1 << 0);
+    }
 }
 
 /**
