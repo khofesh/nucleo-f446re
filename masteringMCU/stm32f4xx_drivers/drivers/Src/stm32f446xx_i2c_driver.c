@@ -64,18 +64,50 @@ void I2C_Init(I2C_Handle_t *pI2CHandle)
 {
     uint32_t tempReg = 0;
 
-    // ACK
+    // ACK control bit
     tempReg |= pI2CHandle->I2C_Config.I2C_ACKControl << I2C_CR1_ACK;
+    pI2CHandle->pI2Cx->CR1 = tempReg;
 
-    // 1. configure the mode (standard or fast)
+    // configure the FREQ field of CR2
+    tempReg = 0;
+    tempReg |= RCC_GetPCLK1Value() / 1000000U;
+    pI2CHandle->pI2Cx->CR2 = (tempReg & 0x3F);
 
-    // 2. configure the speed of the serial clock (SCL)
+    // program the device own address
+    tempReg |= pI2CHandle->I2C_Config.I2C_DeviceAddress << 1;
+    // bit 14 - should always be kept at 1 by software
+    // see RM0390-*.pdf page 784
+    tempReg |= (1 << 14);
+    pI2CHandle->pI2Cx->OAR1 = tempReg;
 
-    // 3. configure the device address (applicable when device is slave)
+    // CCR calculations
+    uint16_t ccr_value = 0;
+    tempReg = 0;
+    if (pI2CHandle->I2C_Config.I2C_SCLSpeed <= I2C_SCL_SPEED_SM)
+    {
+        /* standard mode */
+        ccr_value = (RCC_GetPCLK1Value() / (2 * pI2CHandle->I2C_Config.I2C_SCLSpeed));
+        tempReg |= (ccr_value & 0xFFF);
+    }
+    else
+    {
+        /* fast mode*/
+        tempReg |= (1 << 15);
+        tempReg |= (pI2CHandle->I2C_Config.I2C_FMDutyCycle << 14);
 
-    // 4. enable the Acking
+        if (pI2CHandle->I2C_Config.I2C_FMDutyCycle == I2C_FM_DUTY_2)
+        {
+            ccr_value = (RCC_GetPCLK1Value() / (3 * pI2CHandle->I2C_Config.I2C_SCLSpeed));
+        }
+        else
+        {
+            ccr_value = (RCC_GetPCLK1Value() / (25 * pI2CHandle->I2C_Config.I2C_SCLSpeed));
+        }
 
-    // 5. configure the rise time for I2C pins
+        tempReg |= (ccr_value & 0xFFF);
+    }
+
+    pI2CHandle->pI2Cx->CCR = tempReg;
 }
 
 /**
