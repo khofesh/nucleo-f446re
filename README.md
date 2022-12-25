@@ -113,6 +113,20 @@ see `rm0390-stm32f446xx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf` pag
 **why we use ISPR1 ?** \
 Interrupt Set-pending Registers contains NVIC_ISPR0-NVIC_ISPR7 registers. Each register can handle 32 IRQs. Since the IRQ is 39 (USART3), we have to use ISPR1.
 
+# STM32CUBEIDE on fedora 37
+
+- https://www.reddit.com/r/openSUSE/comments/zevkd9/fedora_dropped_ncurses_abi_5_how_would_opensuse/
+- https://www.reddit.com/r/Fedora/comments/ygl7zy/can_we_bring_back_ncursescompatlibs_in_fedora_37/
+
+down the `deb` version of stm32 cube ide, extract it, and install it inside container.
+
+```shell
+toolbox enter ubuntu-toolbox-22.04
+⬢[fahmad@toolbox deb]$  ls
+st-stm32cubeide_1.11.0_13638_20221122_1308_amd64.deb_bundle.sh
+⬢[fahmad@toolbox deb]$  sudo sh st-stm32cubeide_1.11.0_13638_20221122_1308_amd64.deb_bundle.sh
+```
+
 # References
 
 - Test-Driven Development for Embedded C (https://pragprog.com/titles/jgade/test-driven-development-for-embedded-c/)
