@@ -788,56 +788,38 @@ typedef enum
  **********************************************/
 
 /*******************  Bit definition for I2C_CR1 register  ********************/
-#define I2C_CR1_PE (0U)
-#define I2C_CR1_SMBUS (1U)
-#define I2C_CR1_SMBTYPE (3U)
-#define I2C_CR1_ENARP (4U)
-#define I2C_CR1_ENPEC (5U)
-#define I2C_CR1_ENGC (6U)
-#define I2C_CR1_NOSTRETCH (7U)
-#define I2C_CR1_START (8U)
-#define I2C_CR1_STOP (9U)
-#define I2C_CR1_ACK (10U)
-#define I2C_CR1_POS (11U)
-#define I2C_CR1_PEC (12U)
-#define I2C_CR1_ALERT (13U)
-#define I2C_CR1_SWRST (15U)
+#define I2C_CR1_PE 0
+#define I2C_CR1_SMBUS 1
+#define I2C_CR1_SMBTYPE 3
+#define I2C_CR1_ENARP 4
+#define I2C_CR1_ENPEC 5
+#define I2C_CR1_ENGC 6
+#define I2C_CR1_NOSTRECH 7
+#define I2C_CR1_START 8
+#define I2C_CR1_STOP 9
+#define I2C_CR1_ACK 10
+#define I2C_CR1_POS 11
+#define I2C_CR1_PEC 12
+#define I2C_CR1_ALERT 13
+#define I2C_CR1_RESET 15
 
 /*******************  Bit definition for I2C_CR2 register  ********************/
-#define I2C_CR2_FREQ (0U)
-#define I2C_CR2_FREQ_0 (0x01UL << I2C_CR2_FREQ) /*!< 0x00000001 */
-#define I2C_CR2_FREQ_1 (0x02UL << I2C_CR2_FREQ) /*!< 0x00000002 */
-#define I2C_CR2_FREQ_2 (0x04UL << I2C_CR2_FREQ) /*!< 0x00000004 */
-#define I2C_CR2_FREQ_3 (0x08UL << I2C_CR2_FREQ) /*!< 0x00000008 */
-#define I2C_CR2_FREQ_4 (0x10UL << I2C_CR2_FREQ) /*!< 0x00000010 */
-#define I2C_CR2_FREQ_5 (0x20UL << I2C_CR2_FREQ) /*!< 0x00000020 */
-
-#define I2C_CR2_ITERREN (8U)
-#define I2C_CR2_ITEVTEN (9U)
-#define I2C_CR2_ITBUFEN (10U)
-#define I2C_CR2_DMAEN (11U)
-#define I2C_CR2_LAST (12U)
+#define I2C_CR2_FREQ 0
+#define I2C_CR2_ITERREN 8
+#define I2C_CR2_ITEVTEN 9
+#define I2C_CR2_ITBUFEN 10
+#define I2C_CR2_DMAEN 11
+#define I2C_CR2_LAST 12
 
 /*******************  Bit definition for I2C_OAR1 register  *******************/
-#define I2C_OAR1_ADD1_7 0x000000FEU /*!<Interface Address */
-#define I2C_OAR1_ADD8_9 0x00000300U /*!<Interface Address */
-
-#define I2C_OAR1_ADD0 (0U)
-#define I2C_OAR1_ADD1 (1U)
-#define I2C_OAR1_ADD2 (2U)
-#define I2C_OAR1_ADD3 (3U)
-#define I2C_OAR1_ADD4 (4U)
-#define I2C_OAR1_ADD5 (5U)
-#define I2C_OAR1_ADD6 (6U)
-#define I2C_OAR1_ADD7 (7U)
-#define I2C_OAR1_ADD8 (8U)
-#define I2C_OAR1_ADD9 (9U)
-
-#define I2C_OAR1_ADDMODE (15U)
+#define I2C_OAR1_ADD0 0
+#define I2C_OAR1_ADD7_1 1
+#define I2C_OAR1_ADD9_8 8
+#define I2C_OAR1_ADDMODE 15
 
 /*******************  Bit definition for I2C_OAR2 register  *******************/
-#define I2C_OAR2_ENDUAL (0U)
-#define I2C_OAR2_ADD2 (1U)
+#define I2C_OAR2_ENDUAL 0
+#define I2C_OAR2_ADD2 1
 
 /********************  Bit definition for I2C_DR register  ********************/
 #define I2C_DR_DR0 0
@@ -850,37 +832,30 @@ typedef enum
 #define I2C_DR_DR7 7
 
 /*******************  Bit definition for I2C_SR1 register  ********************/
-#define I2C_SR1_SB (0U)
-#define I2C_SR1_ADDR (1U)
-#define I2C_SR1_BTF (2U)
-#define I2C_SR1_ADD10 (3U)
-#define I2C_SR1_STOPF (4U)
-#define I2C_SR1_RXNE (6U)
-#define I2C_SR1_TXE (7U)
-#define I2C_SR1_BERR (8U)
-#define I2C_SR1_ARLO (9U)
-#define I2C_SR1_AF (10U)
-#define I2C_SR1_OVR (11U)
-#define I2C_SR1_PECERR (12U)
-#define I2C_SR1_TIMEOUT (14U)
-#define I2C_SR1_SMBALERT (15U)
+#define I2C_SR1_SB 0
+#define I2C_SR1_ADDR 1
+#define I2C_SR1_BTF 2
+#define I2C_SR1_ADD10 3
+#define I2C_SR1_STOPF 4
+#define I2C_SR1_RXNE 6
+#define I2C_SR1_TXE 7
+#define I2C_SR1_BERR 8
+#define I2C_SR1_ARLO 9
+#define I2C_SR1_AF 10
+#define I2C_SR1_OVR 11
+#define I2C_SR1_PECERR 12
+#define I2C_SR1_TIMEOUT 14
+#define I2C_SR1_SMBALERT 15
 
 /*******************  Bit definition for I2C_SR2 register  ********************/
-#define I2C_SR2_MSL (0U)
-#define I2C_SR2_BUSY (1U)
-#define I2C_SR2_TRA (2U)
-#define I2C_SR2_GENCALL (4U)
-#define I2C_SR2_SMBDEFAULT (5U)
-#define I2C_SR2_SMBHOST (6U)
-#define I2C_SR2_DUALF (7U)
-#define I2C_SR2_PEC0 (8U)
-#define I2C_SR2_PEC1 (9U)
-#define I2C_SR2_PEC2 (10U)
-#define I2C_SR2_PEC3 (11U)
-#define I2C_SR2_PEC4 (12U)
-#define I2C_SR2_PEC5 (13U)
-#define I2C_SR2_PEC6 (14U)
-#define I2C_SR2_PEC7 (15U)
+#define I2C_SR2_MSL 0
+#define I2C_SR2_BUSY 1
+#define I2C_SR2_TRA 2
+#define I2C_SR2_GENCALL 4
+#define I2C_SR2_SMBDEFAULT 5
+#define I2C_SR2_SMBHOST 6
+#define I2C_SR2_DUALF 7
+#define I2C_SR2_PEC 8
 
 /*******************  Bit definition for I2C_CCR register  ********************/
 #define I2C_CCR_CCR0 (0U)

@@ -13,7 +13,7 @@
 #include "stm32f446xx_i2c_driver.h"
 
 #define MY_ADDR 0x61
-#define SLAVE_ADDR 0x68
+#define SLAVE_ADDR 0x60
 #define LOW 0
 #define BTN_PRESSED LOW
 
@@ -88,7 +88,7 @@ void I2C1_GPIOInits()
 	GPIO_Init(&I2CPins);
 
 	// sda
-	I2CPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_7;
+	I2CPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_9;
 	GPIO_Init(&I2CPins);
 }
 
@@ -109,6 +109,7 @@ void I2C1_Inits()
 void GPIO_ButtonInit()
 {
 	GPIO_Handle_t GPIOBtn;
+	GPIO_Handle_t GpioLed;
 
 	// user blue button - PC13
 	GPIOBtn.pGPIOx = GPIOC;
@@ -118,4 +119,16 @@ void GPIO_ButtonInit()
 	GPIOBtn.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
 
 	GPIO_Init(&GPIOBtn);
+
+	/* LED GPIO Config */
+	GpioLed.pGPIOx = GPIOA;
+	GpioLed.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_5;
+	GpioLed.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_OUTPUT;
+	GpioLed.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
+	GpioLed.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP;
+	GpioLed.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
+
+	GPIO_PeriClockControl(GPIOA, ENABLE);
+
+	GPIO_Init(&GpioLed);
 }

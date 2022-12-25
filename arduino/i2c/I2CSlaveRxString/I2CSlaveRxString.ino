@@ -2,7 +2,7 @@
 // Uno, Ethernet A4 (SDA), A5 (SCL)
 #include <Wire.h>
 
-#define MY_ADDR 0x68
+#define MY_ADDR 0x60
 
 int LED = 13;
 char rx_buffer[32];

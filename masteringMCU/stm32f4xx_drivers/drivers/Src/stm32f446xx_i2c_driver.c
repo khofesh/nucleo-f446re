@@ -252,7 +252,7 @@ uint32_t RCC_GetPCLK1Value()
         SystemClk = RCC_GetPLLOutputClock();
     }
 
-    temp = ((RCC->CFGR >> RCC_CFGR_HPRE_Pos) & 0xFUL);
+    temp = ((RCC->CFGR >> 4) & 0xFUL);
 
     if (temp < 8)
     {
@@ -263,7 +263,7 @@ uint32_t RCC_GetPCLK1Value()
         ahbp = AHB_PreScaler[temp - 8];
     }
 
-    temp = ((RCC->CFGR >> RCC_CFGR_PPRE1_Pos) & 0x7UL);
+    temp = ((RCC->CFGR >> 10) & 0x7UL);
 
     if (temp < 4)
     {
