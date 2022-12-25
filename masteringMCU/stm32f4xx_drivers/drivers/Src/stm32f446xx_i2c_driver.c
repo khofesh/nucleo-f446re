@@ -69,6 +69,9 @@ void I2C_Init(I2C_Handle_t *pI2CHandle)
     uint32_t tempReg = 0;
     uint8_t trise;
 
+    // enable the clock for the i2cx peripheral
+    I2C_PeriClockControl(pI2CHandle->pI2Cx, ENABLE);
+
     // ACK control bit
     tempReg |= pI2CHandle->I2C_Config.I2C_ACKControl << I2C_CR1_ACK;
     pI2CHandle->pI2Cx->CR1 = tempReg;
@@ -193,10 +196,8 @@ void I2C_PeripheralControl(I2C_RegDef_t *pI2Cx, uint8_t EnOrDi)
  *
  * @param pI2Cx
  * @param flagName
- * @return true
- * @return false
  */
-bool I2C_GetFlagStatus(I2C_RegDef_t *pI2Cx, uint32_t flagName)
+uint8_t I2C_GetFlagStatus(I2C_RegDef_t *pI2Cx, uint32_t flagName)
 {
     if (pI2Cx->SR1 & flagName)
     {

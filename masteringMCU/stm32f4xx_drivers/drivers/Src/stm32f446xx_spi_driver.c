@@ -141,7 +141,7 @@ void SPI_DeInit(SPI_RegDef_t *pSPIx)
     }
 }
 
-bool SPI_GetFlagStatus(SPI_RegDef_t *pSPIx, uint32_t flagName)
+uint8_t SPI_GetFlagStatus(SPI_RegDef_t *pSPIx, uint32_t flagName)
 {
     if (pSPIx->SR & flagName)
     {

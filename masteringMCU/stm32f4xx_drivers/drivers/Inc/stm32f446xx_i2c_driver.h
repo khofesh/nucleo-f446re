@@ -8,7 +8,6 @@
 #ifndef INC_STM32F446XX_I2C_DRIVER_H_
 #define INC_STM32F446XX_I2C_DRIVER_H_
 
-#include <stdbool.h>
 #include "stm32f446xx.h"
 
 /**
@@ -102,7 +101,7 @@ void I2C_IRQPriorityConfig(uint8_t IRQNumber, uint32_t IRQPriority);
  * @brief other peripheral control APIs
  */
 void I2C_PeripheralControl(I2C_RegDef_t *pI2Cx, uint8_t EnOrDi);
-bool I2C_GetFlagStatus(I2C_RegDef_t *pI2Cx, uint32_t flagName);
+uint8_t I2C_GetFlagStatus(I2C_RegDef_t *pI2Cx, uint32_t flagName);
 
 // application callback
 void I2C_ApplicationEventCallback(I2C_Handle_t *pI2CHandle, uint8_t appEvent);

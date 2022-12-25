@@ -4,7 +4,8 @@
     "tests.h": "c",
     "stddef.h": "c",
     "algorithm": "c",
-    "compare": "c"
+    "compare": "c",
+    "stm32f446xx.h": "c"
   },
   "C_Cpp.errorSquiggles": "Disabled"
 }
