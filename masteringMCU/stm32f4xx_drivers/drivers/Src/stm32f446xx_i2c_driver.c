@@ -67,6 +67,7 @@ void I2C_PeriClockControl(I2C_RegDef_t *pI2Cx, uint8_t EnOrDi)
 void I2C_Init(I2C_Handle_t *pI2CHandle)
 {
     uint32_t tempReg = 0;
+    uint8_t trise;
 
     // ACK control bit
     tempReg |= pI2CHandle->I2C_Config.I2C_ACKControl << I2C_CR1_ACK;
@@ -112,6 +113,20 @@ void I2C_Init(I2C_Handle_t *pI2CHandle)
     }
 
     pI2CHandle->pI2Cx->CCR = tempReg;
+
+    // TRISE config
+    if (pI2CHandle->I2C_Config.I2C_SCLSpeed <= I2C_SCL_SPEED_SM)
+    {
+        /* standard mode */
+        trise = (RCC_GetPCLK1Value() / 1000000U) + 1;
+    }
+    else
+    {
+        /* fast mode */
+        trise = ((RCC_GetPCLK1Value() * 300) / 1000000000U) + 1;
+    }
+
+    pI2CHandle->pI2Cx->TRISE = (trise & 0x3F);
 }
 
 /**
