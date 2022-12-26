@@ -293,7 +293,8 @@ uint32_t RCC_GetPLLOutputClock()
  * @param Len
  * @param SlaveAddr
  */
-void I2C_MasterSendData(I2C_Handle_t *pI2CHandle, uint8_t *pTxBuffer, uint32_t Len, uint8_t SlaveAddr)
+void I2C_MasterSendData(I2C_Handle_t *pI2CHandle, uint8_t *pTxBuffer,
+                        uint32_t Len, uint8_t SlaveAddr)
 {
     // 1. Generate the START condition
     I2C_GenerateStartCondition(pI2CHandle->pI2Cx);
@@ -352,7 +353,8 @@ void I2C_MasterSendData(I2C_Handle_t *pI2CHandle, uint8_t *pTxBuffer, uint32_t L
  * @param SlaveAddr
  * @param Sr
  */
-void I2C_MasterReceiveData(I2C_Handle_t *pI2CHandle, uint8_t *pRxBuffer, uint8_t Len, uint8_t SlaveAddr, uint8_t Sr)
+void I2C_MasterReceiveData(I2C_Handle_t *pI2CHandle, uint8_t *pRxBuffer,
+                           uint8_t Len, uint8_t SlaveAddr)
 {
     // 1. Generate the START condition
     I2C_GenerateStartCondition(pI2CHandle->pI2Cx);
@@ -379,9 +381,6 @@ void I2C_MasterReceiveData(I2C_Handle_t *pI2CHandle, uint8_t *pRxBuffer, uint8_t
         // Disable Acking
         I2C_ManageAcking(pI2CHandle->pI2Cx, I2C_ACK_DISABLE);
 
-        // generate STOP condition
-        I2C_GenerateStopCondition(pI2CHandle->pI2Cx);
-
         // clear the ADDR flag
         I2C_ClearADDRFlag(pI2CHandle->pI2Cx);
 
@@ -389,10 +388,11 @@ void I2C_MasterReceiveData(I2C_Handle_t *pI2CHandle, uint8_t *pRxBuffer, uint8_t
         while (!I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_FLAG_RXNE))
             ;
 
+        // generate STOP condition
+        I2C_GenerateStopCondition(pI2CHandle->pI2Cx);
+
         // read data in to buffer
         *pRxBuffer = pI2CHandle->pI2Cx->DR;
-
-        return;
     }
 
     // procedure to read data from slave when Len > 1
