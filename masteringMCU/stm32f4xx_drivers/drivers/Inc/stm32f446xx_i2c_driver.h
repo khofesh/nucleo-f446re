@@ -157,6 +157,8 @@ uint8_t I2C_GetFlagStatus(I2C_RegDef_t *pI2Cx, uint32_t flagName);
 void I2C_ManageAcking(I2C_RegDef_t *pI2Cx, uint8_t EnOrDi);
 void I2C_GenerateStopCondition(I2C_RegDef_t *pI2Cx);
 
+void I2C_SlaveEnableDisableCallbackEvents(I2C_RegDef_t *pI2Cx, uint8_t EnOrDi);
+
 // application callback
 void I2C_ApplicationEventCallback(I2C_Handle_t *pI2CHandle, uint8_t appEvent);
 
