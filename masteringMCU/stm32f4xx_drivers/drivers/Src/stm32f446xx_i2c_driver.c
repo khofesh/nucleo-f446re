@@ -15,7 +15,6 @@ static void I2C_GenerateStartCondition(I2C_RegDef_t *pI2Cx);
 static void I2C_ExecuteAddressPhaseWrite(I2C_RegDef_t *pI2Cx, uint8_t SlaveAddr);
 static void I2C_ExecuteAddressPhaseRead(I2C_RegDef_t *pI2Cx, uint8_t SlaveAddr);
 static void I2C_ClearADDRFlag(I2C_Handle_t *pI2CHandle);
-static void I2C_GenerateStopCondition(I2C_RegDef_t *pI2Cx);
 
 uint16_t AHB_PreScaler[8] = {2, 4, 8, 16, 64, 128, 256, 512};
 uint8_t APB1_PreScaler[4] = {2, 4, 8, 16};
@@ -164,6 +163,42 @@ void I2C_DeInit(I2C_RegDef_t *pI2Cx)
  */
 void I2C_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnOrDi)
 {
+    if (EnOrDi == ENABLE)
+    {
+        if (IRQNumber <= 31)
+        {
+            /* Program ISER0 register */
+            *NVIC_ISER0 |= (1 << IRQNumber);
+        }
+        else if (IRQNumber > 31 && IRQNumber < 64)
+        {
+            /* Program ISER1 register (32 to 63) */
+            *NVIC_ISER1 |= (1 << (IRQNumber % 32));
+        }
+        else if (IRQNumber >= 64 && IRQNumber < 96)
+        {
+            /* Program ISER2 register (64 to 95) */
+            *NVIC_ISER2 |= (1 << (IRQNumber % 64));
+        }
+    }
+    else
+    {
+        if (IRQNumber <= 31)
+        {
+            /* Program ICER0 register */
+            *NVIC_ISER0 |= (1 << IRQNumber);
+        }
+        else if (IRQNumber > 31 && IRQNumber < 64)
+        {
+            /* Program ICER1 register (32 to 63) */
+            *NVIC_ISER1 |= (1 << (IRQNumber % 32));
+        }
+        else if (IRQNumber >= 64 && IRQNumber < 96)
+        {
+            /* Program ICER2 register (64 to 95) */
+            *NVIC_ISER2 |= (1 << (IRQNumber % 64));
+        }
+    }
 }
 
 /**
@@ -174,6 +209,11 @@ void I2C_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnOrDi)
  */
 void I2C_IRQPriorityConfig(uint8_t IRQNumber, uint32_t IRQPriority)
 {
+    uint8_t iprx = IRQNumber / 4;
+    uint8_t iprx_section = IRQNumber % 4;
+
+    uint8_t shift_amount = (8 * iprx_section) + (8 - NO_PR_BITS_IMPLEMENTED);
+    *(NVIC_PR_BASE_ADDR + iprx) |= (IRQPriority << shift_amount);
 }
 
 /**
@@ -859,7 +899,7 @@ static void I2C_ClearADDRFlag(I2C_Handle_t *pI2CHandle)
     }
 }
 
-static void I2C_GenerateStopCondition(I2C_RegDef_t *pI2Cx)
+void I2C_GenerateStopCondition(I2C_RegDef_t *pI2Cx)
 {
     pI2Cx->CR1 |= (1 << I2C_CR1_STOP);
 }
