@@ -28,6 +28,22 @@ typedef struct
 {
     I2C_RegDef_t *pI2Cx;
     I2C_Config_t I2C_Config;
+    /* Stores application Tx buffer address */
+    uint8_t *pTxBuffer;
+    /* Stores application Rx buffer address */
+    uint8_t *pRxBuffer;
+    /* Stores Tx length */
+    uint32_t TxLen;
+    /* Stores Rx length */
+    uint32_t RxLen;
+    /* Stores communication state */
+    uint8_t TxRxState;
+    /* Stores slave/device address */
+    uint8_t DevAddr;
+    /* Stores Rx size */
+    uint32_t RxSize;
+    /* Stores repeated start value */
+    uint8_t Sr;
 } I2C_Handle_t;
 
 /**
@@ -79,6 +95,13 @@ typedef struct
 #define I2C_ENABLE_SR SET
 
 /**
+ * @brief Possible I2C Application states
+ */
+#define I2C_READY 0
+#define I2C_BUSY_IN_RX 1
+#define I2C_BUSY_IN_TX 2
+
+/**
  * @brief peripheral clock setup
  */
 void I2C_PeriClockControl(I2C_RegDef_t *pI2Cx, uint8_t EnOrDi);
@@ -95,11 +118,16 @@ void I2C_DeInit(I2C_RegDef_t *pI2Cx);
 void I2C_MasterSendData(I2C_Handle_t *pI2CHandle, uint8_t *pTxBuffer, uint32_t Len, uint8_t SlaveAddr, uint8_t Sr);
 void I2C_MasterReceiveData(I2C_Handle_t *pI2CHandle, uint8_t *pRxBuffer, uint8_t Len, uint8_t SlaveAddr, uint8_t Sr);
 
+uint8_t I2C_MasterSendDataIT(I2C_Handle_t *pI2CHandle, uint8_t *pTxBuffer, uint32_t Len, uint8_t SlaveAddr, uint8_t Sr);
+uint8_t I2C_MasterReceiveDataIT(I2C_Handle_t *pI2CHandle, uint8_t *pRxBuffer, uint8_t Len, uint8_t SlaveAddr, uint8_t Sr);
+
 /**
  * @brief IRQ configuration and ISR handling
  */
 void I2C_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnOrDi);
 void I2C_IRQPriorityConfig(uint8_t IRQNumber, uint32_t IRQPriority);
+void I2C_EV_IRQHandling(I2C_Handle_t *pI2CHandle);
+void I2C_ER_IRQHandling(I2C_Handle_t *pI2CHandle);
 
 /**
  * @brief other peripheral control APIs
