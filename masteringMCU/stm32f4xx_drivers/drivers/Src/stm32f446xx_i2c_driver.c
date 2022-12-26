@@ -9,15 +9,13 @@
 
 uint32_t RCC_GetPCLK1Value();
 uint32_t RCC_GetPLLOutputClock();
-void I2C_MasterHandleTXEInterrupt(I2C_Handle_t *pI2CHandle);
-void I2C_MasterHandleRXNEInterrupt(I2C_Handle_t *pI2CHandle);
+static void I2C_MasterHandleTXEInterrupt(I2C_Handle_t *pI2CHandle);
+static void I2C_MasterHandleRXNEInterrupt(I2C_Handle_t *pI2CHandle);
 static void I2C_GenerateStartCondition(I2C_RegDef_t *pI2Cx);
 static void I2C_ExecuteAddressPhaseWrite(I2C_RegDef_t *pI2Cx, uint8_t SlaveAddr);
 static void I2C_ExecuteAddressPhaseRead(I2C_RegDef_t *pI2Cx, uint8_t SlaveAddr);
 static void I2C_ClearADDRFlag(I2C_Handle_t *pI2CHandle);
 static void I2C_GenerateStopCondition(I2C_RegDef_t *pI2Cx);
-void I2C_CloseReceiveData(I2C_Handle_t *pI2CHandle);
-void I2C_CloseSendData(I2C_Handle_t *pI2CHandle);
 
 uint16_t AHB_PreScaler[8] = {2, 4, 8, 16, 64, 128, 256, 512};
 uint8_t APB1_PreScaler[4] = {2, 4, 8, 16};
@@ -217,8 +215,9 @@ uint8_t I2C_GetFlagStatus(I2C_RegDef_t *pI2Cx, uint32_t flagName)
  *
  * @param pI2CHandle
  * @param appEvent
+ * @return __weak
  */
-void I2C_ApplicationEventCallback(I2C_Handle_t *pI2CHandle, uint8_t appEvent)
+__weak void I2C_ApplicationEventCallback(I2C_Handle_t *pI2CHandle, uint8_t appEvent)
 {
 }
 
@@ -670,20 +669,23 @@ void I2C_ER_IRQHandling(I2C_Handle_t *pI2CHandle)
         // This is arbitration lost error
 
         // Implement the code to clear the arbitration lost error flag
+        pI2CHandle->pI2Cx->SR1 &= ~(1 << I2C_SR1_ARLO);
 
         // Implement the code to notify the application about the error
+        I2C_ApplicationEventCallback(pI2CHandle, I2C_ERROR_ARLO);
     }
 
     /* Check for ACK failure  error */
-
     temp1 = (pI2CHandle->pI2Cx->SR1) & (1 << I2C_SR1_AF);
     if (temp1 && temp2)
     {
         // This is ACK failure error
 
         // Implement the code to clear the ACK failure error flag
+        pI2CHandle->pI2Cx->SR1 &= ~(1 << I2C_SR1_AF);
 
         // Implement the code to notify the application about the error
+        I2C_ApplicationEventCallback(pI2CHandle, I2C_ERROR_AF);
     }
 
     /* Check for Overrun/underrun error */
@@ -693,8 +695,10 @@ void I2C_ER_IRQHandling(I2C_Handle_t *pI2CHandle)
         // This is Overrun/underrun
 
         // Implement the code to clear the Overrun/underrun error flag
+        pI2CHandle->pI2Cx->SR1 &= ~(1 << I2C_SR1_OVR);
 
         // Implement the code to notify the application about the error
+        I2C_ApplicationEventCallback(pI2CHandle, I2C_ERROR_OVR);
     }
 
     /* Check for Time out error */
@@ -704,12 +708,14 @@ void I2C_ER_IRQHandling(I2C_Handle_t *pI2CHandle)
         // This is Time out error
 
         // Implement the code to clear the Time out error flag
+        pI2CHandle->pI2Cx->SR1 &= ~(1 << I2C_SR1_TIMEOUT);
 
         // Implement the code to notify the application about the error
+        I2C_ApplicationEventCallback(pI2CHandle, I2C_ERROR_TIMEOUT);
     }
 }
 
-void I2C_MasterHandleTXEInterrupt(I2C_Handle_t *pI2CHandle)
+static void I2C_MasterHandleTXEInterrupt(I2C_Handle_t *pI2CHandle)
 {
     if (pI2CHandle->TxLen > 0)
     {
@@ -724,7 +730,7 @@ void I2C_MasterHandleTXEInterrupt(I2C_Handle_t *pI2CHandle)
     }
 }
 
-void I2C_MasterHandleRXNEInterrupt(I2C_Handle_t *pI2CHandle)
+static void I2C_MasterHandleRXNEInterrupt(I2C_Handle_t *pI2CHandle)
 {
     // we have to do the data reception
     if (pI2CHandle->RxSize == 1)
@@ -775,7 +781,11 @@ void I2C_CloseReceiveData(I2C_Handle_t *pI2CHandle)
     pI2CHandle->pRxBuffer = NULL;
     pI2CHandle->RxLen = 0;
     pI2CHandle->RxSize = 0;
-    I2C_ManageAcking(pI2CHandle->pI2Cx, ENABLE);
+
+    if (pI2CHandle->I2C_Config.I2C_ACKControl == I2C_ACK_ENABLE)
+    {
+        I2C_ManageAcking(pI2CHandle->pI2Cx, ENABLE);
+    }
 }
 
 void I2C_CloseSendData(I2C_Handle_t *pI2CHandle)
