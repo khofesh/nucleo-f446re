@@ -10,7 +10,8 @@
 uint32_t RCC_GetPCLK1Value();
 uint32_t RCC_GetPLLOutputClock();
 static void I2C_GenerateStartCondition(I2C_RegDef_t *pI2Cx);
-static void I2C_ExecuteAddressPhase(I2C_RegDef_t *pI2Cx, uint8_t SlaveAddr);
+static void I2C_ExecuteAddressPhaseWrite(I2C_RegDef_t *pI2Cx, uint8_t SlaveAddr);
+static void I2C_ExecuteAddressPhaseRead(I2C_RegDef_t *pI2Cx, uint8_t SlaveAddr);
 static void I2C_ClearADDRFlag(I2C_RegDef_t *pI2Cx);
 static void I2C_GenerateStopCondition(I2C_RegDef_t *pI2Cx);
 
@@ -305,7 +306,7 @@ void I2C_MasterSendData(I2C_Handle_t *pI2CHandle, uint8_t *pTxBuffer, uint32_t L
     }
 
     // 3. Send the address of the slave with r/nw bit set to w(0) (total 8 bits )
-    I2C_ExecuteAddressPhase(pI2CHandle->pI2Cx, SlaveAddr);
+    I2C_ExecuteAddressPhaseWrite(pI2CHandle->pI2Cx, SlaveAddr);
 
     // 4. Confirm that address phase is completed by checking the ADDR flag in the SR1
     while (!I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_FLAG_ADDR))
@@ -342,16 +343,127 @@ void I2C_MasterSendData(I2C_Handle_t *pI2CHandle, uint8_t *pTxBuffer, uint32_t L
     I2C_GenerateStopCondition(pI2CHandle->pI2Cx);
 }
 
+/**
+ * @brief I2C_MasterReceiveData
+ *
+ * @param pI2CHandle
+ * @param pRxBuffer
+ * @param Len
+ * @param SlaveAddr
+ * @param Sr
+ */
+void I2C_MasterReceiveData(I2C_Handle_t *pI2CHandle, uint8_t *pRxBuffer, uint8_t Len, uint8_t SlaveAddr, uint8_t Sr)
+{
+    // 1. Generate the START condition
+    I2C_GenerateStartCondition(pI2CHandle->pI2Cx);
+
+    // 2. confirm that start generation is completed by checking the SB flag in the SR1
+    //    Note: Until SB is cleared SCL will be stretched (pulled to LOW)
+    while (!I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_FLAG_SB))
+    {
+        /* code */
+    }
+
+    // 3. Send the address of the slave with r/nw bit set to R(1) (total 8 bits )
+    I2C_ExecuteAddressPhaseRead(pI2CHandle->pI2Cx, SlaveAddr);
+
+    // 4. wait until address phase is completed by checking the ADDR flag in teh SR1
+    while (!I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_FLAG_ADDR))
+    {
+        /* code */
+    }
+
+    // procedure to read only 1 byte from slave
+    if (Len == 1)
+    {
+        // Disable Acking
+        I2C_ManageAcking(pI2CHandle->pI2Cx, I2C_ACK_DISABLE);
+
+        // generate STOP condition
+        I2C_GenerateStopCondition(pI2CHandle->pI2Cx);
+
+        // clear the ADDR flag
+        I2C_ClearADDRFlag(pI2CHandle->pI2Cx);
+
+        // wait until  RXNE becomes 1
+        while (!I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_FLAG_RXNE))
+            ;
+
+        // read data in to buffer
+        *pRxBuffer = pI2CHandle->pI2Cx->DR;
+
+        return;
+    }
+
+    // procedure to read data from slave when Len > 1
+    if (Len > 1)
+    {
+        // clear the ADDR flag
+        I2C_ClearADDRFlag(pI2CHandle->pI2Cx);
+
+        // read the data until Len becomes zero
+        for (uint32_t i = Len; i > 0; i--)
+        {
+            // wait until RXNE becomes 1
+            while (!I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_FLAG_RXNE))
+                ;
+
+            if (i == 2) // if last 2 bytes are remaining
+            {
+                // Disable Acking
+                I2C_ManageAcking(pI2CHandle->pI2Cx, I2C_ACK_DISABLE);
+
+                // generate STOP condition
+                I2C_GenerateStopCondition(pI2CHandle->pI2Cx);
+            }
+
+            // read the data from data register in to buffer
+            *pRxBuffer = pI2CHandle->pI2Cx->DR;
+
+            // increment the buffer address
+            pRxBuffer++;
+        }
+    }
+
+    // re-enable ACKing
+    if (pI2CHandle->I2C_Config.I2C_ACKControl == I2C_ACK_ENABLE)
+    {
+        I2C_ManageAcking(pI2CHandle->pI2Cx, I2C_ACK_ENABLE);
+    }
+}
+
+void I2C_ManageAcking(I2C_RegDef_t *pI2Cx, uint8_t EnOrDi)
+{
+    if (EnOrDi == I2C_ACK_ENABLE)
+    {
+        /* enable the ack */
+        pI2Cx->CR1 |= (1 << I2C_CR1_ACK);
+    }
+    else
+    {
+        // disable the ack
+        pI2Cx->CR1 &= ~(1 << I2C_CR1_ACK);
+    }
+}
+
 static void I2C_GenerateStartCondition(I2C_RegDef_t *pI2Cx)
 {
     pI2Cx->CR1 |= (1 << I2C_CR1_START);
 }
 
-static void I2C_ExecuteAddressPhase(I2C_RegDef_t *pI2Cx, uint8_t SlaveAddr)
+static void I2C_ExecuteAddressPhaseWrite(I2C_RegDef_t *pI2Cx, uint8_t SlaveAddr)
 {
     SlaveAddr = SlaveAddr << 1;
     // slave address + r/nw bit = 0
     SlaveAddr &= ~(1);
+    pI2Cx->DR = SlaveAddr;
+}
+
+static void I2C_ExecuteAddressPhaseRead(I2C_RegDef_t *pI2Cx, uint8_t SlaveAddr)
+{
+    SlaveAddr = SlaveAddr << 1;
+    // slave address + r/nw bit = 1
+    SlaveAddr |= 1;
     pI2Cx->DR = SlaveAddr;
 }
 
