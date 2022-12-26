@@ -19,6 +19,9 @@
 
 I2C_Handle_t I2C1Handle;
 
+// flag variable
+uint8_t rxComplete = RESET;
+
 // receive buffer
 uint8_t rcv_buf[32];
 
@@ -87,9 +90,17 @@ int main()
 									   SLAVE_ADDR, I2C_DISABLE_SR) != I2C_READY)
 			;
 
+		rxComplete = RESET;
+
+		// wait until rx completes
+		while (rxComplete != SET)
+			;
+
 		rcv_buf[len + 1] = '\0';
 
 		printf("data: %s\n", rcv_buf);
+
+		rxComplete = RESET;
 	}
 
 	return 0;
@@ -187,6 +198,7 @@ void I2C_ApplicationEventCallback(I2C_Handle_t *pI2CHandle, uint8_t appEvent)
 	else if (appEvent == I2C_EV_RX_CMPLT)
 	{
 		printf("rx is completed\n");
+		rxComplete = SET;
 	}
 	else if (appEvent == I2C_ERROR_AF)
 	{
