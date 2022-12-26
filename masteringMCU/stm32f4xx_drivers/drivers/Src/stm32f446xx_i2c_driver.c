@@ -903,3 +903,13 @@ void I2C_GenerateStopCondition(I2C_RegDef_t *pI2Cx)
 {
     pI2Cx->CR1 |= (1 << I2C_CR1_STOP);
 }
+
+void I2C_SlaveSendData(I2C_RegDef_t *pI2C, uint8_t data)
+{
+    pI2C->DR = data;
+}
+
+uint8_t I2C_SlaveReceiveData(I2C_RegDef_t *pI2C)
+{
+    return (uint8_t)pI2C->DR;
+}
