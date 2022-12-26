@@ -34,6 +34,8 @@ int main()
 	uint8_t commandCode;
 	uint8_t len;
 
+	printf("application is running\n");
+
 	/* Initialize button */
 	GPIO_ButtonInit();
 
@@ -61,15 +63,19 @@ int main()
 
 		commandCode = 0x51;
 
-		I2C_MasterSendData(&I2C1Handle, &commandCode, 1, SLAVE_ADDR);
+		I2C_MasterSendData(&I2C1Handle, &commandCode, 1, SLAVE_ADDR, I2C_ENABLE_SR);
 
-		I2C_MasterReceiveData(&I2C1Handle, &len, 1, SLAVE_ADDR);
+		I2C_MasterReceiveData(&I2C1Handle, &len, 1, SLAVE_ADDR, I2C_ENABLE_SR);
 
 		commandCode = 0x52;
 
-		I2C_MasterSendData(&I2C1Handle, &commandCode, 1, SLAVE_ADDR);
+		I2C_MasterSendData(&I2C1Handle, &commandCode, 1, SLAVE_ADDR, I2C_ENABLE_SR);
 
-		I2C_MasterReceiveData(&I2C1Handle, rcv_buf, len, SLAVE_ADDR);
+		I2C_MasterReceiveData(&I2C1Handle, rcv_buf, len, SLAVE_ADDR, I2C_DISABLE_SR);
+
+		rcv_buf[len + 1] = '\0';
+
+		printf("data: %s\n", rcv_buf);
 	}
 
 	return 0;

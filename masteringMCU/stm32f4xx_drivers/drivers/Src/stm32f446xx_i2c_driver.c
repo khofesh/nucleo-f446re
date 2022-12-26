@@ -294,7 +294,7 @@ uint32_t RCC_GetPLLOutputClock()
  * @param SlaveAddr
  */
 void I2C_MasterSendData(I2C_Handle_t *pI2CHandle, uint8_t *pTxBuffer,
-                        uint32_t Len, uint8_t SlaveAddr)
+                        uint32_t Len, uint8_t SlaveAddr, uint8_t Sr)
 {
     // 1. Generate the START condition
     I2C_GenerateStartCondition(pI2CHandle->pI2Cx);
@@ -341,7 +341,10 @@ void I2C_MasterSendData(I2C_Handle_t *pI2CHandle, uint8_t *pTxBuffer,
 
     // 8. Generate STOP condition and master need not to wait for the completion of stop condition.
     //    Note: generating STOP, automatically clears the BTF
-    I2C_GenerateStopCondition(pI2CHandle->pI2Cx);
+    if (Sr == I2C_DISABLE_SR)
+    {
+        I2C_GenerateStopCondition(pI2CHandle->pI2Cx);
+    }
 }
 
 /**
@@ -354,7 +357,7 @@ void I2C_MasterSendData(I2C_Handle_t *pI2CHandle, uint8_t *pTxBuffer,
  * @param Sr
  */
 void I2C_MasterReceiveData(I2C_Handle_t *pI2CHandle, uint8_t *pRxBuffer,
-                           uint8_t Len, uint8_t SlaveAddr)
+                           uint8_t Len, uint8_t SlaveAddr, uint8_t Sr)
 {
     // 1. Generate the START condition
     I2C_GenerateStartCondition(pI2CHandle->pI2Cx);
@@ -389,7 +392,10 @@ void I2C_MasterReceiveData(I2C_Handle_t *pI2CHandle, uint8_t *pRxBuffer,
             ;
 
         // generate STOP condition
-        I2C_GenerateStopCondition(pI2CHandle->pI2Cx);
+        if (Sr == I2C_DISABLE_SR)
+        {
+            I2C_GenerateStopCondition(pI2CHandle->pI2Cx);
+        }
 
         // read data in to buffer
         *pRxBuffer = pI2CHandle->pI2Cx->DR;
@@ -414,7 +420,10 @@ void I2C_MasterReceiveData(I2C_Handle_t *pI2CHandle, uint8_t *pRxBuffer,
                 I2C_ManageAcking(pI2CHandle->pI2Cx, I2C_ACK_DISABLE);
 
                 // generate STOP condition
-                I2C_GenerateStopCondition(pI2CHandle->pI2Cx);
+                if (Sr == I2C_DISABLE_SR)
+                {
+                    I2C_GenerateStopCondition(pI2CHandle->pI2Cx);
+                }
             }
 
             // read the data from data register in to buffer
