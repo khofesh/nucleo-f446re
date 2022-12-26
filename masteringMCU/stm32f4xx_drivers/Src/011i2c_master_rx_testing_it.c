@@ -13,7 +13,7 @@
 #include "stm32f446xx_i2c_driver.h"
 
 #define MY_ADDR 0x61
-#define SLAVE_ADDR 0x68
+#define SLAVE_ADDR 0x60
 #define LOW 0
 #define BTN_PRESSED LOW
 
