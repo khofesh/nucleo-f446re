@@ -5,4 +5,10 @@
  *      Author: fahmad
  */
 
-
+int main()
+{
+    while (1)
+    {
+        /* code */
+    }
+}
