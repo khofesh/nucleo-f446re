@@ -6,18 +6,14 @@
  */
 
 #include "stm32f446xx_i2c_driver.h"
+#include "stm32f466xx_rcc_driver.h"
 
-uint32_t RCC_GetPCLK1Value();
-uint32_t RCC_GetPLLOutputClock();
 static void I2C_MasterHandleTXEInterrupt(I2C_Handle_t *pI2CHandle);
 static void I2C_MasterHandleRXNEInterrupt(I2C_Handle_t *pI2CHandle);
 static void I2C_GenerateStartCondition(I2C_RegDef_t *pI2Cx);
 static void I2C_ExecuteAddressPhaseWrite(I2C_RegDef_t *pI2Cx, uint8_t SlaveAddr);
 static void I2C_ExecuteAddressPhaseRead(I2C_RegDef_t *pI2Cx, uint8_t SlaveAddr);
 static void I2C_ClearADDRFlag(I2C_Handle_t *pI2CHandle);
-
-uint16_t AHB_PreScaler[8] = {2, 4, 8, 16, 64, 128, 256, 512};
-uint8_t APB1_PreScaler[4] = {2, 4, 8, 16};
 
 /**
  * @brief I2C_PeriClockControl
@@ -259,73 +255,6 @@ uint8_t I2C_GetFlagStatus(I2C_RegDef_t *pI2Cx, uint32_t flagName)
  */
 __weak void I2C_ApplicationEventCallback(I2C_Handle_t *pI2CHandle, uint8_t appEvent)
 {
-}
-
-uint32_t RCC_GetPCLK1Value()
-{
-    uint32_t pclk1;
-    uint32_t SystemClk;
-
-    uint8_t clksrc;
-    uint8_t temp;
-    uint8_t ahbp;
-    uint8_t apb1p;
-
-    /*
-        see RM0390-*.pdf page 133
-
-        Bits 3:2 SWS[1:0]: System clock switch status
-        Set and cleared by hardware to indicate which clock source is used as the system clock.
-        00: HSI oscillator used as the system clock
-        01: HSE oscillator used as the system clock
-        10: PLL used as the system clock
-        11: PLL_R used as the system clock
-    */
-    clksrc = ((RCC->CFGR >> RCC_CFGR_SWS_Pos) & 0x3);
-
-    if (clksrc == 0)
-    {
-        SystemClk = 16000000;
-    }
-    else if (clksrc == 1)
-    {
-        SystemClk = 8000000;
-    }
-    else if (clksrc == 2)
-    {
-        SystemClk = RCC_GetPLLOutputClock();
-    }
-
-    temp = ((RCC->CFGR >> 4) & 0xFUL);
-
-    if (temp < 8)
-    {
-        ahbp = 1;
-    }
-    else
-    {
-        ahbp = AHB_PreScaler[temp - 8];
-    }
-
-    temp = ((RCC->CFGR >> 10) & 0x7UL);
-
-    if (temp < 4)
-    {
-        apb1p = 1;
-    }
-    else
-    {
-        apb1p = APB1_PreScaler[temp - 4];
-    }
-
-    pclk1 = (SystemClk / ahbp) / apb1p;
-
-    return pclk1;
-}
-
-uint32_t RCC_GetPLLOutputClock()
-{
-    return 0;
 }
 
 /**
