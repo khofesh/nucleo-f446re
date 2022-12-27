@@ -6,6 +6,8 @@
  */
 
 #include "ds1307.h"
+#include <string.h>
+#include <stdint.h>
 
 static void ds1307_i2c_pin_config(void);
 static void ds1307_i2c_config(void);
