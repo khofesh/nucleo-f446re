@@ -32,17 +32,17 @@ typedef struct
     USART_Config_t USART_Config;
 } USART_Handle_t;
 
-/*
- * @USART_Mode
+/**
+ * @brief USART_Mode
  * Possible options for USART_Mode
  */
 #define USART_MODE_ONLY_TX 0
 #define USART_MODE_ONLY_RX 1
 #define USART_MODE_TXRX 2
 
-/*
- *@USART_Baud
- *Possible options for USART_Baud
+/**
+ * @brief USART_Baud
+ * Possible options for USART_Baud
  */
 #define USART_STD_BAUD_1200 1200
 #define USART_STD_BAUD_2400 400
@@ -57,33 +57,36 @@ typedef struct
 #define USART_STD_BAUD_2M 2000000
 #define SUART_STD_BAUD_3M 3000000
 
-/*
- *@USART_ParityControl
- *Possible options for USART_ParityControl
+/**
+ * @brief USART_ParityControl
+ * Possible options for USART_ParityControl
  */
 #define USART_PARITY_EN_ODD 2
 #define USART_PARITY_EN_EVEN 1
 #define USART_PARITY_DISABLE 0
 
-/*
- *@USART_WordLength
- *Possible options for USART_WordLength
+/**
+ * @brief USART_WordLength
+ * Possible options for USART_WordLength
+ * (USART_CR1) bit 12
  */
 #define USART_WORDLEN_8BITS 0
 #define USART_WORDLEN_9BITS 1
 
-/*
- *@USART_NoOfStopBits
- *Possible options for USART_NoOfStopBits
+/**
+ * @brief USART_NoOfStopBits
+ * Possible options for USART_NoOfStopBits
+ * (USART_CR2) bit 12 and 13
  */
 #define USART_STOPBITS_1 0
 #define USART_STOPBITS_0_5 1
 #define USART_STOPBITS_2 2
 #define USART_STOPBITS_1_5 3
 
-/*
- *@USART_HWFlowControl
- *Possible options for USART_HWFlowControl
+/**
+ * @brief USART_HWFlowControl
+ * Possible options for USART_HWFlowControl
+ * (USART_CR3) bit 9 and 8
  */
 #define USART_HW_FLOW_CTRL_NONE 0
 #define USART_HW_FLOW_CTRL_CTS 1

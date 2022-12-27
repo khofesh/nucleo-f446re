@@ -5,7 +5,7 @@
  *      Author: fahmad
  */
 
-#include <stm32f446xx_usart_driver.h>
+#include "stm32f446xx_usart_driver.h"
 
 void USART_PeriClockControl(USART_RegDef_t *pUSARTx, uint8_t EnorDi)
 {
@@ -43,20 +43,20 @@ void USART_DeInit(USART_RegDef_t *pUSARTx)
     }
 }
 
-void USART_SendData(USART_Handle_t *pUSARTHandle, uint8_t *pTxBuffer, uint32_t Length)
+void USART_SendData(USART_RegDef_t *pUSARTx, uint8_t *pTxBuffer, uint32_t Len)
 {
 }
 
-void USART_ReceiveData(USART_Handle_t *pUSARTHandle, uint8_t *pRxBuffer, uint32_t Length)
+void USART_ReceiveData(USART_RegDef_t *pUSARTx, uint8_t *pRxBuffer, uint32_t Len)
 {
 }
 
-uint8_t USART_SendDataInterrupt(USART_Handle_t *pUSARTHandle, uint8_t *pTxBuffer, uint32_t Length)
+uint8_t USART_SendDataIT(USART_Handle_t *pUSARTHandle, uint8_t *pTxBuffer, uint32_t Len)
 {
     return 0;
 }
 
-uint8_t USART_ReceiveDataInterrupt(USART_Handle_t *pUSARTHandle, uint8_t *pRxBuffer, uint32_t Length)
+uint8_t USART_ReceiveDataIT(USART_Handle_t *pUSARTHandle, uint8_t *pRxBuffer, uint32_t Len)
 {
     return 0;
 }
