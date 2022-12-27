@@ -102,9 +102,9 @@ typedef struct
 /**
  * USART flags
  */
-#define USART_FLAG_TXE (1 << USART_SR_TXE_Pos)
-#define USART_FLAG_RXNE (1 << USART_SR_RXNE_Pos)
-#define USART_FLAG_TC (1 << USART_SR_TC_Pos)
+#define USART_FLAG_TXE (1 << USART_SR_TXE)
+#define USART_FLAG_RXNE (1 << USART_SR_RXNE)
+#define USART_FLAG_TC (1 << USART_SR_TC)
 
 /**
  * Application states

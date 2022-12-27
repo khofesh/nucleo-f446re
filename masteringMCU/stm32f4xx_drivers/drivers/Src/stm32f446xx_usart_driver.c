@@ -77,13 +77,13 @@ void USART_Init(USART_Handle_t *pUSARTHandle)
     }
 
     // Implement the code to configure the Word length configuration item
-    tempreg |= pUSARTHandle->USART_Config.USART_WordLength << USART_CR1_M_Pos;
+    tempreg |= pUSARTHandle->USART_Config.USART_WordLength << USART_CR1_M;
 
     // Configuration of parity control bit fields
     if (pUSARTHandle->USART_Config.USART_ParityControl == USART_PARITY_EN_EVEN)
     {
         // Implement the code to enale the parity control
-        tempreg |= (1 << USART_CR1_PCE_Pos);
+        tempreg |= (1 << USART_CR1_PCE);
 
         // Implement the code to enable EVEN parity
         // Not required because by default EVEN parity will be selected once you enable the parity control
@@ -91,10 +91,10 @@ void USART_Init(USART_Handle_t *pUSARTHandle)
     else if (pUSARTHandle->USART_Config.USART_ParityControl == USART_PARITY_EN_ODD)
     {
         // Implement the code to enable the parity control
-        tempreg |= (1 << USART_CR1_PCE_Pos);
+        tempreg |= (1 << USART_CR1_PCE);
 
         // Implement the code to enable ODD parity
-        tempreg |= (1 << USART_CR1_PS_Pos);
+        tempreg |= (1 << USART_CR1_PS);
     }
 
     // Program the CR1 register
@@ -105,7 +105,7 @@ void USART_Init(USART_Handle_t *pUSARTHandle)
     tempreg = 0;
 
     // Implement the code to configure the number of stop bits inserted during USART frame transmission
-    tempreg |= pUSARTHandle->USART_Config.USART_NoOfStopBits << USART_CR2_STOP_Pos;
+    tempreg |= pUSARTHandle->USART_Config.USART_NoOfStopBits << USART_CR2_STOP;
 
     // Program the CR2 register
     pUSARTHandle->pUSARTx->CR2 = tempreg;
@@ -118,18 +118,18 @@ void USART_Init(USART_Handle_t *pUSARTHandle)
     if (pUSARTHandle->USART_Config.USART_HWFlowControl == USART_HW_FLOW_CTRL_CTS)
     {
         // Implement the code to enable CTS flow control
-        tempreg |= (1 << USART_CR3_CTSE_Pos);
+        tempreg |= (1 << USART_CR3_CTSE);
     }
     else if (pUSARTHandle->USART_Config.USART_HWFlowControl == USART_HW_FLOW_CTRL_RTS)
     {
         // Implement the code to enable RTS flow control
-        tempreg |= (1 << USART_CR3_RTSE_Pos);
+        tempreg |= (1 << USART_CR3_RTSE);
     }
     else if (pUSARTHandle->USART_Config.USART_HWFlowControl == USART_HW_FLOW_CTRL_CTS_RTS)
     {
         // Implement the code to enable both CTS and RTS Flow control
-        tempreg |= (1 << USART_CR3_CTSE_Pos);
-        tempreg |= (1 << USART_CR3_RTSE_Pos);
+        tempreg |= (1 << USART_CR3_CTSE);
+        tempreg |= (1 << USART_CR3_RTSE);
     }
 
     pUSARTHandle->pUSARTx->CR3 = tempreg;
@@ -311,10 +311,10 @@ uint8_t USART_SendDataIT(USART_Handle_t *pUSARTHandle, uint8_t *pTxBuffer, uint3
         pUSARTHandle->TxBusyState = USART_BUSY_IN_TX;
 
         // Implement the code to enable interrupt for TXE
-        pUSARTHandle->pUSARTx->CR1 |= (1 << USART_CR1_TXEIE_Pos);
+        pUSARTHandle->pUSARTx->CR1 |= (1 << USART_CR1_TXEIE);
 
         // Implement the code to enable interrupt for TC
-        pUSARTHandle->pUSARTx->CR1 |= (1 << USART_CR1_TCIE_Pos);
+        pUSARTHandle->pUSARTx->CR1 |= (1 << USART_CR1_TCIE);
     }
 
     return txState;
@@ -341,7 +341,7 @@ uint8_t USART_ReceiveDataIT(USART_Handle_t *pUSARTHandle, uint8_t *pRxBuffer, ui
         (void)pUSARTHandle->pUSARTx->DR;
 
         // Implement the code to enable interrupt for RXNE
-        pUSARTHandle->pUSARTx->CR1 |= (1 << USART_CR1_RXNEIE_Pos);
+        pUSARTHandle->pUSARTx->CR1 |= (1 << USART_CR1_RXNEIE);
     }
 
     return rxState;
