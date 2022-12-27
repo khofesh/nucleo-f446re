@@ -108,6 +108,10 @@
 #define IRQ_NO_SPI3 51
 #define IRQ_NO_SPI4 84
 
+#define IRQ_NO_USART1 37
+#define IRQ_NO_USART2 38
+#define IRQ_NO_USART3 39
+
 /**
  * @brief possible priority levels
  *
