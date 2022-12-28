@@ -22,14 +22,14 @@ void lcd_set_cursor(uint8_t row, uint8_t column);
 
 /*Application configurable items */
 
-#define LCD_GPIO_PORT GPIOA
-#define LCD_GPIO_RS GPIO_PIN_NO_0
-#define LCD_GPIO_RW GPIO_PIN_NO_1
-#define LCD_GPIO_EN GPIO_PIN_NO_2
-#define LCD_GPIO_D4 GPIO_PIN_NO_3
-#define LCD_GPIO_D5 GPIO_PIN_NO_4
-#define LCD_GPIO_D6 GPIO_PIN_NO_5
-#define LCD_GPIO_D7 GPIO_PIN_NO_6
+#define LCD_GPIO_PORT GPIOB
+#define LCD_GPIO_RS GPIO_PIN_NO_2  // pb2
+#define LCD_GPIO_RW GPIO_PIN_NO_1  // pb1
+#define LCD_GPIO_EN GPIO_PIN_NO_15 // pb15
+#define LCD_GPIO_D4 GPIO_PIN_NO_14 // pb14
+#define LCD_GPIO_D5 GPIO_PIN_NO_13 // pb13
+#define LCD_GPIO_D6 GPIO_PIN_NO_10 // pb10
+#define LCD_GPIO_D7 GPIO_PIN_NO_4  // pb4
 
 /*LCD commands */
 #define LCD_CMD_4DL_2N_5X8F 0x28

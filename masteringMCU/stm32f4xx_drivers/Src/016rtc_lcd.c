@@ -6,22 +6,39 @@
  */
 
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #include "stm32f446xx.h"
 #include "ds1307.h"
+#include "lcd.h"
 
 #define SYSTICK_TIM_CLK 16000000UL
+#define PRINT_LCD
 
 char *get_day_of_week(uint8_t day);
 char *time_to_string(RTC_time_t *rtc_time);
 char *date_to_string(RTC_date_t *rtc_date);
 void number_to_string(uint8_t num, char *buf);
 void init_systick_timer(uint32_t tick_hz);
+static void mdelay(uint32_t cnt);
 
 int main()
 {
     RTC_time_t current_time;
     RTC_date_t current_date;
+
+#ifndef PRINT_LCD
     printf("RTC test\n");
+#else
+    lcd_init();
+
+    lcd_print_string("rtc test...");
+
+    mdelay(2000);
+
+    lcd_display_clear();
+    lcd_display_return_home();
+#endif
 
     if (ds1307_init())
     {
@@ -55,18 +72,39 @@ int main()
     {
         am_pm = (current_time.time_format) ? "PM" : "AM";
         timeInString = time_to_string(&current_time);
+#ifndef PRINT_LCD
+
         printf("current time = %s %s\n", timeInString, am_pm);
+#else
+        lcd_print_string(timeInString);
+        lcd_print_string(am_pm);
+#endif
     }
     else
     {
         timeInString = time_to_string(&current_time);
+#ifndef PRINT_LCD
         printf("current time = %s\n", timeInString);
+#else
+        lcd_print_string(timeInString);
+#endif
     }
 
     // 27/12/22 <wednesday>
     char *dateInString = date_to_string(&current_date);
     char *dayOfWeek = get_day_of_week(current_date.day);
+
+#ifndef PRINT_LCD
     printf("current date = %s <%s>\n", dateInString, dayOfWeek);
+
+#else
+    char *separation = "<";
+
+    lcd_set_cursor(2, 1);
+    lcd_print_string(dateInString);
+    lcd_print_char((uint8_t)atoi(separation));
+    lcd_print_string(dayOfWeek);
+#endif
 
     while (1)
     {
@@ -187,12 +225,24 @@ void SysTick_Handler()
     {
         am_pm = (current_time.time_format) ? "PM" : "AM";
         timeInString = time_to_string(&current_time);
+
+#ifndef PRINT_LCD
         printf("current time = %s %s\n", timeInString, am_pm);
+#else
+        lcd_set_cursor(1, 1);
+        lcd_print_string(timeInString);
+        lcd_print_string(am_pm);
+#endif
     }
     else
     {
         timeInString = time_to_string(&current_time);
+#ifndef PRINT_LCD
         printf("current time = %s\n", timeInString);
+#else
+        lcd_set_cursor(1, 1);
+        lcd_print_string(timeInString);
+#endif
     }
 
     ds1307_get_current_date(&current_date);
@@ -200,5 +250,23 @@ void SysTick_Handler()
     // 27/12/22 <wednesday>
     char *dateInString = date_to_string(&current_date);
     char *dayOfWeek = get_day_of_week(current_date.day);
+
+#ifndef PRINT_LCD
     printf("current date = %s <%s>\n", dateInString, dayOfWeek);
+#else
+    char *sepStart = "<";
+    char *sepEnd = ">";
+
+    lcd_set_cursor(2, 1);
+    lcd_print_string(dateInString);
+    lcd_print_char((uint8_t)atoi(sepStart));
+    lcd_print_string(dayOfWeek);
+    lcd_print_char((uint8_t)atoi(sepEnd));
+#endif
+}
+
+static void mdelay(uint32_t cnt)
+{
+    for (uint32_t i = 0; i < (cnt * 1000); i++)
+        ;
 }
