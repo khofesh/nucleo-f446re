@@ -125,6 +125,7 @@ toolbox enter ubuntu-toolbox-22.04
 ⬢[fahmad@toolbox deb]$  ls
 st-stm32cubeide_1.11.0_13638_20221122_1308_amd64.deb_bundle.sh
 ⬢[fahmad@toolbox deb]$  sudo sh st-stm32cubeide_1.11.0_13638_20221122_1308_amd64.deb_bundle.sh
+⬢[fahmad@toolbox ~]$  /opt/st/stm32cubeide_1.11.0/stm32cubeide
 ```
 
 # References
