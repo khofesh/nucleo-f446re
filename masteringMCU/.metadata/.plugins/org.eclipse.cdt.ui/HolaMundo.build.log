@@ -1,0 +1,18 @@
+20:41:49 **** Incremental Build of configuration Debug for project HolaMundo ****
+make -j12 all 
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/main.o"
+arm-none-eabi-gcc "../Src/syscalls.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/syscalls.d" -MT"Src/syscalls.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/syscalls.o"
+arm-none-eabi-gcc -o "HolaMundo.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/fahmad/GitHub/nucleo-f446re/masteringMCU/HolaMundo/STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="HolaMundo.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: HolaMundo.elf
+ 
+arm-none-eabi-size   HolaMundo.elf 
+arm-none-eabi-objdump -h -S  HolaMundo.elf  > "HolaMundo.list"
+   text	   data	    bss	    dec	    hex	filename
+   3792	    108	   1588	   5488	   1570	HolaMundo.elf
+Finished building: default.size.stdout
+ 
+Finished building: HolaMundo.list
+ 
+
+20:41:49 Build Finished. 0 errors, 0 warnings. (took 285ms)
+

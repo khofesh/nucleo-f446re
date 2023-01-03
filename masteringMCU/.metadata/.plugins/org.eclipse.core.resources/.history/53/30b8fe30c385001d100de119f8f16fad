@@ -1,0 +1,19 @@
+/*
+ * stm32f466xx_rcc_driver.c
+ *
+ *  Created on: Dec 27, 2022
+ *      Author: fahmad
+ */
+
+
+#include "stm32f466xx_rcc_driver.h"
+
+uint16_t AHB_PreScaler[8] = {2, 4, 8, 16, 64, 128, 256, 512};
+uint8_t APB1_PreScaler[4] = {2, 4, 8, 16};
+
+
+
+uint32_t RCC_GetPLLOutputClock()
+{
+    return 0;
+}

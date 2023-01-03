@@ -67,7 +67,7 @@ ctrlp.root
 *.html
 
 # Eclipse
-.metadata
+# .metadata
 .settings
 [Rr]elease
 [Dd]ebug

@@ -1,0 +1,10 @@
+21:17:03 **** Incremental Build of configuration Debug for project 006BitBanding ****
+make -j12 all 
+arm-none-eabi-size   006BitBanding.elf 
+   text	   data	    bss	    dec	    hex	filename
+    752	      8	   1568	   2328	    918	006BitBanding.elf
+Finished building: default.size.stdout
+ 
+
+21:17:03 Build Finished. 0 errors, 0 warnings. (took 181ms)
+

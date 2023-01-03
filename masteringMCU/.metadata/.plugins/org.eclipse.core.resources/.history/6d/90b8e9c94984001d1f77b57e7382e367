@@ -1,0 +1,27 @@
+/*
+ * 009i2c_master_tx_testing.c
+ *
+ *  Created on: Dec 25, 2022
+ *      Author: fahmad
+ */
+
+#include <string.h>
+#include <stdio.h>
+#include "stm32f446xx.h"
+#include "stm32f446xx_spi_driver.h"
+#include "stm32f446xx_gpio_driver.h"
+#include "stm32f446xx_i2c_driver.h"
+
+void delay();
+
+int main()
+{
+	return 0;
+}
+
+void delay()
+{
+	for (uint32_t i = 0; i < 500000 / 2; i++)
+	{
+	}
+}

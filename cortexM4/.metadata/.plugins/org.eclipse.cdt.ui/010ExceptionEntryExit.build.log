@@ -1,0 +1,10 @@
+11:18:07 **** Incremental Build of configuration Debug for project 010ExceptionEntryExit ****
+make -j12 all 
+arm-none-eabi-size   010ExceptionEntryExit.elf 
+   text	   data	    bss	    dec	    hex	filename
+   3904	    108	   1588	   5600	   15e0	010ExceptionEntryExit.elf
+Finished building: default.size.stdout
+ 
+
+11:18:07 Build Finished. 0 errors, 0 warnings. (took 240ms)
+

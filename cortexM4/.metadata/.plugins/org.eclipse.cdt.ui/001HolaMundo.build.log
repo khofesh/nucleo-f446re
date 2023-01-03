@@ -1,0 +1,10 @@
+23:03:13 **** Build of configuration Debug for project 001HolaMundo ****
+make -j12 all 
+arm-none-eabi-size   001HolaMundo.elf 
+   text	   data	    bss	    dec	    hex	filename
+   3792	    108	   1588	   5488	   1570	001HolaMundo.elf
+Finished building: default.size.stdout
+ 
+
+23:03:13 Build Finished. 0 errors, 0 warnings. (took 251ms)
+

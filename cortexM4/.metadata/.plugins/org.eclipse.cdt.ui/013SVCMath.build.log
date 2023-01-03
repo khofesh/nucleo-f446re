@@ -1,0 +1,10 @@
+22:26:39 **** Incremental Build of configuration Debug for project 013SVCMath ****
+make -j12 all 
+arm-none-eabi-size   013SVCMath.elf 
+   text	   data	    bss	    dec	    hex	filename
+   6116	    108	   1588	   7812	   1e84	013SVCMath.elf
+Finished building: default.size.stdout
+ 
+
+22:26:39 Build Finished. 0 errors, 0 warnings. (took 253ms)
+
