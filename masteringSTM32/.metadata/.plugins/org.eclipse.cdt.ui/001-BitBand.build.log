@@ -1,0 +1,30 @@
+15:21:32 **** Incremental Build of configuration Debug for project 001-BitBand ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:48:25: warning: initialization of 'uint32_t *' {aka 'long unsigned int *'} from 'long unsigned int' makes pointer from integer without a cast [-Wint-conversion]
+   48 | #define GPIOA_PERH_ADDR 0x40020000UL
+      |                         ^~~~~~~~~~~~
+../Core/Src/main.c:84:24: note: in expansion of macro 'GPIOA_PERH_ADDR'
+   84 |  uint32_t *GPIOA_ODR = GPIOA_PERH_ADDR + ODR_ADDR_OFF;
+      |                        ^~~~~~~~~~~~~~~
+../Core/Src/main.c:46:27: warning: initialization of 'uint32_t *' {aka 'long unsigned int *'} from 'long unsigned int' makes pointer from integer without a cast [-Wint-conversion]
+   46 | #define BITBAND_PERI(a,b) ((ALIAS_PERI_BASE + ((uint32_t)a-BITBAND_PERI_BASE)*32 + (b*4)))
+      |                           ^
+../Core/Src/main.c:85:25: note: in expansion of macro 'BITBAND_PERI'
+   85 |  uint32_t *GPIOA_PIN5 = BITBAND_PERI(GPIOA_ODR, 5);
+      |                         ^~~~~~~~~~~~
+arm-none-eabi-gcc -o "001-BitBand.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/fahmad/GitHub/nucleo-f446re/masteringSTM32/001-BitBand/STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="001-BitBand.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 001-BitBand.elf
+ 
+arm-none-eabi-size   001-BitBand.elf 
+arm-none-eabi-objdump -h -S  001-BitBand.elf  > "001-BitBand.list"
+   text	   data	    bss	    dec	    hex	filename
+   8436	     20	   1636	  10092	   276c	001-BitBand.elf
+Finished building: default.size.stdout
+ 
+Finished building: 001-BitBand.list
+ 
+
+15:21:33 Build Finished. 0 errors, 2 warnings. (took 513ms)
+
