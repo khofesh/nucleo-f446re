@@ -106,3 +106,71 @@ Caused by: java.io.IOException: error=2, No such file or directory
 
 !ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2023-01-03 21:04:43.166
 !MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 16000000; div: 8
+!SESSION 2023-01-04 07:57:09.143 -----------------------------------------------
+eclipse.buildId=Version 1.11.0
+java.version=11.0.16
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2023-01-04 07:57:16.068
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2023-01-04 07:57:16.136
+!MESSAGE Log4j initialized with config file /home/fahmad/GitHub/nucleo-f446re/masteringMCU2/.metadata/.log4j.xml
+
+!ENTRY org.eclipse.urischeme 4 0 2023-01-04 07:57:18.569
+!MESSAGE Cannot run program "xdg-mime": error=2, No such file or directory
+!STACK 0
+java.io.IOException: Cannot run program "xdg-mime": error=2, No such file or directory
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1128)
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1071)
+	at org.eclipse.urischeme.internal.registration.ProcessExecutor.execute(ProcessExecutor.java:36)
+	at org.eclipse.urischeme.internal.registration.RegistrationLinux.getRegisteredDesktopFileForScheme(RegistrationLinux.java:145)
+	at org.eclipse.urischeme.internal.registration.RegistrationLinux.determineHandlerLocation(RegistrationLinux.java:87)
+	at org.eclipse.urischeme.internal.registration.RegistrationLinux.getSchemesInformation(RegistrationLinux.java:76)
+	at org.eclipse.urischeme.AutoRegisterSchemeHandlersJob.run(AutoRegisterSchemeHandlersJob.java:87)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: java.io.IOException: error=2, No such file or directory
+	at java.base/java.lang.ProcessImpl.forkAndExec(Native Method)
+	at java.base/java.lang.ProcessImpl.<init>(ProcessImpl.java:340)
+	at java.base/java.lang.ProcessImpl.start(ProcessImpl.java:271)
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1107)
+	... 7 more
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2023-01-04 07:57:23.270
+!MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2023-01-04 08:42:24.039 -----------------------------------------------
+eclipse.buildId=Version 1.11.0
+java.version=11.0.16
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2023-01-04 08:42:32.544
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2023-01-04 08:42:32.598
+!MESSAGE Log4j initialized with config file /home/fahmad/GitHub/nucleo-f446re/masteringMCU2/.metadata/.log4j.xml
+
+!ENTRY org.eclipse.urischeme 4 0 2023-01-04 08:42:35.038
+!MESSAGE Cannot run program "xdg-mime": error=2, No such file or directory
+!STACK 0
+java.io.IOException: Cannot run program "xdg-mime": error=2, No such file or directory
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1128)
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1071)
+	at org.eclipse.urischeme.internal.registration.ProcessExecutor.execute(ProcessExecutor.java:36)
+	at org.eclipse.urischeme.internal.registration.RegistrationLinux.getRegisteredDesktopFileForScheme(RegistrationLinux.java:145)
+	at org.eclipse.urischeme.internal.registration.RegistrationLinux.determineHandlerLocation(RegistrationLinux.java:87)
+	at org.eclipse.urischeme.internal.registration.RegistrationLinux.getSchemesInformation(RegistrationLinux.java:76)
+	at org.eclipse.urischeme.AutoRegisterSchemeHandlersJob.run(AutoRegisterSchemeHandlersJob.java:87)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: java.io.IOException: error=2, No such file or directory
+	at java.base/java.lang.ProcessImpl.forkAndExec(Native Method)
+	at java.base/java.lang.ProcessImpl.<init>(ProcessImpl.java:340)
+	at java.base/java.lang.ProcessImpl.start(ProcessImpl.java:271)
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1107)
+	... 7 more
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2023-01-04 08:42:38.130
+!MESSAGE Started RMI Server, listening on port 41337

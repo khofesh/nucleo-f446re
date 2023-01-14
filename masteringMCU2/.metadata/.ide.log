@@ -1314,3 +1314,15 @@
 2023-01-03 20:35:25,624 [INFO] ApiDb:451 - User favorites MCUs=[]
 2023-01-03 20:35:25,625 [INFO] ApiDb:447 - Save user favorites file /home/fahmad/.stm32cubeide/favorites.boards.txt: 2 item(s)
 2023-01-03 20:35:25,625 [INFO] ApiDb:451 - User favorites Boards=[NUCLEO-F446RE, STM32F429I-DISC1]
+2023-01-03 22:36:03,428 [INFO] JxBrowserEngine:114 - Initiate JxBrowser Engine with user profile folder
+2023-01-03 22:36:03,973 [INFO] WebAppUi:459 - Close the Jxbrowser engine manually
+2023-01-03 22:36:03,979 [INFO] WebAppUi:462 - Profiles folder deleted
+2023-01-03 22:36:04,213 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 
+2023-01-04 07:57:16,137 [INFO] Activator:179 - 
+
+
+2023-01-04 07:57:16,138 [INFO] Activator:180 - !SESSION log4j initialized
+2023-01-04 08:42:32,600 [INFO] Activator:179 - 
+
+
+2023-01-04 08:42:32,601 [INFO] Activator:180 - !SESSION log4j initialized
