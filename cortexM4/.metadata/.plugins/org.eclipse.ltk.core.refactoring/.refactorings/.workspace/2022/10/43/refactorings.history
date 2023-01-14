@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;operation_modes&apos; to &apos;002operation_modes&apos;" description="Rename resource &apos;operation_modes&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/operation_modes" name="002operation_modes" stamp="1666426339110" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;inline_1&apos; to &apos;003inline_1&apos;" description="Rename resource &apos;inline_1&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/inline_1" name="003inline_1" stamp="1666426351376" updateReferences="true"/>
-</session>

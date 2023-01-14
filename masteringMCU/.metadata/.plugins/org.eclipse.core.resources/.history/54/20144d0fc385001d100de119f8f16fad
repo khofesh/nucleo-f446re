@@ -1,9 +1,0 @@
-/*
- * stm32f466xx_rcc_driver.c
- *
- *  Created on: Dec 27, 2022
- *      Author: fahmad
- */
-
-
-#include "stm32f466xx_rcc_driver.h"
