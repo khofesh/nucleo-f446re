@@ -73,7 +73,7 @@ int main(void)
   GPIO_InitTypeDef gpio_init;
   gpio_init.Pin = GPIO_PIN_5;
   gpio_init.Mode = GPIO_MODE_OUTPUT_PP;
-  gpio_init.Pull = GPIO_NOPULL;
+  gpio_init.Pull = GPIO_PULLUP;
   gpio_init.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &gpio_init);
 
