@@ -177,16 +177,8 @@ void SystemClock_Config(void)
   }
 }
 
-
 /* USER CODE BEGIN 4 */
-void EXTI15_10_IRQHandler()
-{
-  if (__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_13) != RESET)
-  {
-    __HAL_GPIO_EXTI_CLEAR_IT(GPIO_PIN_13);
-    HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-  }
-}
+
 /* USER CODE END 4 */
 
 /**
