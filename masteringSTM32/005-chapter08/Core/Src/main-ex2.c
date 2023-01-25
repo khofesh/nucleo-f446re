@@ -47,10 +47,8 @@
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-static void MX_USART2_UART_Init(void);
-void printWelcomeMessage(void);
-uint8_t processUserInput(uint8_t opt);
-uint8_t readUserInput(void);
+char readBuf[1];
+__IO ITStatus UartReady = SET;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -58,7 +56,11 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 
 /* USER CODE BEGIN PFP */
-
+static void MX_USART2_UART_Init(void);
+void performCriticalTasks(void);
+void printWelcomeMessage(void);
+uint8_t processUserInput(uint8_t opt);
+int8_t readUserInput(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -98,6 +100,9 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
   MX_USART2_UART_Init();
+  // enable USART2 interrupt
+  HAL_NVIC_SetPriority(USART2_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(USART2_IRQn);
 
 printMessage:
   printWelcomeMessage();
@@ -112,10 +117,15 @@ printMessage:
     /* USER CODE BEGIN 3 */
     opt = readUserInput();
     processUserInput(opt);
-    if (opt == 3)
+    if (opt > 0)
     {
-      goto printMessage;
+      processUserInput(opt);
+      if (opt == 3)
+      {
+        goto printMessage;
+      }
     }
+    performCriticalTasks();
   }
   /* USER CODE END 3 */
 }
@@ -233,20 +243,37 @@ static void MX_USART2_UART_Init(void)
 
 void printWelcomeMessage()
 {
-  HAL_UART_Transmit(&huart2, (uint8_t *)"\033[0;0H", strlen("\033[0;0H"), HAL_MAX_DELAY);
-  HAL_UART_Transmit(&huart2, (uint8_t *)"\033[2J", strlen("\033[2J"), HAL_MAX_DELAY);
-  HAL_UART_Transmit(&huart2, (uint8_t *)WELCOME_MSG, strlen(WELCOME_MSG), HAL_MAX_DELAY);
-  HAL_UART_Transmit(&huart2, (uint8_t *)MAIN_MENU, strlen(MAIN_MENU), HAL_MAX_DELAY);
+  char *strings[] = {
+      "\033[0;0H",
+      "\033[0;0H",
+      WELCOME_MSG,
+      MAIN_MENU,
+      PROMPT,
+  };
+
+  for (uint8_t i = 0; i < 5; i++)
+  {
+    HAL_UART_Transmit_IT(&huart2, (uint8_t *)strings[i], strlen(strings[i]));
+    while (
+        HAL_UART_GetState(&huart2) == HAL_UART_STATE_BUSY_TX ||
+        HAL_UART_GetState(&huart2) == HAL_UART_STATE_BUSY_TX_RX)
+    {
+    }
+  }
 }
 
-uint8_t readUserInput()
+int8_t readUserInput()
 {
-  char readBuf[1];
+  int8_t retVal = -1;
 
-  HAL_UART_Transmit(&huart2, (uint8_t *)PROMPT, strlen(PROMPT), HAL_MAX_DELAY);
-  HAL_UART_Receive(&huart2, (uint8_t *)readBuf, 1, HAL_MAX_DELAY);
+  if (UartReady == SET)
+  {
+    UartReady = RESET;
+    HAL_UART_Receive_IT(&huart2, (uint8_t *)readBuf, 1);
+    retVal = atoi(readBuf);
+  }
 
-  return atoi(readBuf);
+  return retVal;
 }
 
 uint8_t processUserInput(uint8_t opt)
@@ -267,15 +294,33 @@ uint8_t processUserInput(uint8_t opt)
     HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
     break;
   case 2:
-    sprintf(msg, "\r\nUSER BUTTON status: %s",
+    sprintf(msg, "\r\nUSER BUTTON status: %s\n",
             HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_RESET ? "PRESSED" : "RELEASED");
     HAL_UART_Transmit(&huart2, (uint8_t *)msg, strlen(msg), HAL_MAX_DELAY);
   case 3:
     return 2;
   };
 
+  HAL_UART_Transmit(&huart2, (uint8_t*)PROMPT, strlen(PROMPT), HAL_MAX_DELAY);
   return 1;
 }
+
+void USART2_IRQHandler()
+{
+  HAL_UART_IRQHandler(&huart2);
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *UartHandle)
+{
+  // set transmission flag: transfer complete
+  UartReady = SET;
+}
+
+void performCriticalTasks(void)
+{
+  HAL_Delay(100);
+}
+
 /* USER CODE END 4 */
 
 /**
