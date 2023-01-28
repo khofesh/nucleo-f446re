@@ -260,6 +260,11 @@ void DMATransferComplete(DMA_HandleTypeDef *hdma)
 		HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
 	}
 }
+
+void DMA1_Stream6_IRQHandler()
+{
+	DMATransferComplete(&hdma_usart2_tx);
+}
 /* USER CODE END 4 */
 
 /**
