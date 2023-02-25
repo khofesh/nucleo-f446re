@@ -55,67 +55,7 @@
 /* USER CODE END ExternalFunctions */
 
 /* USER CODE BEGIN 0 */
-/**
-* @brief TIM_Base MSP Initialization
-* This function configures the hardware resources used in this example
-* @param htim_base: TIM_Base handle pointer
-* @retval None
-*/
-void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* htim_base)
-{
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
-  if(htim_base->Instance==TIM1)
-  {
-  /* USER CODE BEGIN TIM3_MspInit 0 */
 
-  /* USER CODE END TIM3_MspInit 0 */
-    /* Peripheral clock enable */
-	__TIM1_CLK_ENABLE();
-
-    /**TIM1 GPIO Configuration
-    PA9     ------> TIM1_CH2
-    */
-    GPIO_InitStruct.Pin = GPIO_PIN_9;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-    GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
-    GPIO_InitStruct.Alternate = GPIO_AF1_TIM1;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /* USER CODE BEGIN TIM3_MspInit 1 */
-    if (htim_base->Instance == TIM3)
-    {
-    	__TIM3_CLK_ENABLE();
-    }
-  /* USER CODE END TIM3_MspInit 1 */
-  }
-
-}
-
-/**
-* @brief TIM_Base MSP De-Initialization
-* This function freeze the hardware resources used in this example
-* @param htim_base: TIM_Base handle pointer
-* @retval None
-*/
-void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* htim_base)
-{
-  if(htim_base->Instance==TIM1)
-  {
-  /* USER CODE BEGIN TIM3_MspDeInit 0 */
-	__TIM1_CLK_DISABLE();
-
-	HAL_GPIO_DeInit(GPIOA, GPIO_PIN_9);
-
-  /* USER CODE BEGIN TIM3_MspDeInit 1 */
-    if (htim_base->Instance == TIM3)
-    {
-    	__TIM3_CLK_DISABLE();
-    }
-  /* USER CODE END TIM3_MspDeInit 1 */
-  }
-
-}
 /* USER CODE END 0 */
 /**
   * Initializes the Global MSP.
