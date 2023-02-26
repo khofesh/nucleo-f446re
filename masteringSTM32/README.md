@@ -25,6 +25,11 @@ to close screen session: `Ctrl+a \`
 
 <img src="../images/Screenshot%20from%202023-01-25%2022-39-29.png" alt="terminal" width="500"/>
 
+### ringbuffer
+
+- https://embeddedartistry.com/blog/2017/05/17/creating-a-circular-buffer-in-c-and-c/
+- https://github.com/AndersKaloer/Ring-Buffer
+
 ## 013-chapter11-ex7
 
 you have to add `__HAL_TIM_ENABLE_IT`, so it looks like the following
@@ -37,7 +42,6 @@ you have to add `__HAL_TIM_ENABLE_IT`, so it looks like the following
   HAL_TIM_OC_Start_IT(&htim3, TIM_CHANNEL_2);
 ```
 
-### ringbuffer
+### references
 
-- https://embeddedartistry.com/blog/2017/05/17/creating-a-circular-buffer-in-c-and-c/
-- https://github.com/AndersKaloer/Ring-Buffer
+- https://community.st.com/s/question/0D50X00009hpBdlSAE/timer3-update-event-interrupt-not-working-properly
