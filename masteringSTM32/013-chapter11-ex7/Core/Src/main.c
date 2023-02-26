@@ -1,20 +1,20 @@
 /* USER CODE BEGIN Header */
 /**
-  ******************************************************************************
-  * @file           : main.c
-  * @brief          : generate two output square wave signals
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2023 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file           : main.c
+ * @brief          : generate two output square wave signals
+ ******************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2023 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
+ */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -61,9 +61,9 @@ volatile uint16_t CH2_FREQ = 0;
 /* USER CODE END 0 */
 
 /**
-  * @brief  The application entry point.
-  * @retval int
-  */
+ * @brief  The application entry point.
+ * @retval int
+ */
 int main(void)
 {
   /* USER CODE BEGIN 1 */
@@ -95,6 +95,7 @@ int main(void)
   // Enable timer overflow interrupt
   __HAL_TIM_ENABLE_IT(&htim3, TIM_IT_UPDATE);
 
+  // start timer
   HAL_TIM_OC_Start_IT(&htim3, TIM_CHANNEL_1);
   HAL_TIM_OC_Start_IT(&htim3, TIM_CHANNEL_2);
   /* USER CODE END 2 */
@@ -111,22 +112,22 @@ int main(void)
 }
 
 /**
-  * @brief System Clock Configuration
-  * @retval None
-  */
+ * @brief System Clock Configuration
+ * @retval None
+ */
 void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
   /** Configure the main internal regulator output voltage
-  */
+   */
   __HAL_RCC_PWR_CLK_ENABLE();
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE3);
 
   /** Initializes the RCC Oscillators according to the specified parameters
-  * in the RCC_OscInitTypeDef structure.
-  */
+   * in the RCC_OscInitTypeDef structure.
+   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
@@ -143,9 +144,8 @@ void SystemClock_Config(void)
   }
 
   /** Initializes the CPU, AHB and APB buses clocks
-  */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+   */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
@@ -158,10 +158,10 @@ void SystemClock_Config(void)
 }
 
 /**
-  * @brief USART2 Initialization Function
-  * @param None
-  * @retval None
-  */
+ * @brief USART2 Initialization Function
+ * @param None
+ * @retval None
+ */
 static void MX_USART2_UART_Init(void)
 {
 
@@ -187,14 +187,13 @@ static void MX_USART2_UART_Init(void)
   /* USER CODE BEGIN USART2_Init 2 */
 
   /* USER CODE END USART2_Init 2 */
-
 }
 
 /**
-  * @brief GPIO Initialization Function
-  * @param None
-  * @retval None
-  */
+ * @brief GPIO Initialization Function
+ * @param None
+ * @retval None
+ */
 static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
@@ -220,42 +219,39 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(LD2_GPIO_Port, &GPIO_InitStruct);
-
 }
 
 /* USER CODE BEGIN 4 */
 uint16_t computePulse(TIM_HandleTypeDef *htim, uint32_t chFrequency)
 {
-	uint32_t timFrequency = HAL_RCC_GetPCLK1Freq() / (htim->Instance->PSC + 1);
+  uint32_t timFrequency = HAL_RCC_GetPCLK1Freq() / (htim->Instance->PSC + 1);
 
-	return (uint16_t)(timFrequency / chFrequency);
+  return (uint16_t)(timFrequency / chFrequency);
 }
 
 void MX_TIM3_Init()
 {
-	TIM_OC_InitTypeDef sConfigOC;
+  TIM_OC_InitTypeDef sConfigOC;
 
+  htim3.Instance = TIM3;
+  htim3.Init.Prescaler = 2;
+  htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim3.Init.Period = 65535;
+  htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  HAL_TIM_OC_Init(&htim3);
 
+  CH1_FREQ = computePulse(&htim3, 25000);
+  CH2_FREQ = computePulse(&htim3, 50000);
 
-	htim3.Instance = TIM3;
-	htim3.Init.Prescaler = 2;
-	htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-	htim3.Init.Period = 65535;
-	htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-	HAL_TIM_OC_Init(&htim3);
+  sConfigOC.OCMode = TIM_OCMODE_TOGGLE;
+  sConfigOC.Pulse = CH1_FREQ;
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  HAL_TIM_OC_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_1);
 
-	CH1_FREQ = computePulse(&htim3, 25000);
-	CH2_FREQ = computePulse(&htim3, 50000);
-
-	sConfigOC.OCMode = TIM_OCMODE_TOGGLE;
-	sConfigOC.Pulse = CH1_FREQ;
-	sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-	HAL_TIM_OC_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_1);
-
-	sConfigOC.OCMode = TIM_OCMODE_TOGGLE;
-	sConfigOC.Pulse = CH2_FREQ;
-	sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-	HAL_TIM_OC_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_2);
+  sConfigOC.OCMode = TIM_OCMODE_TOGGLE;
+  sConfigOC.Pulse = CH2_FREQ;
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  HAL_TIM_OC_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_2);
 }
 
 void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim)
@@ -264,37 +260,40 @@ void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim)
   uint16_t arr = __HAL_TIM_GET_AUTORELOAD(htim);
 
   /* TIMx_CH1 toggling with frequency = 50KHz */
-  if(htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1) {
+  if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1)
+  {
     pulse = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_1);
     /* Set the Capture Compare Register value */
-    if((pulse + CH1_FREQ) < arr)
+    if ((pulse + CH1_FREQ) < arr)
       __HAL_TIM_SET_COMPARE(htim, TIM_CHANNEL_1, (pulse + CH1_FREQ));
     else
       __HAL_TIM_SET_COMPARE(htim, TIM_CHANNEL_1, (pulse + CH1_FREQ) - arr);
   }
 
   /* TIMx_CH2 toggling with frequency = 100KHz */
-  if(htim->Channel == HAL_TIM_ACTIVE_CHANNEL_2) {
-  pulse = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_2);
-  /* Set the Capture Compare Register value */
-  if((pulse + CH2_FREQ) < arr)
-    __HAL_TIM_SET_COMPARE(htim, TIM_CHANNEL_2, (pulse + CH2_FREQ));
-  else
-    __HAL_TIM_SET_COMPARE(htim, TIM_CHANNEL_2, (pulse + CH2_FREQ) - arr);
+  if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_2)
+  {
+    pulse = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_2);
+    /* Set the Capture Compare Register value */
+    if ((pulse + CH2_FREQ) < arr)
+      __HAL_TIM_SET_COMPARE(htim, TIM_CHANNEL_2, (pulse + CH2_FREQ));
+    else
+      __HAL_TIM_SET_COMPARE(htim, TIM_CHANNEL_2, (pulse + CH2_FREQ) - arr);
   }
 }
 
-void HAL_TIM_OC_MspInit(TIM_HandleTypeDef* htim_base)
+void HAL_TIM_OC_MspInit(TIM_HandleTypeDef *htim_base)
 {
   GPIO_InitTypeDef GPIO_InitStruct;
-  if(htim_base->Instance==TIM3) {
+  if (htim_base->Instance == TIM3)
+  {
     __TIM3_CLK_ENABLE();
 
     /**TIM3 GPIO Configuration
     PA6     ------> TIM3_CH1
     PA7     ------> TIM3_CH2
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7;
+    GPIO_InitStruct.Pin = GPIO_PIN_6 | GPIO_PIN_7;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
@@ -321,9 +320,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 /* USER CODE END 4 */
 
 /**
-  * @brief  This function is executed in case of error occurrence.
-  * @retval None
-  */
+ * @brief  This function is executed in case of error occurrence.
+ * @retval None
+ */
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
@@ -335,14 +334,14 @@ void Error_Handler(void)
   /* USER CODE END Error_Handler_Debug */
 }
 
-#ifdef  USE_FULL_ASSERT
+#ifdef USE_FULL_ASSERT
 /**
-  * @brief  Reports the name of the source file and the source line number
-  *         where the assert_param error has occurred.
-  * @param  file: pointer to the source file name
-  * @param  line: assert_param error line source number
-  * @retval None
-  */
+ * @brief  Reports the name of the source file and the source line number
+ *         where the assert_param error has occurred.
+ * @param  file: pointer to the source file name
+ * @param  line: assert_param error line source number
+ * @retval None
+ */
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
