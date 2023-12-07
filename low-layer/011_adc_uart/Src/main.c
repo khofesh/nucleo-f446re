@@ -44,6 +44,7 @@ uint32_t volatile sensor_value = 0;
 
 int main(void)
 {
+	uart2_init();
 	adc1_init();
 
     /* Loop forever */
